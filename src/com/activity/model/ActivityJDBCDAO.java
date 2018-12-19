@@ -20,7 +20,7 @@ public class ActivityJDBCDAO implements ActivityDAO_interface {
 	private static final String INSERT_SQL = "INSERT INTO Activity (actID,actName,actStart,actEnd)"
 																			+ "VALUES('A'||LPAD(to_char(act_seq.nextval),4,'0'),?,?,?)";
 	private static final String UPDATE = "UPDATE Activity set actName=?,actStart=?,actEnd=? where actID=?";
-	private static final String DELETE="DELETE FROMActivity WHERE actID=?";
+	private static final String DELETE="DELETE FROM Activity WHERE actID=?";
 	private static final String FIND_BY_PK = "SELECT * FROM Activity where actID=?";
 	private static final String FIND_BY_NAME = "SELECT actID,actStart,actEnd FROM Activity where actName=?";
 	private static final String FIND_ALL_STMT = "SELECT * FROM Activity ORDER by actID";
@@ -344,6 +344,9 @@ public class ActivityJDBCDAO implements ActivityDAO_interface {
 		System.out.print(actVO3.getActStart()+" ");
 		System.out.println(actVO3.getActEnd());
 		
+		
+		
+		
 		//找全部
 		
 		List<ActivityVO>list =dao.getAll();
@@ -355,6 +358,10 @@ public class ActivityJDBCDAO implements ActivityDAO_interface {
 			System.out.print(actVO4.getActEnd()+" ");
 			System.out.println();
 		}
+		
+		//刪除
+		dao.delete("A0021");
+		
 		
 		
 	}

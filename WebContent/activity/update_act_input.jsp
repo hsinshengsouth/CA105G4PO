@@ -4,8 +4,9 @@
 <%@page import="java.util.*" %>
 
 <%
-  ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
+  ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");//ActServlet.java (Concroller) 取出req的actVO物件 (包括幫忙取出的actVO, 也包括輸入資料錯誤時的actVO物件)
 %>
+
    
 <!DOCTYPE html>
 <html >
@@ -18,7 +19,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Add Activity</title>
+    <title>Update Activity</title>
 
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -299,20 +300,24 @@
             <li class="breadcrumb-item">
               <a href="index.html">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">新增一筆促銷活動</li>
+            <li class="breadcrumb-item active">修改促銷活動</li>
           </ol>
 
           <!-- Page Content 這邊開始自由發揮-->
-     		<h3>新增一筆促銷活動</h3>
+     		<h3>修改一筆促銷活動</h3>
 			<div class="container">
 				<div class="row">
 					
-						<form METHOD="post" ACTION="act.do"  class="form-inline form-horizontal" name="insertform">
+						<form METHOD="post" ACTION="act.do"  class="form-inline form-horizontal" name="updateform">
      						<table class="table table-hover">
+     							<tr>
+     								<td>促銷活動編號:<font color=red><b>*</b></font></td>
+     								<td><%=actVO.getActID() %></td>
+     							</tr>
      							<tr>
      								<td>促銷活動名稱</td>
      								<td><input class="form-control " type="TEXT" name="actName"
-     							value="<%=(actVO==null)?"請新增一筆促銷活動":actVO.getActName() %>"/></td>
+     							value="<%=actVO.getActName() %>"/></td>
      							</tr>
      				     				
      							<tr>
@@ -329,9 +334,10 @@
      					</table>
      					
      					<div class="col-xs-12 col-sm-8">
-     					<input type="hidden" name="action" value="insert"> 
+     					<input type="hidden" name="action" value="update">
+						<input type="hidden" name="actID" value="<%=actVO.getActID()%>"> 
      					</div> 								
-  				<button class="btn btn-info" type="submit" >送出新增</button> 
+  				<button class="btn btn-info" type="submit" >送出修改</button> 
      				    				
      		</form>
 
@@ -414,7 +420,7 @@
 
   </body>
 
-	<% 
+<% 
   java.sql.Date date = null;
   try {
 	    date = actVO.getActStart();
@@ -444,7 +450,7 @@
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=date%>', // value:   new Date(),
+		   value: '<%=str%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
