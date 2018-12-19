@@ -7,7 +7,7 @@ public class ActivityService {
 	private ActivityDAO_interface dao;
 	
 	public ActivityService() {
-		dao =new ActivityJDBCDAO();
+		dao =new ActivityDAO();
 	}
 	
 	public ActivityVO addAct(String actName, java.sql.Date startDate,java.sql.Date  endDate) {

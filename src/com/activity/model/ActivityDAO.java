@@ -1,10 +1,11 @@
 package com.activity.model;
 
-import java.sql.Connection;
-import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,23 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ActivityDAO implements ActivityDAO_interface{
+public class ActivityDAO implements ActivityDAO_interface {
+
+	private static final String DRIVER= "oracle.jdbc.driver.OracleDriver";
+	 
+	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	private static final String USER = "CA105G4";
+	private static final String PWD = "123456";
+
+	private static final String INSERT_SQL = "INSERT INTO Activity (actID,actName,actStart,actEnd)"
+																			+ "VALUES('A'||LPAD(to_char(act_seq.nextval),4,'0'),?,?,?)";
+	private static final String UPDATE = "UPDATE Activity set actName=?,actStart=?,actEnd=? where actID=?";
+	private static final String DELETE="DELETE FROM Activity WHERE actID=?";
+	private static final String FIND_BY_PK = "SELECT * FROM Activity where actID=?";
+	private static final String FIND_BY_NAME = "SELECT actID,actStart,actEnd FROM Activity where actName=?";
+	private static final String FIND_ALL_STMT = "SELECT * FROM Activity ORDER by actID";
+	
+
 	private static DataSource ds =null;	
 	
 	static {
@@ -24,33 +41,27 @@ public class ActivityDAO implements ActivityDAO_interface{
 			e.printStackTrace();
 		} 
 	}
-	
-	private static final String INSERT_STMT ="INSERT INTO Activity (actID,actName,actStart,actEnd) "
-																					+ "VALUES('A'||LPAD(to_char(act_seq.nextval),4,'0'),?,?,?)";
-	private static final String UPDATE ="UPDATE Activity SET actName=?, actStart=?, actEnd=? WHERE actID=?";
-	private static final String DELETE = "DELETE FROM Activity WHERE actID=?"; 
-	private static final String FIND_BY_PK ="SELECT * FROM Activity WHERE actID=?";
-	private static final String FIND_BY_NAME="SELECT * FROM Activity WHERE actName=?";
-	private static final String FIND_ALL_STMT ="SELECT * FROM Avtivity ORDER BY actID";
-	
-	
+
 	@Override
 	public void insert(ActivityVO activityVO) {
-		Connection con =null;
-		PreparedStatement pstmt = null;
+		Connection con = null;
+		PreparedStatement pstmt =null;
 		
 		try {
 			con=ds.getConnection();
-			pstmt =con.prepareStatement(INSERT_STMT);
+			pstmt =con.prepareStatement(INSERT_SQL);
 			
 			pstmt.setString(1, activityVO.getActName());
-			pstmt.setDate(2, activityVO.getActStart());
+			pstmt.setDate(2,activityVO.getActStart());
 			pstmt.setDate(3, activityVO.getActEnd());
 			
 			pstmt.executeUpdate();
-		} catch (SQLException se) {
-			throw new  RuntimeException("A database error occured."+se.getMessage());
+			
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		}finally {
+			
 			if(pstmt != null) {
 				try {
 					pstmt.close();
@@ -68,163 +79,163 @@ public class ActivityDAO implements ActivityDAO_interface{
 			}
 			
 		}
+		
+		
 	}
 
 	@Override
 	public void update(ActivityVO activityVO) {
-		Connection con =null;
-		PreparedStatement pstmt =null;
-	
-		try {
-			con =ds.getConnection();
-			pstmt =con.prepareStatement(UPDATE);
-			
-			pstmt.setString(1, activityVO.getActName());
-			pstmt.setDate(2, activityVO.getActStart());
-			pstmt.setDate(3,activityVO.getActEnd());
-			pstmt.setString(4, activityVO.getActID());
-			
-			pstmt.executeUpdate();
-	
-		} catch (SQLException se) {
-			throw new  RuntimeException("A database error occured."+se.getMessage());
-		}finally {
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			if(con!= null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			
-		}
+			Connection con =null;
+			PreparedStatement pstmt =null;
 		
-	
+			try {
+				con=ds.getConnection();
+				pstmt=con.prepareStatement(UPDATE);
+				
+				pstmt.setString(1, activityVO.getActName());
+				pstmt.setDate(2,activityVO.getActStart());
+				pstmt.setDate(3, activityVO.getActEnd());
+				pstmt.setString(4, activityVO.getActID());
+				pstmt.executeUpdate();
+
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			}finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			
+		
 	}
 
-	@Override
+		@Override
 	public void delete(String actID) {
-		Connection con =null;
-		PreparedStatement pstmt =null;
-		
-		try {
-			con = ds.getConnection();
-			pstmt =con.prepareStatement(DELETE);
+			Connection con =null;
+			PreparedStatement pstmt =null;
 			
-			pstmt.setString(1,  actID);
-			
-			pstmt.executeUpdate();
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured."+se.getMessage());
-		}finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+			try {
+				con=ds.getConnection();
+				pstmt=con.prepareStatement(DELETE);
+				
+				pstmt.setString(1, actID);
+				
+				pstmt.executeUpdate();
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "+se.getMessage());
+			}finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
 				}
 			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		
-		
 	}
 	
 	@Override
 	public ActivityVO findByPK(String actID) {
 		ActivityVO actVO =null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
+		Connection con =null;
+		PreparedStatement pstmt =null;
 		ResultSet rs =null;
 		
+		
 		try {
-			con =ds.getConnection();
-			pstmt=con.prepareStatement(FIND_BY_PK);
-			
+			con=ds.getConnection();
+			pstmt =con.prepareStatement(FIND_BY_PK);
 			pstmt.setString(1, actID);
-			rs=pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				actVO =new ActivityVO();
-				
-				actVO.setActID(rs.getString("actID"));
-				actVO.setActName(rs.getString("actName"));
+				actVO.setActID(rs.getString("ACTID"));
+				actVO.setActName(rs.getString("ACTName"));
 				actVO.setActStart(rs.getDate("actStart"));
 				actVO.setActEnd(rs.getDate("actEnd"));
-				
-				
-			}	
+			}
+			System.out.println();
+			
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured."+ se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		}finally {
-			if (rs != null) {
+			
+			if(rs!=null) {
 				try {
 					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
 			
-			if (pstmt != null) {
+			if(pstmt!=null) {
 				try {
 					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
-			if (con != null) {
+			
+			if(con!=null) {
 				try {
 					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
+		
 		}
-		
-		
-		
+			
 		return actVO;
 	}
 
 	@Override
 	public ActivityVO findByName(String actName) {
 		ActivityVO actVO =null;
-		Connection con = null;
+		Connection con =null;
 		PreparedStatement pstmt =null;
+		
 		ResultSet rs =null;
 		
 		try {
-			con =ds.getConnection();
+			con=ds.getConnection();
 			pstmt =con.prepareStatement(FIND_BY_NAME);
-			pstmt.setString(1, actName);
+			pstmt.setString(1,actName);
+			rs= pstmt.executeQuery();
 			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				actVO =new ActivityVO();
-				
+			while(rs !=null) {
+				actVO = new ActivityVO();
 				actVO.setActID(rs.getString("actID"));
-				actVO.setActName(rs.getString("actName"));
 				actVO.setActStart(rs.getDate("actStart"));
 				actVO.setActEnd(rs.getDate("actEnd"));
 			}
 			
+			
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured."+se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		}finally {
 			if (rs != null) {
 				try {
@@ -246,39 +257,37 @@ public class ActivityDAO implements ActivityDAO_interface{
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
-			}
+			} 	
 		}
-		
-		
 		return actVO;
 	}
 
 	@Override
 	public List<ActivityVO> getAll() {
-		List<ActivityVO>list =new ArrayList<ActivityVO>();
+		List<ActivityVO> list = new ArrayList<ActivityVO>();
 		ActivityVO actVO =null;
 		
 		Connection con =null;
-		PreparedStatement pstmt  =null;
+		PreparedStatement pstmt =null;
 		ResultSet rs =null;
 		
 		try {
-			con =ds.getConnection();
+			con=ds.getConnection();
 			pstmt =con.prepareStatement(FIND_ALL_STMT);
-			rs =pstmt.executeQuery();
+			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {
-				actVO = new ActivityVO();
+				actVO =new ActivityVO();
 				actVO.setActID(rs.getString("actID"));
-				actVO.setActName(rs.getString("actNAme"));
+				actVO.setActName(rs.getString("actName"));
 				actVO.setActStart(rs.getDate("actStart"));
 				actVO.setActEnd(rs.getDate("actEnd"));
-				
 				list.add(actVO);
 			}
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured."+se.getMessage());
-		}finally {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}	finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -301,10 +310,6 @@ public class ActivityDAO implements ActivityDAO_interface{
 				}
 			}
 		}
-		
-		
 		return list;
 	}
-	
-	
 }
