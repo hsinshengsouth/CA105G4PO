@@ -303,19 +303,26 @@
      		<div class="container">
 				<div class="row">
 					<div class="col-xs-12 col-sm-6">
+     						
+     						
      						<form METHOD="post" ACTION="emp.do" >
-     							<div class="form-group">
+     						
 									<label for="actID">活動編號</label>
 									<input type="text" name="actID" id="actID" placeholder="請輸入活動編號" class="form-control">
-									 <button type="button" class="btn btn-info">送出</button>								
-								</div>
+									<button type="button" class="btn btn-info">送出</button>					
+																					
      						</form>
-     				</div>
+     						
+     						
+     						
+     				</div>      				 			
      			</div>
      		</div>
      
           
-          
+									<label for="actID">活動編號</label>
+									<input type="text" name="actID" id="actID" placeholder="請輸入活動編號" class="form-control">
+									 <input type="submit" value="送出">						
         
           <!-- Page Content 這邊開始自由發揮結束-->
         </div>
