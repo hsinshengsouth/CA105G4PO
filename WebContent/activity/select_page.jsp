@@ -2,9 +2,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ page import="com.activity.model.*"%>
    <%@page import="java.util.*" %>
-   <%
 
-%>
     
 <!DOCTYPE html>
 <html >
@@ -30,9 +28,11 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
-
-	
-	
+	<style>
+	.form-group {
+    	margin-right: 8px
+		}
+	</style>
 	</head>
 
   <body id="page-top">
@@ -306,17 +306,49 @@
      		
      		<div class="container">
 				<div class="row">
-					<div class="col-xs-12 col-sm-6">
+					<div class="col-xs-12 col-sm-6">				
+     					
+     					
+     					<a href='listAllActivity.jsp'>促銷活動列表</a> <br><br>
      						
+     					<form METHOD="post" ACTION="act.do"  class="form-inline">
+     							
+								<label >促銷活動編號:</label>
+	<!-- 						<span class="form-inline form-group">
+								<input type="text" name="actID"  placeholder="請輸入促銷活動編號"  class="form-group">
+								<input type="hidden" name="action" value="getOne_For_Display" class="form-group">
+								<button type="submit" class="btn btn-info">送出</button>	</span>    -->				
+									
+								<div class="input-group mb-3">
+  									<div class="input-group-append">
+  										<input type="text"  name="actID" class="form-control "   placeholder="請輸入促銷活動編號" >
+  										<input type="hidden" name="action" value="getOne_For_Display">  								
+  										<button class="btn btn-info" type="submit" >送出</button> 
+  									</div>
+						   		</div>
+																
+     					</form>
      						
-     						<form METHOD="post" ACTION="emp.do"  class="form-inline">
+     					
+     					
+     					<jsp:useBean id="actSvc" scope="page" class="com.activity.model.ActivityService"/>
+     					
+     					
+     					<form METHOD="post" ACTION="act.do" >
+     						<label >促銷活動名稱:</label><br> 
+     							 <select size="1" name="actID">
+     								    <c:forEach var="actVO" items="${actSvc.all}" > 
+         								 		<option value="${actVO.actID}">${actVO.actName}
+        								 </c:forEach>   
+     							 </select>
+     							      							 
+     							 <input type="hidden" name="action" value="getOne_For_Display">
+      							 <button class="btn btn-info" type="submit" >送出</button> 
+     			
+     					</form>
+     			
      						
-									<label for="actID">活動編號:     </label>
-									<input type="text" name="actID" id="actID" placeholder="請輸入活動編號" class="form-control">
-									<button type="button" class="btn btn-info">送出</button>					
-																					
-     						</form>
-     						
+				
      						
      						
      				</div>      				 			
