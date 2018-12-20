@@ -14,6 +14,17 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class ActivityDAO implements ActivityDAO_interface {
+	
+private static DataSource ds =null;	
+	
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G4DB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} 
+	}
 
 
 	private static final String INSERT_SQL = "INSERT INTO Activity (actID,actName,actStart,actEnd)"
@@ -25,17 +36,7 @@ public class ActivityDAO implements ActivityDAO_interface {
 	private static final String FIND_ALL_STMT = "SELECT * FROM Activity ORDER by actID";
 	
 
-	private static DataSource ds =null;	
 	
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G4DB");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		} 
-	}
-
 	@Override
 	public void insert(ActivityVO activityVO) {
 		Connection con = null;
