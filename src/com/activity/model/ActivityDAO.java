@@ -1,11 +1,10 @@
 package com.activity.model;
 
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +15,6 @@ import javax.sql.DataSource;
 
 public class ActivityDAO implements ActivityDAO_interface {
 
-	private static final String DRIVER= "oracle.jdbc.driver.OracleDriver";
-	 
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "CA105G4";
-	private static final String PWD = "123456";
 
 	private static final String INSERT_SQL = "INSERT INTO Activity (actID,actName,actStart,actEnd)"
 																			+ "VALUES('A'||LPAD(to_char(act_seq.nextval),4,'0'),?,?,?)";
