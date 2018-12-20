@@ -222,6 +222,7 @@ public class ActivityDAO implements ActivityDAO_interface {
 			while(rs !=null) {
 				actVO = new ActivityVO();
 				actVO.setActID(rs.getString("actID"));
+				actVO.setActName(rs.getString("actName"));
 				actVO.setActStart(rs.getDate("actStart"));
 				actVO.setActEnd(rs.getDate("actEnd"));
 			}
