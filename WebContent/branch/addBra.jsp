@@ -36,6 +36,10 @@
 <!-- Custom styles for this template-->
 <link href="css/sb-admin.css" rel="stylesheet">
 <style>
+.container {
+	margin-left: 375px;
+	padding: 10px;
+}
 </style>
 </head>
 
@@ -293,7 +297,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">新增一筆促銷活動</li>
+					<li class="breadcrumb-item active">新增分店</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
@@ -309,56 +313,138 @@
 				</c:if>
 
 
+				<br>
 
-
-
-				<h3>新增一筆促銷活動</h3>
 				<div class="container">
 					<div class="row">
-
-						<form METHOD="post" ACTION="act.do"
-							class="form-inline form-horizontal" name="insertform">
-							<table class="table table-hover">
-								<tr>
-									<td>促銷活動名稱</td>
-									<td><input class="form-control " type="TEXT"
-										name="actName" placeholder="請新增一筆促銷活動"
-										value="<%=(actVO == null) ? "" : actVO.getActName()%>" /></td>
-								</tr>
-
-								<tr>
-									<td>促銷活動開始時間</td>
-									<td><input name="actStart" id="f_date1" type="text"
-										class="form-control " /></td>
-								</tr>
-
-
-								<tr>
-									<td>促銷活動結束時間</td>
-									<td><input name="actEnd" id="f_date2" type="text"
-										class="form-control " /></td>
-								</tr>
-
-							</table>
-
-							<div class="col-xs-12 col-sm-8">
-								<input type="hidden" name="action" value="insert">
-							</div>
-							<button class="btn btn-info" type="submit">送出新增</button>
-
-						</form>
+						<div class="col-xs-12 col-sm-6  ">
 
 
 
 
+							<form class="form-horizontal">
+								<div class="form-row">
+									<div class="form-group" style="margin-right: 15px">
+										<label for="aa">分店編號:</label> <input type="text" name="aa"
+											id="aa" placeholder="文字" class="form-control"
+											style="width: 150px">
+									</div>
+
+									<div class="form-group">
+										<label for="aa">分店名稱:</label> <input type="text" name="aa"
+											id="aa" placeholder="文字" class="form-control"
+											style="width: 250px">
+									</div>
+								</div>
+
+
+								<div class="form-row">
+
+									<div class="form-group" style="margin-right: 15px">
+										<label for="aa">分店電話:</label> <input type="text" name="aa"
+											id="aa" placeholder="文字" class="form-control"
+											style="width: 200px">
+									</div>
+
+
+
+									<div class="form-group" style="margin-right: 15px">
+										<label for="aa">分店經度:</label> <input type="text" name="aa"
+											id="aa" placeholder="文字" class="form-control"
+											style="width: 100px">
+									</div>
+
+
+
+
+									<div class="form-group">
+										<label for="aa">分店緯度:</label> <input type="text" name="aa"
+											id="aa" placeholder="文字" class="form-control"
+											style="width: 100px">
+									</div>
+
+
+								</div>
+
+								<div class="form-group">
+									<label for="inputAddress">分店地址</label> <input type="text"
+										class="form-control" id="inputAddress"
+										placeholder="1234 Main St">
+								</div>
+
+
+								<div class="form-row">
+
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">分店介紹</span>
+										</div>
+										<textarea class="form-control" aria-label="With textarea"
+											Cols="31" Rows="5"></textarea>
+									</div>
+
+								</div>
+								<br>
+								<div class="form-row">
+									<div class="input-group mb-3 form-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												id="inputGroupFile02"> <label
+												class="custom-file-label" for="inputGroupFile02">上傳分店照片
+												file</label>
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text" id="">Upload</span>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="form-row">
+									<div class="input-group mb-3 form-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												id="inputGroupFile02"> <label
+												class="custom-file-label" for="inputGroupFile02">上傳分店影片
+												file</label>
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text" id="">Upload</span>
+										</div>
+									</div>
+
+								</div>
+
+
+								<div class="form-group">
+
+
+									<div class="form-check form-check-inline form-group">
+										<input class="form-check-input" type="radio"
+											name="inlineRadioOptions" id="inlineRadio1" value="option1">
+										<label class="form-check-label" for="inlineRadio1">營業中</label>
+									</div>
+									<div class="form-check form-check-inline form-group">
+										<input class="form-check-input" type="radio"
+											name="inlineRadioOptions" id="inlineRadio2" value="option2">
+										<label class="form-check-label" for="inlineRadio2">休息中</label>
+									</div>
+								</div>
+								<div class="col-12 text-right">
+									<button class="btn btn-primary" style="height:50px; width:80px">送出</button>
+								</div>
+
+								<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
+
+								<!-- 			<div class="text-center">
+									<a href="#" class="btn btn-info">送出</a>
+								</div>   -->
+							</form>
+
+
+						</div>
 					</div>
 				</div>
-
-
-
-
-
-
 
 
 
@@ -464,7 +550,8 @@
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=date%> 	', // value:   new Date(),
+		   value: '<%=date%>
+	', // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -475,11 +562,12 @@
 		timepicker : false, //timepicker:true,
 		step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 		format : 'Y-m-d', //format:'Y-m-d H:i:s',
-		value :<%=str%>
+		value :
+<%=str%>
 	, // value:   new Date(),
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-		minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		minDate : '-1970-01-01', // 去除今日(不含)之前
 	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 	});
 
