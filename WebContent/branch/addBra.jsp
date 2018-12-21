@@ -37,10 +37,13 @@
 <link href="css/sb-admin.css" rel="stylesheet">
 <style>
 .container {
-	margin-left: 375px;
+	margin-left: -13px;
 	padding: 10px;
 }
 </style>
+
+
+
 </head>
 
 <body id="page-top">
@@ -317,12 +320,12 @@
 
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-12 col-sm-6  ">
+						<div class="col-sm-7 offset-sm-3 ">
 
 
 
 
-							<form class="form-horizontal">
+							<form class="form-horizontal justify-content-center">
 								<div class="form-row">
 									<div class="form-group" style="margin-right: 15px">
 										<label for="aa">分店編號:</label> <input type="text" name="aa"
@@ -367,7 +370,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="inputAddress">分店地址</label> <input type="text"
+									<label for="inputAddress">分店地址:</label> <input type="text"
 										class="form-control" id="inputAddress"
 										placeholder="1234 Main St" style="margin-left:-4px">
 								</div>
@@ -380,7 +383,7 @@
 											<span class="input-group-text">分店介紹</span>
 										</div>
 										<textarea class="form-control" aria-label="With textarea"
-											Cols="31" Rows="5"></textarea>
+											Cols="25" Rows="5"></textarea>
 									</div>
 
 								</div>
@@ -446,7 +449,6 @@
 						</div>
 					</div>
 				</div>
-
 
 
 
