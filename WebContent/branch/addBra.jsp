@@ -369,7 +369,7 @@
 								<div class="form-group">
 									<label for="inputAddress">分店地址</label> <input type="text"
 										class="form-control" id="inputAddress"
-										placeholder="1234 Main St">
+										placeholder="1234 Main St" style="margin-left:-4px">
 								</div>
 
 
@@ -430,8 +430,9 @@
 										<label class="form-check-label" for="inlineRadio2">休息中</label>
 									</div>
 								</div>
-								<div class="col-12 text-right">
-									<button class="btn btn-primary" style="height:50px; width:80px">送出</button>
+								<div class="col-12 text-center">
+									<button class="btn btn-primary">送出修改</button>
+									<button class="btn btn-primary" >返回</button>
 								</div>
 
 								<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
