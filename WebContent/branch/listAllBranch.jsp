@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.activity.model.*"%>
+<%@ page import="com.branch.model.*"%>
 <%@page import="java.util.*"%>
 <%
-	ActivityService actSvc = new ActivityService();
-	List<ActivityVO> list = actSvc.getAll();
+	BranchService braSvc = new BranchService();
+	List<BranchVO> list = braSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
 
@@ -21,7 +21,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>ListAllActivity</title>
+<title>ListAllBranch</title>
 
 <!-- Bootstrap core CSS-->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -293,7 +293,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">促銷活動管理</li>
+					<li class="breadcrumb-item active">所有分店列表</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
@@ -304,10 +304,16 @@
 
 						<thead>
 							<tr>
-								<th>促銷活動編號</th>
-								<th>促銷活動名稱</th>
-								<th>活動開始時間</th>
-								<th>活動結束時間</th>
+								<th >分店編號</th>
+								<th>分店名稱</th>
+								<th>分店介紹</th>
+								<th>分店電話</th>
+								<th>分店地址</th>
+								<th>分店經度</th>
+								<th>分店緯度</th>
+								<th>分店圖片</th>
+								<th>分店影片</th>
+								<th>分店狀態</th>
 								<th align="center">修改</th>
 								<th align="center">刪除</th>
 							</tr>
@@ -315,28 +321,35 @@
 
 						<tbody>
 							<%@ include file="page1.file"%>
-							<c:forEach var="actVO" items="${list}" begin="<%=pageIndex%>"
+							<c:forEach var="bchVO" items="${list}" begin="<%=pageIndex%>"
 								end="<%=pageIndex+rowsPerPage-1%>">
 								<tr>
-									<td>${actVO.actID}</td>
-									<td>${actVO.actName}</td>
-									<td>${actVO.actStart}</td>
-									<td>${actVO.actEnd}</td>
+									<td>${bchVO.braID}</td>
+									<td>${bchVO.braName}</td>
+									<td>${bchVO.braIntro}</td>
+									<td>${bchVO.braTel}</td>
+									<td>${bchVO.braAddr}</td>
+									<td>${bchVO.braLng}</td>
+									<td>${bchVO.braLat}</td>
+									<td>${bchVO.braPic}</td>
+									<td>${bchVO.braVideo}</td>
+									<td>${bchVO.braState}</td>
+									
 									<td>
 										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/activity/act.do"
+											ACTION="<%=request.getContextPath()%>/branch/bra.do"
 											style="margin-bottom: 0px;">
 											<button class="btn btn-info" type="submit">修改</button>
-											<input type="hidden" name="actID" value="${actVO.actID}">
+											<input type="hidden" name="actID" value="">
 											<input type="hidden" name="action" value="getOne_For_Update">
 										</form>
 									</td>
 									<td>
 										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/activity/act.do"
+											ACTION="<%=request.getContextPath()%>/branch/bra.do"
 											style="margin-bottom: 0px;">
 											<button class="btn btn-info" type="submit">刪除</button>
-											<input type="hidden" name="actID" value="${actVO.actID}">
+											<input type="hidden" name="actID" value="">
 											<input type="hidden" name="action" value="delete">
 										</form>
 									</td>
@@ -346,7 +359,7 @@
 					</table>
 					<%@ include file="page2.file"%>
 					<br>
-					<a href="select_page.jsp">回選取頁面</a>
+					<a href="addBra.jsp">回選取頁面</a>
 				</div>
 
 

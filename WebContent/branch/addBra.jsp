@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.activity.model.*"%>
+<%@ page import="com.branch.model.*"%>
 <%@page import="java.util.*"%>
 
 <%
-	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
+	BranchVO braVO = (BranchVO) request.getAttribute("braVO");
 %>
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Add Activity</title>
+<title>Add Branch</title>
 
 <!-- Bootstrap core CSS-->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -325,7 +325,9 @@
 
 
 
-							<form class="form-horizontal justify-content-center">
+							<form method="post" action="bra.do" name="insertbraform"
+								enctype="multipart/form-data"
+								class="form-horizontal justify-content-center">
 								<div class="form-row">
 									<div class="form-group" style="margin-right: 15px">
 										<label for="aa">分店編號:</label> <input type="text" name="aa"
@@ -334,9 +336,9 @@
 									</div>
 
 									<div class="form-group">
-										<label for="aa">分店名稱:</label> <input type="text" name="aa"
-											id="aa" placeholder="文字" class="form-control"
-											style="width: 250px">
+										<label for="aa">分店名稱:</label> <input type="text"
+											name="braName" id="braName" placeholder="請輸入分店店名"
+											class="form-control" style="width: 250px">
 									</div>
 								</div>
 
@@ -344,26 +346,26 @@
 								<div class="form-row">
 
 									<div class="form-group" style="margin-right: 15px">
-										<label for="aa">分店電話:</label> <input type="text" name="aa"
-											id="aa" placeholder="文字" class="form-control"
+										<label for="aa">分店電話:</label> <input type="text" name="phone"
+											id="aa" placeholder="分店註冊電話" class="form-control"
 											style="width: 200px">
 									</div>
 
 
 
 									<div class="form-group" style="margin-right: 15px">
-										<label for="aa">分店經度:</label> <input type="text" name="aa"
-											id="aa" placeholder="文字" class="form-control"
-											style="width: 100px">
+										<label for="aa">分店經度:</label> <input type="text" name="lng"
+											id="aa" placeholder="請輸入經度" class="form-control"
+											style="width: 140px">
 									</div>
 
 
 
 
 									<div class="form-group">
-										<label for="aa">分店緯度:</label> <input type="text" name="aa"
-											id="aa" placeholder="文字" class="form-control"
-											style="width: 100px">
+										<label for="aa">分店緯度:</label> <input type="text" name="lat"
+											id="aa" placeholder="請輸入緯度" class="form-control"
+											style="width: 140px">
 									</div>
 
 
@@ -371,8 +373,8 @@
 
 								<div class="form-group">
 									<label for="inputAddress">分店地址:</label> <input type="text"
-										class="form-control" id="inputAddress"
-										placeholder="1234 Main St" style="margin-left:-4px">
+										class="form-control" id="inputAddress" placeholder="請輸入分店地址"
+										style="margin-left: -4px" name="addr">
 								</div>
 
 
@@ -383,7 +385,7 @@
 											<span class="input-group-text">分店介紹</span>
 										</div>
 										<textarea class="form-control" aria-label="With textarea"
-											Cols="25" Rows="5"></textarea>
+											Cols="25" Rows="5" name="intro"></textarea>
 									</div>
 
 								</div>
@@ -392,7 +394,7 @@
 									<div class="input-group mb-3 form-group">
 										<div class="custom-file">
 											<input type="file" class="custom-file-input"
-												id="inputGroupFile02"> <label
+												id="inputGroupFile02" name="braPic"> <label
 												class="custom-file-label" for="inputGroupFile02">上傳分店照片
 												file</label>
 										</div>
@@ -407,7 +409,7 @@
 									<div class="input-group mb-3 form-group">
 										<div class="custom-file">
 											<input type="file" class="custom-file-input"
-												id="inputGroupFile02"> <label
+												id="inputGroupFile02" name="braVideo"> <label
 												class="custom-file-label" for="inputGroupFile02">上傳分店影片
 												file</label>
 										</div>
@@ -423,27 +425,28 @@
 
 
 									<div class="form-check form-check-inline form-group">
-										<input class="form-check-input" type="radio"
-											name="inlineRadioOptions" id="inlineRadio1" value="option1">
-										<label class="form-check-label" for="inlineRadio1">營業中</label>
+										<input class="form-check-input" type="radio" name="braState"
+											id="inlineRadio1" value="1" checked="checked"> <label
+											class="form-check-label" for="inlineRadio1">營業中</label>
 									</div>
 									<div class="form-check form-check-inline form-group">
-										<input class="form-check-input" type="radio"
-											name="inlineRadioOptions" id="inlineRadio2" value="option2">
-										<label class="form-check-label" for="inlineRadio2">休息中</label>
+										<input class="form-check-input" type="radio" name="braState"
+											id="inlineRadio2" value="0"> <label
+											class="form-check-label" for="inlineRadio2">休息中</label>
 									</div>
 								</div>
 								<div class="col-12 text-center">
-									<button class="btn btn-primary">送出修改</button>
-									<button class="btn btn-primary" >返回</button>
+									<input type="hidden" name="action" value="insert"> <input
+										class="btn btn-primary" type="submit" value="送出新增">
+									<button class="btn btn-primary">返回</button>
 								</div>
+							</form>
+							<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
 
-								<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
-
-								<!-- 			<div class="text-center">
+							<!-- 			<div class="text-center">
 									<a href="#" class="btn btn-info">送出</a>
 								</div>   -->
-							</form>
+
 
 
 						</div>
@@ -520,7 +523,7 @@
 
 </body>
 
-<%
+<!-- 
 	java.sql.Date date = null;
 	try {
 		date = actVO.getActStart();
@@ -529,7 +532,7 @@
 	}
 
 	String str = null;
-%>
+%> -->
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
@@ -545,7 +548,7 @@
 	height: 151px; /* height:  151px; */
 }
 </style>
-
+<!--  
 <script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
@@ -553,8 +556,7 @@
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=date%>
-	', // value:   new Date(),
+		   value: '	', // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -566,7 +568,7 @@
 		step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 		format : 'Y-m-d', //format:'Y-m-d H:i:s',
 		value :
-<%=str%>
+
 	, // value:   new Date(),
 		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 		//startDate:	            '2017/07/10',  // 起始日
@@ -620,5 +622,5 @@
 	//              return [true, ""];
 	//      }});
 </script>
-
+-->
 </html>
