@@ -298,22 +298,22 @@
 
 				<!-- Page Content 這邊開始自由發揮-->
 				<div class="container">
-					<caption>促銷活動列表</caption>
+					<caption>各地分店</caption>
 					<br>
 					<table class="table table-hover">
 
-						<thead>
+						<thead >
 							<tr>
-								<th >分店編號</th>
-								<th>分店名稱</th>
-								<th>分店介紹</th>
-								<th>分店電話</th>
-								<th>分店地址</th>
-								<th>分店經度</th>
-								<th>分店緯度</th>
+								<th style="width:90px">分店編號</th>
+								<th style="width:90px">名稱</th>
+								<th>分店簡介</th>
+								<th>電話</th>
+								<th style="width:80px">地址</th>
+								<th>經度</th>
+								<th>緯度</th>
 								<th>分店圖片</th>
 								<th>分店影片</th>
-								<th>分店狀態</th>
+								<th style="width:90px">分店狀態</th>
 								<th align="center">修改</th>
 								<th align="center">刪除</th>
 							</tr>
@@ -324,14 +324,14 @@
 							<c:forEach var="bchVO" items="${list}" begin="<%=pageIndex%>"
 								end="<%=pageIndex+rowsPerPage-1%>">
 								<tr>
-									<td>${bchVO.braID}</td>
+									<td >${bchVO.braID}</td>
 									<td>${bchVO.braName}</td>
 									<td>${bchVO.braIntro}</td>
 									<td>${bchVO.braTel}</td>
 									<td>${bchVO.braAddr}</td>
 									<td>${bchVO.braLng}</td>
 									<td>${bchVO.braLat}</td>
-									<td>${bchVO.braPic}</td>
+									<td><img src="<%=request.getContextPath() %>/branch/braImg.do?braID=${bchVO.braID}" height="150px" width="200px"></td>
 									<td>${bchVO.braVideo}</td>
 									<td>${bchVO.braState}</td>
 									

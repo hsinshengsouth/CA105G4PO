@@ -323,20 +323,17 @@
 						<div class="col-sm-7 offset-sm-3 ">
 
 							<form method="post" action="bra.do" name="insertbraform"
-								class="form-horizontal justify-content-center">
+								class="form-horizontal justify-content-center" enctype="multipart/form-data">
 								
 								
 								<div class="form-row">
 									<div class="form-group">
 										<label for="aa">分店名稱:</label> <input type="text"
 											name="braName" id="braName" placeholder="請輸入分店店名"
-											class="form-control" style="width: 250px">
+											class="form-control" style="width: 200px">
 									</div>
-								</div>
-
-
-								<div class="form-row">
-									<div class="form-group" style="margin-right: 15px">
+								
+									<div class="form-group" style="margin-left: 15px">
 										<label for="aa">分店電話:</label> <input type="text" name="phone"
 											id="aa" placeholder="分店註冊電話" class="form-control"
 											style="width: 200px">

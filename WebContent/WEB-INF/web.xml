@@ -24,8 +24,7 @@
     <url-pattern>/activity/act.do</url-pattern>
   </servlet-mapping>
   
-  
-   <servlet>
+  <servlet>
     <servlet-name>BchServlet</servlet-name>
     <servlet-class>com.branch.controller.braServlet</servlet-class>
   </servlet>
@@ -34,5 +33,13 @@
     <url-pattern>/branch/bra.do</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>braImgServlet</servlet-name>
+    <servlet-class>com.branch.controller.braImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>braImgServlet</servlet-name>
+    <url-pattern>/branch/braImg.do</url-pattern>
+  </servlet-mapping>
   
 </web-app>

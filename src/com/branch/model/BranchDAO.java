@@ -1,7 +1,6 @@
 package com.branch.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +12,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.activity.model.ActivityVO;
 
 public class BranchDAO implements BranchDAO_interface {
 
@@ -32,8 +30,8 @@ public class BranchDAO implements BranchDAO_interface {
 			+ " VALUES('B'||LPAD(to_char(bra_seq.nextval)2,'0'),?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE = "UPDATE Branch set braName=?,braIntro=?,braPic?,braTel=?,braVideo=?,braAddr=?,braLng=?,braLat=?,braState=? WHERE braID=?";
 
-	private static final String DELETE = "DELETE FROM Branch WHERE braID=?";
-	private static final String FIND_BY_PK = "SELECT * FROM Branch WHERE ID=?";
+	//private static final String DELETE = "DELETE FROM Branch WHERE braID=?";
+	private static final String FIND_BY_PK = "SELECT * FROM Branch WHERE braID=?";
 	private static final String FIND_ALL_STMT = "SELECT * FROM Branch ORDER BY braID";
 
 	@Override

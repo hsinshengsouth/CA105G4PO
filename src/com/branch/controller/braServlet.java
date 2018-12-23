@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.servlet.annotation.MultipartConfig;
 
 import com.branch.model.BranchService;
 import com.branch.model.BranchVO;
+
+@MultipartConfig
 
 public class braServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -82,15 +85,16 @@ public class braServlet extends HttpServlet {
 				
 				byte[] pic=null;
 				Part braPic = req.getPart("braPic");
+				if (braPic.getSubmittedFileName().trim().length() == 0 || braPic.getSubmittedFileName() == null) {
+					errorMsgs.add("請上傳分店照片");
+				}
 				InputStream inP = braPic.getInputStream();
 
 				pic = new byte[inP.available()];
 				inP.read(pic);
 				inP.close();
 
-				if (braPic.getSubmittedFileName().trim().length() == 0 && braPic.getContentType() == null) {
-					errorMsgs.add("請上傳分店照片");
-				}
+			
 				
 				byte[]video =null;
 				Part braVideo =	 req.getPart("braVideo");
