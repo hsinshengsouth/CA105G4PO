@@ -126,7 +126,7 @@ public class braServlet extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("braVO", braVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("braVO", braVO); // 含有輸入格式錯誤的braVO物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/branch/addBra.jsp");
 					failureView.forward(req, res);
 					return;
