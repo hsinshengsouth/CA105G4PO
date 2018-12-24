@@ -345,7 +345,7 @@
 											ACTION="<%=request.getContextPath()%>/branch/bra.do"
 											style="margin-bottom: 0px;">
 											<button class="btn btn-info" type="submit">修改</button>
-											<input type="hidden" name="braID" value="${braVO.braID }">
+											<input type="hidden" name="braID" value="${bchVO.braID }">
 											<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> <!--送出本網頁的路徑給Controller-->
 											<input type="hidden" name="action" value="getOne_For_Update">
 										</form>

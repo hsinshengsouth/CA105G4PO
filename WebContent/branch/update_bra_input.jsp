@@ -5,7 +5,7 @@
 <%@page import="java.util.*"%>
 
 <%
-	BranchVO braVO = (BranchVO) request.getAttribute("braVO");//braServlet.java (Concroller) 存入req的bchVO物件 (包括幫忙取出的bchVO, 也包括輸入資料錯誤時的bchVO物件)
+	BranchVO braVO = (BranchVO) request.getAttribute("bchVO");//braServlet.java (Concroller) 存入req的bchVO物件 (包括幫忙取出的bchVO, 也包括輸入資料錯誤時的bchVO物件)
 %>
 
 <!DOCTYPE html>
