@@ -153,5 +153,105 @@ public class braServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-	}
+	
+		
+		if("getOne_For_Update".equals(action)) {  // 來自update_bra_input.jsp的請求
+			
+			List<String>errorMsgs = new LinkedList<String>();  //錯誤訊息
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURL =req.getParameter("requestURL");//送出修改的來源請求
+			
+			try {
+			/***************************1.接收請求參數****************************************/
+			
+			String braID =req.getParameter("braID");
+			
+			
+			/***************************2.開始查詢資料****************************************/
+			BranchService bchSvc = new BranchService();
+			BranchVO bchVO= bchSvc.getOneByID(braID);
+			
+			/***************************3.查詢完成,準備轉交(Send the Success view)************/
+			req.setAttribute("bchVO", bchVO); // 資料庫取出的empVO物件,存入req
+			String url ="/branch/update_bra_input.jsp";
+			RequestDispatcher successView =req.getRequestDispatcher(url);
+			successView.forward(req, res); 
+
+			/***************************其他可能的錯誤處理************************************/
+
+			}catch(Exception e) {
+				errorMsgs.add("修改資料取出時失效:"+e.getMessage());
+				RequestDispatcher failureView =req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+				
+				
+			}
+			
+			
+			
+//			String braName =req.getParameter("braName");
+//			
+//			if(braName==null ||braName.trim().length()==0) {
+//				errorMsgs.add("店名請勿空白");
+//			}
+//			
+//			
+//			String phone = req.getParameter("phone");
+//			
+//			if(phone==null ||phone.trim().length()==0) {
+//				errorMsgs.add("分店電話請勿空白");
+//			}
+//			
+//			
+//			Double lng = null;
+//
+//			try {
+//				lng = new Double(req.getParameter("lng").trim());
+//			} catch (NumberFormatException e) {
+//				lng = 0.0;
+//				errorMsgs.add("請填入分店經度");
+//			}
+//
+//			Double lat = null;
+//
+//			try {
+//				lat = new Double(req.getParameter("lat").trim());
+//			} catch (NumberFormatException e) {
+//				lat = 0.0;
+//				errorMsgs.add("請填入分店緯度");
+//			}
+//
+//			String addr = req.getParameter("addr");
+//
+//			if (addr == null || addr.trim().length() == 0) {
+//				errorMsgs.add("分店地址請勿空白");
+//			}
+//
+//			String intro = req.getParameter("intro");
+//
+//			if (intro == null || intro.trim().length() == 0) {
+//				errorMsgs.add("請輸入分店介紹");
+//			}
+//			
+//			byte[] pic =null;
+			
+			
+			
+			
+			
+			
+		}
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}//doPost()的右括弧
 }

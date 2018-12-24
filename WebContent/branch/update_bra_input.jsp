@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.branch.model.*"%>
 <%@page import="java.util.*"%>
+
 <%
-	BranchService braSvc = new BranchService();
-	List<BranchVO> list = braSvc.getAll();
-	pageContext.setAttribute("list", list);
+	BranchVO braVO = (BranchVO) request.getAttribute("braVO");//braServlet.java (Concroller) 存入req的bchVO物件 (包括幫忙取出的bchVO, 也包括輸入資料錯誤時的bchVO物件)
 %>
 
 <!DOCTYPE html>
@@ -14,14 +13,14 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>ListAllBranch</title>
+<title>Update Branch</title>
 
 <!-- Bootstrap core CSS-->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -36,6 +35,14 @@
 
 <!-- Custom styles for this template-->
 <link href="css/sb-admin.css" rel="stylesheet">
+<style>
+.container {
+	margin-left: -13px;
+	padding: 10px;
+}
+</style>
+
+
 
 </head>
 
@@ -293,81 +300,164 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">所有分店列表</li>
+					<li class="breadcrumb-item active">修改分店資料</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
-				
-				
-				
-				
-				
+
+				<%--錯誤列表 --%>
+				<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
+
+
+				<br>
+
 				<div class="container">
-					<caption>各地分店</caption>
-					<br>
-					<table class="table table-hover">
+					<div class="row">
+						<div class="col-sm-7 offset-sm-3 ">
 
-						<thead >
-							<tr>
-								<th style="width:90px">分店編號</th>
-								<th style="width:90px">名稱</th>
-								<th>分店簡介</th>
-								<th>電話</th>
-								<th style="width:80px">地址</th>
-								<th>經度</th>
-								<th>緯度</th>
-								<th>分店圖片</th>
-								<th>分店影片</th>
-								<th style="width:90px">分店狀態</th>
-								<th align="center">修改</th>
-								<th align="center">刪除</th>
-							</tr>
-						</thead>
+							<form method="post" action="bra.do" name="updateform"
+								class="form-horizontal justify-content-center" enctype="multipart/form-data">
+								
+							<div class="form-row">
+									<div class="form-group">
+										<label for="aa">分店編號:<font color=red><b>*</b></font></label>
+										 <input type="text"
+											name="braID" id="braName" placeholder=""
+											class="form-control" style="width: 200px" value="<%=braVO.getBraID()%>">
+									</div>
+							</div>	
+								
+								
+								
+								<div class="form-row">
+									<div class="form-group">
+										<label for="aa">分店名稱:</label> <input type="text"
+											name="braName" id="braName" placeholder=""
+											class="form-control" style="width: 200px" value="<%=braVO.getBraName()%>">
+									</div>
+								
+									<div class="form-group" style="margin-left: 15px">
+										<label for="aa">分店電話:</label> <input type="text" name="phone"
+											id="aa" placeholder="" class="form-control"
+											style="width: 200px" value="<%=braVO.getBraTel() %>">
+									</div>
+								</div>
+								
+								
+								<div class="form-row">
+									<div class="form-group" style="margin-right: 15px">
+										<label for="aa">分店經度:</label> <input type="text" name="lng"
+											id="aa" placeholder="" class="form-control"
+											style="width: 140px" value="<%=braVO.getBraLng() %>">
+											
+									</div>
 
-						<tbody>
-							<%@ include file="page1.file"%>
-							<c:forEach var="bchVO" items="${list}" begin="<%=pageIndex%>"
-								end="<%=pageIndex+rowsPerPage-1%>">
-								<tr>
-									<td >${bchVO.braID}</td>
-									<td>${bchVO.braName}</td>
-									<td>${bchVO.braIntro}</td>
-									<td>${bchVO.braTel}</td>
-									<td>${bchVO.braAddr}</td>
-									<td>${bchVO.braLng}</td>
-									<td>${bchVO.braLat}</td>
-									<td><img src="<%=request.getContextPath() %>/branch/braImg.do?braID=${bchVO.braID}" height="150px" width="200px"></td>
-									<td>${bchVO.braVideo}</td>
-									<td>${bchVO.braState}</td>
-									
-									<td>
-										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/branch/bra.do"
-											style="margin-bottom: 0px;">
-											<button class="btn btn-info" type="submit">修改</button>
-											<input type="hidden" name="braID" value="${braVO.braID }">
-											<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> <!--送出本網頁的路徑給Controller-->
-											<input type="hidden" name="action" value="getOne_For_Update">
-										</form>
-									</td>
-									<td>
-										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/branch/bra.do"
-											style="margin-bottom: 0px;">
-											<button class="btn btn-info" type="submit">刪除</button>
-											<input type="hidden" name="braID" value="${braVO.braID }">
-											 <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
-											<input type="hidden" name="action" value="delete">
-										</form>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<%@ include file="page2.file"%>
-					<br>
-					<a href="addBra.jsp">回選取頁面</a>
+
+
+
+									<div class="form-group">
+										<label for="aa">分店緯度:</label> <input type="text" name="lat"
+											id="aa" placeholder="" class="form-control"
+											style="width: 140px"   value="<%=braVO.getBraLat() %>">
+									</div>
+
+								</div>
+
+								<div class="form-group">
+									<label for="inputAddress">分店地址:</label> <input type="text"
+										class="form-control" id="inputAddress" placeholder=""
+										style="margin-left: -4px" name="addr"  value="<%=braVO.getBraAddr() %>">
+								</div>
+
+
+								<div class="form-row">
+
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">分店介紹</span>
+										</div>
+										<textarea class="form-control" aria-label="With textarea"
+											Cols="25" Rows="5" name="intro" value="<%=braVO.getBraIntro() %>"></textarea>
+									</div>
+
+								</div>
+								<br>
+								<div class="form-row">
+									<div class="input-group mb-3 form-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												id="inputGroupFile02" name="braPic"> <label
+												class="custom-file-label" for="inputGroupFile02">上傳分店照片
+												file</label>
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text" id="">Upload</span>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="form-row">
+									<div class="input-group mb-3 form-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												id="inputGroupFile02" name="braVideo"> <label
+												class="custom-file-label" for="inputGroupFile02">上傳分店影片
+												file</label>
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text" id="">Upload</span>
+										</div>
+									</div>
+
+								</div>
+
+
+								<div class="form-group">
+
+
+									<div class="form-check form-check-inline form-group">
+										<input class="form-check-input" type="radio" name="braState"
+											id="inlineRadio1" value="1" checked="checked"> <label
+											class="form-check-label" for="inlineRadio1">營業中</label>
+									</div>
+									<div class="form-check form-check-inline form-group">
+										<input class="form-check-input" type="radio" name="braState"
+											id="inlineRadio2" value="0"> <label
+											class="form-check-label" for="inlineRadio2">休息中</label>
+									</div>
+								</div>
+
+								<div class="col-12 text-center">
+									<input type="hidden" name="action" value="insert"> <input
+										class="btn btn-primary" type="submit" value="送出新增">
+									<button class="btn btn-primary">返回</button>
+								</div>
+
+							</form>
+
+							<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
+
+
+
+
+
+
+
+
+
+						</div>
+					</div>
 				</div>
+
+
 
 
 
@@ -436,5 +526,8 @@
 	<script src="js/sb-admin.min.js"></script>
 
 </body>
+
+
+
 
 </html>
