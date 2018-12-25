@@ -40,6 +40,11 @@
 	margin-left: -13px;
 	padding: 10px;
 }
+
+img{
+  max-width:400px;
+  max-height:250px;
+}
 </style>
 
 
@@ -323,7 +328,7 @@
 						<div class="col-sm-7 offset-sm-3 ">
 
 							<form method="post" action="bra.do" name="insertbraform"
-								class="form-horizontal justify-content-center" enctype="multipart/form-data">
+								class="form-horizontal justify-content-center" enctype="multipart/form-data" runat="server">
 								
 								
 								<div class="form-row">
@@ -380,26 +385,42 @@
 								<br>
 								<div class="form-row">
 									<div class="input-group mb-3 form-group">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input"
-												id="inputGroupFile02" name="braPic"> <label
-												class="custom-file-label" for="inputGroupFile02">上傳分店照片
+									<div class="custom-file">
+									
+									
+										<input  class="custom-file-input"
+												id="inputGroupFile01" name="braPic"  multiple type="file"> <label
+												class="custom-file-label" for="inputGroupFile02" id="labelPicName">上傳分店照片
 												file</label>
-										</div>
+												
+										</div>	
 										<div class="input-group-append">
 											<span class="input-group-text" id="">Upload</span>
 										</div>
+									
+										
+										
+<!-- 											<span style="width:100px">分店照片:</span> -->
+<!-- 											<input type="file" class="custom-file" -->
+<!-- 												id="inputGroupFile01" name="braPic" >  -->
+										
 									</div>
-
+									<div class="form-row">
+										<img id="blah"/>
+									</div>
 								</div>
 
+
+								<br>
 								<div class="form-row">
 									<div class="input-group mb-3 form-group">
 										<div class="custom-file">
 											<input type="file" class="custom-file-input"
-												id="inputGroupFile02" name="braVideo"> <label
+												id="inputGroupFile02" name="braVideo" > <label
 												class="custom-file-label" for="inputGroupFile02">上傳分店影片
 												file</label>
+												
+												
 										</div>
 										<div class="input-group-append">
 											<span class="input-group-text" id="">Upload</span>
@@ -515,7 +536,41 @@
 	<script src="js/sb-admin.min.js"></script>
 
 </body>
-
+	<script>
+	$(function()
+			{
+		
+		$(document).ready(function() {
+		    $('#inputGroupFile01').on('change', function(event) {
+		        // and you can get the name of the image like this:
+		        console.log(event.target.files[0].name);
+		        $('#labelPicName').text(event.target.files[0].name);
+		    });
+		});
+			
+		
+		
+		
+		
+			$("#inputGroupFile01").change(function(){
+					if (this.files && this.files[0]) {
+						var reader = new FileReader();
+						
+						reader.onload = function (e) {
+							$('#blah').attr('src', e.target.result);
+							
+	//						$('#labelPicName').text(event.target.files[0].name);
+						}								
+						
+						reader.readAsDataURL(this.files[0]);
+					
+					}
+				});
+			}) ;
+	
+	
+	
+	</script>
 
 
 

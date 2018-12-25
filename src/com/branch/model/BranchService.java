@@ -28,7 +28,7 @@ public class BranchService {
 	}
 	
 	public BranchVO updateBra(String braName, String braIntro, byte[] braPic, String braTel, byte[] braVideo,
-			String braAddr, Double braLng, Double braLat, Integer braState) {
+			String braAddr, Double braLng, Double braLat, Integer braState,String braID) {
 		BranchVO braVO = new BranchVO();
 
 		braVO.setBraName(braName);
@@ -40,6 +40,7 @@ public class BranchService {
 		braVO.setBraLng(braLng);
 		braVO.setBraLat(braLat);
 		braVO.setBraState(braState);
+		braVO.setBraID(braID);
 		dao.update(braVO);
 		
 		return braVO;

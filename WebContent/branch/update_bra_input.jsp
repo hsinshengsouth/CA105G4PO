@@ -6,6 +6,22 @@
 
 <%
 	BranchVO braVO = (BranchVO) request.getAttribute("bchVO");//braServlet.java (Concroller) 存入req的bchVO物件 (包括幫忙取出的bchVO, 也包括輸入資料錯誤時的bchVO物件)
+
+	
+
+	Base64.Encoder encoder = Base64.getEncoder();
+	String encodedText = "";
+	
+	if(braVO.getBraPic() != null){
+		encodedText = encoder.encodeToString(braVO.getBraPic());
+			pageContext.setAttribute("braPic", new Integer(1));
+		}
+		else{
+			pageContext.setAttribute("braPic", new Integer(0));
+		}
+
+
+
 %>
 
 <!DOCTYPE html>
@@ -329,7 +345,7 @@
 									<div class="form-group">
 										<label for="aa">分店編號:<font color=red><b>*</b></font></label>
 										 <input type="text"
-											name="braID" id="braName" placeholder=""
+											name="braID" id="braID" placeholder=""
 											class="form-control" style="width: 200px" value="<%=braVO.getBraID()%>">
 									</div>
 							</div>	
@@ -384,23 +400,55 @@
 											<span class="input-group-text">分店介紹</span>
 										</div>
 										<textarea class="form-control" aria-label="With textarea"
-											Cols="25" Rows="5" name="intro" value="<%=braVO.getBraIntro() %>"></textarea>
+											Cols="25" Rows="5" name="intro" placeholder="<%=braVO.getBraIntro() %>"></textarea>
+									
+									
 									</div>
 
 								</div>
 								<br>
+								
+								
 								<div class="form-row">
 									<div class="input-group mb-3 form-group">
+										
+										<div class="col-sm-8">
+											
+										<c:choose>	
+											<c:when test="${ braPic==1}">
+												<img id="blah" style="max-width: none;" width="150" src="data:image ;base64, <%=encodedText%>">
+											</c:when>
+												
+											
+											<c:otherwise>											
+												<img id="icon_preview"  style="max-width: none;" width="150" src="<%=request.getContextPath()%>/image/noImage.jpg">
+											</c:otherwise>
+										
+										
+										
+										</c:choose>
+										</div>
+										
+										</div>
+										<div class="input-group mb-3 form-group">
+										
 										<div class="custom-file">
-											<input type="file" class="custom-file-input"
-												id="inputGroupFile02" name="braPic"> <label
-												class="custom-file-label" for="inputGroupFile02">上傳分店照片
+											
+										<input  class="custom-file-input"
+												id="inputGroupFile01" name="braPic"  multiple type="file"> <label
+												class="custom-file-label" for="inputGroupFile02" id="labelPicName">上傳分店照片
 												file</label>
 										</div>
+										
+										
 										<div class="input-group-append">
 											<span class="input-group-text" id="">Upload</span>
 										</div>
+									
 									</div>
+									
+									
+									
 
 								</div>
 
@@ -436,8 +484,10 @@
 								</div>
 
 								<div class="col-12 text-center">
-									<input type="hidden" name="action" value="insert"> <input
-										class="btn btn-primary" type="submit" value="送出新增">
+									<input type="hidden" name="action" value="update">
+									<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+									 <input
+										class="btn btn-primary" type="submit" value="送出修改">
 									<button class="btn btn-primary">返回</button>
 								</div>
 
@@ -524,9 +574,47 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin.min.js"></script>
+	
+	
+	
+	
 
 </body>
-
+	<script>
+	$(function()
+			{
+		
+		$(document).ready(function() {
+		    $('#inputGroupFile01').on('change', function(event) {
+		        // and you can get the name of the image like this:
+		        console.log(event.target.files[0].name);
+		        $('#labelPicName').text(event.target.files[0].name);
+		    });
+		});
+			
+		
+		
+		
+		
+			$("#inputGroupFile01").change(function(){
+					if (this.files && this.files[0]) {
+						var reader = new FileReader();
+						
+						reader.onload = function (e) {
+							$('#blah').attr('src', e.target.result);
+							
+	//						$('#labelPicName').text(event.target.files[0].name);
+						}								
+						
+						reader.readAsDataURL(this.files[0]);
+					
+					}
+				});
+			}) ;
+	
+	
+	
+	</script>
 
 
 

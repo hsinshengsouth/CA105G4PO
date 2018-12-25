@@ -7,6 +7,11 @@
 	BranchService braSvc = new BranchService();
 	List<BranchVO> list = braSvc.getAll();
 	pageContext.setAttribute("list", list);
+	
+	
+	
+	
+	
 %>
 
 <!DOCTYPE html>
@@ -320,7 +325,6 @@
 								<th>分店影片</th>
 								<th style="width:90px">分店狀態</th>
 								<th align="center">修改</th>
-								<th align="center">刪除</th>
 							</tr>
 						</thead>
 
@@ -350,16 +354,7 @@
 											<input type="hidden" name="action" value="getOne_For_Update">
 										</form>
 									</td>
-									<td>
-										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/branch/bra.do"
-											style="margin-bottom: 0px;">
-											<button class="btn btn-info" type="submit">刪除</button>
-											<input type="hidden" name="braID" value="${braVO.braID }">
-											 <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
-											<input type="hidden" name="action" value="delete">
-										</form>
-									</td>
+								
 								</tr>
 							</c:forEach>
 						</tbody>

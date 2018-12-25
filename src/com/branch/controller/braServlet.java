@@ -26,13 +26,12 @@ public class braServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-	
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		System.out.println("1");
 		System.out.println(action);
-		
+
 		if ("insert".equals(action)) { // 來自addBra.jsp的請求
 			System.out.println("insert");
 			List<String> errorMsgs = new LinkedList<String>(); // 放置錯誤訊息的容器
@@ -81,9 +80,8 @@ public class braServlet extends HttpServlet {
 				if (intro == null || intro.trim().length() == 0) {
 					errorMsgs.add("請輸入分店介紹");
 				}
-				
-				
-				byte[] pic=null;
+
+				byte[] pic = null;
 				Part braPic = req.getPart("braPic");
 				if (braPic.getSubmittedFileName().trim().length() == 0 || braPic.getSubmittedFileName() == null) {
 					errorMsgs.add("請上傳分店照片");
@@ -94,19 +92,16 @@ public class braServlet extends HttpServlet {
 				inP.read(pic);
 				inP.close();
 
-			
-				
-				byte[]video =null;
-				Part braVideo =	 req.getPart("braVideo");
+				byte[] video = null;
+				Part braVideo = req.getPart("braVideo");
 				InputStream inV = braVideo.getInputStream();
-				video =new byte[inV.available()];
+				video = new byte[inV.available()];
 				inV.read(video);
 				inV.close();
-				
+
 				if (braVideo.getSubmittedFileName().trim().length() == 0 && braVideo.getContentType() == null) {
 					errorMsgs.add("請上傳分店影片");
 				}
-				
 
 				Integer bchStateChecked = null;
 				String braState = req.getParameter("braState");
@@ -135,17 +130,16 @@ public class braServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-				
-				/***************************2.開始新增資料***************************************/
-				BranchService braSvc =new BranchService();
-				braVO =braSvc.addBra(braName, intro, pic, phone, video, addr, lng, lat, bchStateChecked);
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url ="/branch/listAllBranch.jsp";
-				RequestDispatcher successView =req.getRequestDispatcher(url);
+
+				/*************************** 2.開始新增資料 ***************************************/
+				BranchService braSvc = new BranchService();
+				braVO = braSvc.addBra(braName, intro, pic, phone, video, addr, lng, lat, bchStateChecked);
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				String url = "/branch/listAllBranch.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				
-				
-				/***************************其他可能的錯誤處理**********************************/
+
+				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 
 				errorMsgs.add(e.getMessage());
@@ -153,105 +147,161 @@ public class braServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-	
-		
-		if("getOne_For_Update".equals(action)) {  // 來自update_bra_input.jsp的請求
-			
-			List<String>errorMsgs = new LinkedList<String>();  //錯誤訊息
+
+		if ("getOne_For_Update".equals(action)) { // 來自update_bra_input.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>(); // 錯誤訊息
 			req.setAttribute("errorMsgs", errorMsgs);
-			
-			String requestURL =req.getParameter("requestURL");//送出修改的來源請求
-			
+
+			String requestURL = req.getParameter("requestURL");// 送出修改的來源請求
+
 			try {
-			/***************************1.接收請求參數****************************************/
-			
-			String braID =req.getParameter("braID");
-			
-			
-			/***************************2.開始查詢資料****************************************/
-			BranchService bchSvc = new BranchService();
-			BranchVO bchVO= bchSvc.getOneByID(braID);
-			
-			/***************************3.查詢完成,準備轉交(Send the Success view)************/
-			req.setAttribute("bchVO", bchVO); // 資料庫取出的empVO物件,存入req
-			String url ="/branch/update_bra_input.jsp";
-			RequestDispatcher successView =req.getRequestDispatcher(url);
-			successView.forward(req, res); 
+				/*************************** 1.接收請求參數 ****************************************/
 
-			/***************************其他可能的錯誤處理************************************/
+				String braID = req.getParameter("braID");
 
-			}catch(Exception e) {
-				errorMsgs.add("修改資料取出時失效:"+e.getMessage());
-				RequestDispatcher failureView =req.getRequestDispatcher(requestURL);
+				/*************************** 2.開始查詢資料 ****************************************/
+				BranchService bchSvc = new BranchService();
+				BranchVO bchVO = bchSvc.getOneByID(braID);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("bchVO", bchVO); // 資料庫取出的empVO物件,存入req
+				String url = "/branch/update_bra_input.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 ************************************/
+
+			} catch (Exception e) {
+				errorMsgs.add("修改資料取出時失效:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
-				
-				
+			}
+		}
+
+		
+		
+		if ("update".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>(); // 儲存錯誤在list裡
+			req.setAttribute("erroeMsgs", errorMsgs);
+			
+			String requestURL = req.getParameter("requestURL"); 	 // 送出修改的來源網頁路徑: 可能為【/bra/listAllBranch.jsp】
+			/*************************** * 1.接收請求參數- 輸入格式的錯誤處理 ****************************************/
+try {
+			String braID = req.getParameter("braID");
+			
+			String braName = req.getParameter("braName");
+
+			if (braName == null || braName.trim().length() == 0) {
+				errorMsgs.add("修改資料，分店名稱請勿空白");
+			}
+
+			String phone = req.getParameter("phone");
+
+			if (phone == null || phone.trim().length() == 0) {
+				errorMsgs.add("分店電話請勿空白");
+			}
+
+			Double lng = null;
+			try {
+				lng = new Double(req.getParameter("lng").trim());
+			} catch (NumberFormatException e) {
+				lng = 0.0;
+				errorMsgs.add("請填入分店經度");
+			}
+			
+			Double lat = null;
+			try {
+				lat = new Double(req.getParameter("lat").trim());
+			} catch (NumberFormatException e) {
+				lat = 0.0;
+				errorMsgs.add("請填入分店緯度");
+			}
+			
+			String addr = req.getParameter("addr");
+			if (addr == null || addr.trim().length() == 0) {
+				errorMsgs.add("分店地址請勿空白");
+			}
+			
+			String intro = req.getParameter("intro");
+			if (intro == null || intro.trim().length() == 0) {
+				errorMsgs.add("請輸入分店介紹");
+			}
+
+
+			byte[] pic =null;
+			Part braPic =req.getPart("braPic");
+			if (braPic.getSubmittedFileName().trim().length() == 0 || braPic.getSubmittedFileName() == null) {
+				errorMsgs.add("請上傳分店照片");
+			}
+			
+			InputStream inP= braPic.getInputStream();
+			
+			pic = new byte[inP.available()];
+			inP.read(pic);
+			inP.close();
+			
+			byte[] video = null;
+			Part braVideo = req.getPart("braVideo");
+			InputStream inV = braVideo.getInputStream();
+			video = new byte[inV.available()];
+			inV.read(video);
+			inV.close();
+
+			if (braVideo.getSubmittedFileName().trim().length() == 0 && braVideo.getContentType() == null) {
+				errorMsgs.add("請上傳分店影片");
+			}
+			
+			Integer bchStateChecked = null;
+			String braState = req.getParameter("braState");
+			if ("1".equals(braState)) {
+				bchStateChecked = new Integer(braState);
+			} else if ("0".equals(braState)) {
+				bchStateChecked = new Integer(braState);
+			}
+
+			BranchVO braVO = new BranchVO();
+
+			braVO.setBraName(braName);
+			braVO.setBraTel(phone);
+			braVO.setBraAddr(addr);
+			braVO.setBraIntro(intro);
+			braVO.setBraLng(lng);
+			braVO.setBraLat(lat);
+			braVO.setBraState(bchStateChecked);
+			braVO.setBraPic(pic);
+			braVO.setBraVideo(video);
+			
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				req.setAttribute("braVO", braVO); // 含有輸入格式錯誤的braVO物件,也存入req
+				RequestDispatcher failureView = req.getRequestDispatcher("/branch/update_bra_input.jsp");
+				failureView.forward(req, res);
+				return;
 			}
 			
 			
+			/***************************2.開始修改資料*****************************************/
+			BranchService braSvc =new BranchService();
+			braVO =braSvc.updateBra(braName, intro, pic, phone, video, addr, lng, lat, bchStateChecked,braID);
 			
-//			String braName =req.getParameter("braName");
-//			
-//			if(braName==null ||braName.trim().length()==0) {
-//				errorMsgs.add("店名請勿空白");
-//			}
-//			
-//			
-//			String phone = req.getParameter("phone");
-//			
-//			if(phone==null ||phone.trim().length()==0) {
-//				errorMsgs.add("分店電話請勿空白");
-//			}
-//			
-//			
-//			Double lng = null;
-//
-//			try {
-//				lng = new Double(req.getParameter("lng").trim());
-//			} catch (NumberFormatException e) {
-//				lng = 0.0;
-//				errorMsgs.add("請填入分店經度");
-//			}
-//
-//			Double lat = null;
-//
-//			try {
-//				lat = new Double(req.getParameter("lat").trim());
-//			} catch (NumberFormatException e) {
-//				lat = 0.0;
-//				errorMsgs.add("請填入分店緯度");
-//			}
-//
-//			String addr = req.getParameter("addr");
-//
-//			if (addr == null || addr.trim().length() == 0) {
-//				errorMsgs.add("分店地址請勿空白");
-//			}
-//
-//			String intro = req.getParameter("intro");
-//
-//			if (intro == null || intro.trim().length() == 0) {
-//				errorMsgs.add("請輸入分店介紹");
-//			}
-//			
-//			byte[] pic =null;
+			/***************************3.修改完成,準備轉交(Send the Success view)*************/
+			req.setAttribute("braVO", braVO);// 資料庫update成功後,正確的的braVO物件,存入req
+			String url =requestURL;
+			RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
+			successView.forward(req, res);
+		
 			
-			
-			
-			
-			
-			
+		}catch(Exception e) {
+			errorMsgs.add("修改資料失敗"+ e.getMessage());
+			RequestDispatcher failureView =req.getRequestDispatcher("/branch/update_bra_input.jsp");
+			failureView.forward(req, res);
 		}
 		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	}//doPost()的右括弧
-}
+		}
+
+
+
+	}
+
+}// doPost()的右括弧
