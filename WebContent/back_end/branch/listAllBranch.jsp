@@ -340,13 +340,13 @@
 									<td>${bchVO.braAddr}</td>
 									<td>${bchVO.braLng}</td>
 									<td>${bchVO.braLat}</td>
-									<td><img src="<%=request.getContextPath() %>/branch/braImg.do?braID=${bchVO.braID}" height="150px" width="200px"></td>
+									<td><img src="<%=request.getContextPath() %>/back_end/branch/braImg.do?braID=${bchVO.braID}" height="150px" width="200px"></td>
 									<td>${bchVO.braVideo}</td>
 									<td>${bchVO.braState}</td>
 									
 									<td>
 										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/branch/bra.do"
+											ACTION="<%=request.getContextPath()%>/back_end/branch/bra.do"
 											style="margin-bottom: 0px;">
 											<button class="btn btn-info" type="submit">修改</button>
 											<input type="hidden" name="braID" value="${bchVO.braID }">

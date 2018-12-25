@@ -126,7 +126,7 @@ public class braServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("braVO", braVO); // 含有輸入格式錯誤的braVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/branch/addBra.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/branch/addBra.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -135,7 +135,7 @@ public class braServlet extends HttpServlet {
 				BranchService braSvc = new BranchService();
 				braVO = braSvc.addBra(braName, intro, pic, phone, video, addr, lng, lat, bchStateChecked);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/branch/listAllBranch.jsp";
+				String url = "/back_end/branch/listAllBranch.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -143,7 +143,7 @@ public class braServlet extends HttpServlet {
 			} catch (Exception e) {
 
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/branch/addBra.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/branch/addBra.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -166,7 +166,7 @@ public class braServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("bchVO", bchVO); // 資料庫取出的empVO物件,存入req
-				String url = "/branch/update_bra_input.jsp";
+				String url = "/back_end/branch/update_bra_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -275,7 +275,7 @@ try {
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("braVO", braVO); // 含有輸入格式錯誤的braVO物件,也存入req
-				RequestDispatcher failureView = req.getRequestDispatcher("/branch/update_bra_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/branch/update_bra_input.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -294,7 +294,7 @@ try {
 			
 		}catch(Exception e) {
 			errorMsgs.add("修改資料失敗"+ e.getMessage());
-			RequestDispatcher failureView =req.getRequestDispatcher("/branch/update_bra_input.jsp");
+			RequestDispatcher failureView =req.getRequestDispatcher("/back_end/branch/update_bra_input.jsp");
 			failureView.forward(req, res);
 		}
 		
