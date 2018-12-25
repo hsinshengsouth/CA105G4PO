@@ -4,14 +4,11 @@
 <%@ page import="com.branch.model.*"%>
 <%@page import="java.util.*"%>
 <%
+	
 	BranchService braSvc = new BranchService();
 	List<BranchVO> list = braSvc.getAll();
 	pageContext.setAttribute("list", list);
-	
-	
-	
-	
-	
+		
 %>
 
 <!DOCTYPE html>
