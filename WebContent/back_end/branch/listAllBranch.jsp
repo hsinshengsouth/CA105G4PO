@@ -3,12 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.branch.model.*"%>
 <%@page import="java.util.*"%>
+
 <%
-	
 	BranchService braSvc = new BranchService();
 	List<BranchVO> list = braSvc.getAll();
 	pageContext.setAttribute("list", list);
-		
+
+	BranchVO bchVO = (BranchVO) request.getAttribute("bchVO");
+	String val = "";
 %>
 
 <!DOCTYPE html>
@@ -299,66 +301,125 @@
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
-				
-				
-				
-				
-				
+
+
+
+
+
 				<div class="container">
 					<caption>各地分店</caption>
 					<br>
 					<table class="table table-hover">
 
-						<thead >
+						<thead>
 							<tr>
-								<th style="width:90px">分店編號</th>
-								<th style="width:90px">名稱</th>
+								<th style="width: 90px">分店編號</th>
+								<th style="width: 90px">名稱</th>
 								<th>分店簡介</th>
 								<th>電話</th>
-								<th style="width:80px">地址</th>
+								<th style="width: 80px">地址</th>
 								<th>經度</th>
 								<th>緯度</th>
 								<th>分店圖片</th>
 								<th>分店影片</th>
-								<th style="width:90px">分店狀態</th>
+								<th style="width: 90px">分店狀態</th>
 								<th align="center">修改</th>
 							</tr>
 						</thead>
 
 						<tbody>
 							<%@ include file="page1.file"%>
-							<c:forEach var="bchVO" items="${list}" begin="<%=pageIndex%>"
-								end="<%=pageIndex+rowsPerPage-1%>">
+							<c:forEach var="bchVO" items="${list}" varStatus="status"
+								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 								<tr>
-									<td >${bchVO.braID}</td>
+									<td>${bchVO.braID}</td>
 									<td>${bchVO.braName}</td>
 									<td>${bchVO.braIntro}</td>
 									<td>${bchVO.braTel}</td>
 									<td>${bchVO.braAddr}</td>
 									<td>${bchVO.braLng}</td>
 									<td>${bchVO.braLat}</td>
-									<td><img src="<%=request.getContextPath() %>/back_end/branch/braImg.do?braID=${bchVO.braID}" height="150px" width="200px"></td>
-									<td>${bchVO.braVideo}</td>
+
+									<c:set var="index" value="${status.index}" />
+									<%
+										int count = (Integer) pageContext.getAttribute("index");
+											String encodedText = null;
+											if (list.get(count).getBraPic() != null) {
+												Base64.Encoder encoder = Base64.getEncoder();
+												encodedText = encoder.encodeToString(list.get(count).getBraPic());
+												pageContext.setAttribute("icon_", new Integer(1));
+											} else {
+												pageContext.setAttribute("icon_", new Integer(0));
+											}
+									%>
+
+
+									<c:choose>
+										<c:when test="${ icon_== 1}">
+											<td><img width="200"
+												src="data:image/png;base64, <%=encodedText%>"></td>
+										</c:when>
+										<c:otherwise>
+											<td><img
+												src="<%=request.getContextPath()%>/image/noImage.jpg"
+												height="240px" width="320px"></td>
+										</c:otherwise>
+
+									</c:choose>
+
+
+									<c:set var="index" value="${status.index}" />
+									<%
+										int count1 = (Integer) pageContext.getAttribute("index");
+											String encodedText1 = null;
+
+											if (list.get(count).getBraVideo() != null) {
+												Base64.Encoder encoder = Base64.getEncoder();
+												encodedText = encoder.encodeToString(list.get(count).getBraVideo());
+												pageContext.setAttribute("icon_1", new Integer(1));
+											} else {
+												pageContext.setAttribute("icon_1", new Integer(0));
+											}
+									%>
+
+
+									<c:choose>
+										<c:when test="${ icon_1== 1}">
+											<td><video controls  width="200" height="132"><source type="video/webm" src="data:video/webm;base64,<%=encodedText%>" ></video></td>
+										</c:when>
+
+
+										<c:otherwise>
+											<td><img
+												src="<%=request.getContextPath()%>/image/noVideo.png"
+												width="200" height="132"></td>
+
+
+										</c:otherwise>
+
+									</c:choose>
+
 									<td>${bchVO.braState}</td>
-									
+
 									<td>
 										<form METHOD="post"
 											ACTION="<%=request.getContextPath()%>/back_end/branch/bra.do"
 											style="margin-bottom: 0px;">
 											<button class="btn btn-info" type="submit">修改</button>
 											<input type="hidden" name="braID" value="${bchVO.braID }">
-											<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> <!--送出本網頁的路徑給Controller-->
+											<input type="hidden" name="requestURL"
+												value="<%=request.getServletPath()%>">
+											<!--送出本網頁的路徑給Controller-->
 											<input type="hidden" name="action" value="getOne_For_Update">
 										</form>
 									</td>
-								
+
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 					<%@ include file="page2.file"%>
-					<br>
-					<a href="addBra.jsp">回選取頁面</a>
+					<br> <a href="addBra.jsp">回選取頁面</a>
 				</div>
 
 
@@ -428,5 +489,41 @@
 	<script src="js/sb-admin.min.js"></script>
 
 </body>
-
+<style>
+		table {
+			table-layout: fixed;
+			width: 100%;   
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}	
+			
+		.table > thead > tr > th {
+			text-align: center;
+			vertical-align: middle;
+		}  
+		.table > tbody > tr > td {
+			word-break: break-all;
+			text-align: center;
+			vertical-align: middle;
+			border-top: 0px;
+		}
+		
+		
+		.float_btn{
+			position:fixed;
+			width:60px;
+			height:60px;
+			bottom:30px;
+			right:30px;
+			background-color:#0094D4FF;
+			color:#FFF;
+			border-radius:30px;
+			text-align:center;
+			box-shadow: 4px 4px 6px #222;
+		}
+		
+		.my-float{
+			margin-top:22px;
+		}
+</style>
 </html>

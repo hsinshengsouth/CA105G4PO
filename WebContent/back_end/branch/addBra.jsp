@@ -417,7 +417,7 @@ img{
 										<div class="custom-file">
 											<input type="file" class="custom-file-input"
 												id="inputGroupFile02" name="braVideo" > <label
-												class="custom-file-label" for="inputGroupFile02">上傳分店影片
+												class="custom-file-label" for="inputGroupFile02" id="labelVideoName">上傳分店影片
 												file</label>
 												
 												
@@ -426,6 +426,12 @@ img{
 											<span class="input-group-text" id="">Upload</span>
 										</div>
 									</div>
+								
+									<div class="form-row">
+										<video id="vlah" width="377.8" height="250" controls></video>
+									</div>
+
+
 
 								</div>
 
@@ -548,8 +554,13 @@ img{
 		    });
 		});
 			
-		
-		
+		$(document).ready(function() {
+		$('#inputGroupFile02').on('change', function(event) {
+		    
+	    	$('#labelVideoName').text(event.target.files[0].name);
+	    
+	    });
+		});
 		
 		
 			$("#inputGroupFile01").change(function(){
@@ -559,13 +570,33 @@ img{
 						reader.onload = function (e) {
 							$('#blah').attr('src', e.target.result);
 							
-	//						$('#labelPicName').text(event.target.files[0].name);
 						}								
 						
 						reader.readAsDataURL(this.files[0]);
 					
 					}
 				});
+			
+			
+			$("#inputGroupFile02").change(function(){
+				if (this.files && this.files[0]) {
+					var reader = new FileReader();
+					
+					reader.onload = function (e) {
+						$('#vlah').attr('src', e.target.result);
+						
+					}								
+					
+					reader.readAsDataURL(this.files[0]);
+				
+				}
+			});
+			
+			
+			
+			
+			
+			
 			}) ;
 	
 	
