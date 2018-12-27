@@ -6,22 +6,6 @@
 
 <%
 	BranchVO braVO = (BranchVO) request.getAttribute("bchVO");//braServlet.java (Concroller) 存入req的bchVO物件 (包括幫忙取出的bchVO, 也包括輸入資料錯誤時的bchVO物件)
-
-	
-
-	Base64.Encoder encoder = Base64.getEncoder();
-	String encodedText = "";
-	
-	if(braVO.getBraPic() != null){
-		encodedText = encoder.encodeToString(braVO.getBraPic());
-			pageContext.setAttribute("braPic", new Integer(1));
-		}
-		else{
-			pageContext.setAttribute("braPic", new Integer(0));
-		}
-
-
-
 %>
 
 <!DOCTYPE html>
@@ -298,10 +282,10 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">新增:</h6>
-					<a class="dropdown-item" href="blank.html">新增分店</a>
+					<a class="dropdown-item" href="addBra.jsp">新增分店</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
-					<a class="dropdown-item" href="table.html">分店列表</a>
+					<a class="dropdown-item" href="listAllBranch.jsp">分店列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a class="nav-link"
 				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q&A</span>
@@ -339,40 +323,42 @@
 						<div class="col-sm-7 offset-sm-3 ">
 
 							<form method="post" action="bra.do" name="updateform"
-								class="form-horizontal justify-content-center" enctype="multipart/form-data">
-								
-							<div class="form-row">
+								class="form-horizontal justify-content-center"
+								enctype="multipart/form-data">
+
+								<div class="form-row">
 									<div class="form-group">
-										<label for="aa">分店編號:<font color=red><b>*</b></font></label>
-										 <input type="text"
-											name="braID" id="braID" placeholder=""
-											class="form-control" style="width: 200px" value="<%=braVO.getBraID()%>">
+										<label for="aa">分店編號:<font color=red><b>*</b></font></label> <input
+											type="text" name="braID" id="braID" placeholder=""
+											class="form-control" style="width: 200px"
+											value="<%=braVO.getBraID()%>">
 									</div>
-							</div>	
-								
-								
-								
+								</div>
+
+
+
 								<div class="form-row">
 									<div class="form-group">
 										<label for="aa">分店名稱:</label> <input type="text"
 											name="braName" id="braName" placeholder=""
-											class="form-control" style="width: 200px" value="<%=braVO.getBraName()%>">
+											class="form-control" style="width: 200px"
+											value="<%=braVO.getBraName()%>">
 									</div>
-								
+
 									<div class="form-group" style="margin-left: 15px">
 										<label for="aa">分店電話:</label> <input type="text" name="phone"
 											id="aa" placeholder="" class="form-control"
-											style="width: 200px" value="<%=braVO.getBraTel() %>">
+											style="width: 200px" value="<%=braVO.getBraTel()%>">
 									</div>
 								</div>
-								
-								
+
+
 								<div class="form-row">
 									<div class="form-group" style="margin-right: 15px">
 										<label for="aa">分店經度:</label> <input type="text" name="lng"
 											id="aa" placeholder="" class="form-control"
-											style="width: 140px" value="<%=braVO.getBraLng() %>">
-											
+											style="width: 140px" value="<%=braVO.getBraLng()%>">
+
 									</div>
 
 
@@ -381,7 +367,7 @@
 									<div class="form-group">
 										<label for="aa">分店緯度:</label> <input type="text" name="lat"
 											id="aa" placeholder="" class="form-control"
-											style="width: 140px"   value="<%=braVO.getBraLat() %>">
+											style="width: 140px" value="<%=braVO.getBraLat()%>">
 									</div>
 
 								</div>
@@ -389,7 +375,8 @@
 								<div class="form-group">
 									<label for="inputAddress">分店地址:</label> <input type="text"
 										class="form-control" id="inputAddress" placeholder=""
-										style="margin-left: -4px" name="addr"  value="<%=braVO.getBraAddr() %>">
+										style="margin-left: -4px" name="addr"
+										value="<%=braVO.getBraAddr()%>">
 								</div>
 
 
@@ -400,72 +387,132 @@
 											<span class="input-group-text">分店介紹</span>
 										</div>
 										<textarea class="form-control" aria-label="With textarea"
-											Cols="25" Rows="5" name="intro" placeholder="<%=braVO.getBraIntro() %>"></textarea>
-									
-									
+											Cols="25" Rows="5" name="intro"
+											placeholder="<%=braVO.getBraIntro()%>"></textarea>
+
+
 									</div>
 
 								</div>
 								<br>
-								
-								
+
+<%
+
+Base64.Encoder encoder = Base64.getEncoder();
+String encodedText = "";
+
+if (braVO.getBraPic() != null) {
+	encodedText = encoder.encodeToString(braVO.getBraPic());
+	pageContext.setAttribute("braPic", new Integer(1));
+} else {
+	pageContext.setAttribute("braPic", new Integer(0));
+}
+
+%>
+
+
+
+
 								<div class="form-row">
 									<div class="input-group mb-3 form-group">
-										
-										<div class="col-sm-8">
-											
-										<c:choose>	
-											<c:when test="${ braPic==1}">
-												<img id="blah" style="max-width: none;" width="150" src="data:image ;base64, <%=encodedText%>">
-											</c:when>
-												
-											
-											<c:otherwise>											
-												<img id="icon_preview"  style="max-width: none;" width="150" src="<%=request.getContextPath()%>/image/noImage.jpg">
-											</c:otherwise>
-										
-										
-										
-										</c:choose>
-										</div>
-										
-										</div>
-										<div class="input-group mb-3 form-group">
-										
-										<div class="custom-file">
-											
-										<input  class="custom-file-input"
-												id="inputGroupFile01" name="braPic"  multiple type="file"> <label
-												class="custom-file-label" for="inputGroupFile02" id="labelPicName">上傳分店照片
-												file</label>
-										</div>
-										
-										
-										<div class="input-group-append">
-											<span class="input-group-text" id="">Upload</span>
-										</div>
-									
+
+
+
+										<c:choose>
+									<c:when test="${ braPic==1}">
+												<img id="blah" width="377.8" height="250"
+													src="data:image ;base64, <%=encodedText%>">
+										</c:when> 
+
+
+										<c:otherwise> 
+											<img id="icon_preview" width="377.8" height="250" 
+												src="<%=request.getContextPath()%>/image/noImage.jpg"> 
+										</c:otherwise>
+
+
+
+								</c:choose> 
+
+
 									</div>
 									
 									
 									
+									
+									<div class="input-group mb-3 form-group">
+
+										<div class="custom-file">
+
+											<input class="custom-file-input" id="inputGroupFile01"
+												name="braPic" multiple type="file"> <label
+												class="custom-file-label" for="inputGroupFile02"
+												id="labelPicName">上傳分店照片 file</label>
+										</div>
+
+
+										<div class="input-group-append">
+											<span class="input-group-text" id="">Upload</span>
+										</div>
+
+									</div>
 
 								</div>
 
+								<%
+									Base64.Encoder encoder1 = Base64.getEncoder();
+									String encodeText1 = "";
+
+									if (braVO.getBraVideo() != null) {
+										encodeText1 = encoder1.encodeToString(braVO.getBraVideo());
+										pageContext.setAttribute("braVideo", new Integer(1));
+									} else {
+										pageContext.setAttribute("braVideo", new Integer(0));
+									}
+								%>
+
+
+
+
+
+								<div class="form-row">
+									<c:choose>
+
+										<c:when test="${ braVideo==1}">
+											<div class="form-row" style="margin-bottom: 15px">
+												<video id="vlah" width="377.8" height="250" controls>
+													<source type="video/webm"
+														src="data:video/webm;base64,<%=encodeText1%>">
+												</video>
+											</div>
+										</c:when>
+
+										<c:otherwise>
+											<video id="vlah" width="377.8" height="250" controls></video>
+										</c:otherwise>
+
+									</c:choose>
+								</div>
+
+								<br>
 								<div class="form-row">
 									<div class="input-group mb-3 form-group">
 										<div class="custom-file">
 											<input type="file" class="custom-file-input"
 												id="inputGroupFile02" name="braVideo"> <label
-												class="custom-file-label" for="inputGroupFile02">上傳分店影片
-												file</label>
+												class="custom-file-label" for="inputGroupFile02"
+												id="labelVideoName">上傳分店影片 file</label>
 										</div>
 										<div class="input-group-append">
-											<span class="input-group-text" id="">Upload</span>
+											<span class="input-group-text">Upload</span>
 										</div>
 									</div>
 
 								</div>
+
+
+
+
 
 
 								<div class="form-group">
@@ -484,10 +531,11 @@
 								</div>
 
 								<div class="col-12 text-center">
-									<input type="hidden" name="action" value="update">
-									<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
-									 <input
-										class="btn btn-primary" type="submit" value="送出修改">
+									<input type="hidden" name="action" value="update"> <input
+										type="hidden" name="requestURL"
+										value="<%=request.getParameter("requestURL")%>">
+									<!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+									<input class="btn btn-primary" type="submit" value="送出修改">
 									<button class="btn btn-primary">返回</button>
 								</div>
 
@@ -574,47 +622,61 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin.min.js"></script>
-	
-	
-	
-	
+
+
+
+
 
 </body>
-	<script>
-	$(function()
-			{
-		
+<script>
+	$(function() {
+
 		$(document).ready(function() {
-		    $('#inputGroupFile01').on('change', function(event) {
-		        // and you can get the name of the image like this:
-		        console.log(event.target.files[0].name);
-		        $('#labelPicName').text(event.target.files[0].name);
-		    });
+			$('#inputGroupFile01').on('change', function(event) {
+				// and you can get the name of the image like this:
+				console.log(event.target.files[0].name);
+				$('#labelPicName').text(event.target.files[0].name);
+			});
 		});
-			
-		
-		
-		
-		
-			$("#inputGroupFile01").change(function(){
-					if (this.files && this.files[0]) {
-						var reader = new FileReader();
-						
-						reader.onload = function (e) {
-							$('#blah').attr('src', e.target.result);
-							
-	//						$('#labelPicName').text(event.target.files[0].name);
-						}								
-						
-						reader.readAsDataURL(this.files[0]);
-					
-					}
-				});
-			}) ;
-	
-	
-	
-	</script>
+
+		$(document).ready(function() {
+			$('#inputGroupFile02').on('change', function(event) {
+				// and you can get the name of the image like this:
+				console.log(event.target.files[0].name);
+				$('#labelVideoName').text(event.target.files[0].name);
+			});
+		});
+
+		$("#inputGroupFile01").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#icon_preview').attr('src', e.target.result);
+
+				}
+
+				reader.readAsDataURL(this.files[0]);
+
+			}
+		});
+
+		$("#inputGroupFile02").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#vlah').attr('src', e.target.result);
+
+				}
+
+				reader.readAsDataURL(this.files[0]);
+
+			}
+		});
+
+	});
+</script>
 
 
 

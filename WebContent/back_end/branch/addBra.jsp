@@ -41,9 +41,9 @@
 	padding: 10px;
 }
 
-img{
-  max-width:400px;
-  max-height:250px;
+img {
+	max-width: 400px;
+	max-height: 250px;
 }
 </style>
 
@@ -287,10 +287,10 @@ img{
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">新增:</h6>
-					<a class="dropdown-item" href="blank.html">新增分店</a>
+					<a class="dropdown-item" href="addBra.jsp">新增分店</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
-					<a class="dropdown-item" href="table.html">分店列表</a>
+					<a class="dropdown-item" href="listAllBranch.jsp">分店列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a class="nav-link"
 				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q&A</span>
@@ -328,24 +328,25 @@ img{
 						<div class="col-sm-7 offset-sm-3 ">
 
 							<form method="post" action="bra.do" name="insertbraform"
-								class="form-horizontal justify-content-center" enctype="multipart/form-data" >
-								
-								
+								class="form-horizontal justify-content-center"
+								enctype="multipart/form-data">
+
+
 								<div class="form-row">
 									<div class="form-group">
 										<label for="aa">分店名稱:</label> <input type="text"
 											name="braName" id="braName" placeholder="請輸入分店店名"
 											class="form-control" style="width: 200px">
 									</div>
-								
+
 									<div class="form-group" style="margin-left: 15px">
 										<label for="aa">分店電話:</label> <input type="text" name="phone"
 											id="aa" placeholder="分店註冊電話" class="form-control"
 											style="width: 200px">
 									</div>
 								</div>
-								
-								
+
+
 								<div class="form-row">
 									<div class="form-group" style="margin-right: 15px">
 										<label for="aa">分店經度:</label> <input type="text" name="lng"
@@ -383,53 +384,67 @@ img{
 
 								</div>
 								<br>
+				
+
+
+
+
+
+
 								<div class="form-row">
+
+
+
+									<div class="form-row" style="margin-bottom: 15px">
+										<img id="blah" />
+									</div>
+
+
+
 									<div class="input-group mb-3 form-group">
-									<div class="custom-file">
-									
-									
-										<input  class="custom-file-input"
-												id="inputGroupFile01" name="braPic"  multiple type="file"> <label
-												class="custom-file-label" for="inputGroupFile02" id="labelPicName">上傳分店照片
-												file</label>
-												
-										</div>	
+										<div class="custom-file">
+
+											<input class="custom-file-input" id="inputGroupFile01"
+												name="braPic" multiple type="file"> <label
+												class="custom-file-label" for="inputGroupFile02"
+												id="labelPicName">上傳分店照片 file</label>
+
+										</div>
 										<div class="input-group-append">
 											<span class="input-group-text" id="">Upload</span>
 										</div>
-									
-										
-										
-<!-- 											<span style="width:100px">分店照片:</span> -->
-<!-- 											<input type="file" class="custom-file" -->
-<!-- 												id="inputGroupFile01" name="braPic" >  -->
-										
+
+
 									</div>
-									<div class="form-row">
-										<img id="blah"/>
-									</div>
+
 								</div>
 
 
-								<br>
+
+
 								<div class="form-row">
+
+									<div class="form-row" style="margin-bottom: 15px">
+										<video id="vlah" width="377.8" height="250" controls></video>
+									</div>
+
+
+
 									<div class="input-group mb-3 form-group">
 										<div class="custom-file">
 											<input type="file" class="custom-file-input"
-												id="inputGroupFile02" name="braVideo" > <label
-												class="custom-file-label" for="inputGroupFile02" id="labelVideoName">上傳分店影片
-												file</label>
-												
-												
+												id="inputGroupFile02" name="braVideo"> <label
+												class="custom-file-label" for="inputGroupFile02"
+												id="labelVideoName">上傳分店影片 file</label>
+
+
 										</div>
 										<div class="input-group-append">
 											<span class="input-group-text" id="">Upload</span>
 										</div>
 									</div>
-								
-									<div class="form-row">
-										<video id="vlah" width="377.8" height="250" controls></video>
-									</div>
+
+
 
 
 
@@ -542,66 +557,55 @@ img{
 	<script src="js/sb-admin.min.js"></script>
 
 </body>
-	<script>
-	$(function()
-			{
-		
+<script>
+	$(function() {
+
 		$(document).ready(function() {
-		    $('#inputGroupFile01').on('change', function(event) {
-		        // and you can get the name of the image like this:
-		        console.log(event.target.files[0].name);
-		        $('#labelPicName').text(event.target.files[0].name);
-		    });
-		});
-			
-		$(document).ready(function() {
-		$('#inputGroupFile02').on('change', function(event) {
-		    
-	    	$('#labelVideoName').text(event.target.files[0].name);
-	    
-	    });
-		});
-		
-		
-			$("#inputGroupFile01").change(function(){
-					if (this.files && this.files[0]) {
-						var reader = new FileReader();
-						
-						reader.onload = function (e) {
-							$('#blah').attr('src', e.target.result);
-							
-						}								
-						
-						reader.readAsDataURL(this.files[0]);
-					
-					}
-				});
-			
-			
-			$("#inputGroupFile02").change(function(){
-				if (this.files && this.files[0]) {
-					var reader = new FileReader();
-					
-					reader.onload = function (e) {
-						$('#vlah').attr('src', e.target.result);
-						
-					}								
-					
-					reader.readAsDataURL(this.files[0]);
-				
-				}
+			$('#inputGroupFile01').on('change', function(event) {
+				// and you can get the name of the image like this:
+				console.log(event.target.files[0].name);
+				$('#labelPicName').text(event.target.files[0].name);
 			});
-			
-			
-			
-			
-			
-			
-			}) ;
-	
-	
-	
-	</script>
+		});
+
+		$(document).ready(function() {
+			$('#inputGroupFile02').on('change', function(event) {
+
+				$('#labelVideoName').text(event.target.files[0].name);
+
+			});
+		});
+
+		$("#inputGroupFile01").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#blah').attr('src', e.target.result);
+
+				}
+
+				reader.readAsDataURL(this.files[0]);
+
+			}
+		});
+
+		$("#inputGroupFile02").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#vlah').attr('src', e.target.result);
+
+				}
+
+				reader.readAsDataURL(this.files[0]);
+
+			}
+		});
+
+	});
+</script>
 
 
 

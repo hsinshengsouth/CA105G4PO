@@ -40,7 +40,24 @@
 
 <!-- Custom styles for this template-->
 <link href="css/sb-admin.css" rel="stylesheet">
+<style>
+.scrollbar {
+align:center;
+float: left;
+height: 150px;
+width: 120px;
+overflow-y: scroll;
 
+}
+
+.scrollbar1 {
+overflow-x: scroll;
+float: top;
+width: 120px;
+
+}
+
+</style>
 </head>
 
 <body id="page-top">
@@ -279,10 +296,10 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">新增:</h6>
-					<a class="dropdown-item" href="blank.html">新增分店</a>
+					<a class="dropdown-item" href="addBra.jsp">新增分店</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
-					<a class="dropdown-item" href="table.html">分店列表</a>
+					<a class="dropdown-item" href="listAllBranch.jsp">分店列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a class="nav-link"
 				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q&A</span>
@@ -306,23 +323,23 @@
 
 
 
-				<div class="container">
+				<div class="container-fluid">
 					<caption>各地分店</caption>
 					<br>
 					<table class="table table-hover">
 
 						<thead>
 							<tr>
-								<th style="width: 90px">分店編號</th>
-								<th style="width: 90px">名稱</th>
+								<th style="width: 80px">編號</th>
+								<th style="width: 80px">店名</th>
 								<th>分店簡介</th>
-								<th>電話</th>
-								<th style="width: 80px">地址</th>
-								<th>經度</th>
-								<th>緯度</th>
+								<th style="width: 90px">電話</th>
+								<th>地址</th>
+								<th style="width: 85px">經度</th>
+								<th style="width: 80px">緯度</th>
 								<th>分店圖片</th>
 								<th>分店影片</th>
-								<th style="width: 90px">分店狀態</th>
+								<th style="width: 90px">狀態</th>
 								<th align="center">修改</th>
 							</tr>
 						</thead>
@@ -334,9 +351,12 @@
 								<tr>
 									<td>${bchVO.braID}</td>
 									<td>${bchVO.braName}</td>
-									<td>${bchVO.braIntro}</td>
+									
+	 								 <td class="scrollbar">${bchVO.braIntro}</td>
+									
+									
 									<td>${bchVO.braTel}</td>
-									<td>${bchVO.braAddr}</td>
+									<td class="scrollbar1">${bchVO.braAddr}</td>
 									<td>${bchVO.braLng}</td>
 									<td>${bchVO.braLat}</td>
 
@@ -356,15 +376,14 @@
 
 									<c:choose>
 										<c:when test="${ icon_== 1}">
-											<td><img width="200"
+											<td style=""><img width="200"
 												src="data:image/png;base64, <%=encodedText%>"></td>
 										</c:when>
 										<c:otherwise>
 											<td><img
 												src="<%=request.getContextPath()%>/image/noImage.jpg"
-												height="240px" width="320px"></td>
+												width="200" height="132"></td>
 										</c:otherwise>
-
 									</c:choose>
 
 
@@ -375,7 +394,7 @@
 
 											if (list.get(count).getBraVideo() != null) {
 												Base64.Encoder encoder = Base64.getEncoder();
-												encodedText = encoder.encodeToString(list.get(count).getBraVideo());
+												encodedText1 = encoder.encodeToString(list.get(count).getBraVideo());
 												pageContext.setAttribute("icon_1", new Integer(1));
 											} else {
 												pageContext.setAttribute("icon_1", new Integer(0));
@@ -383,9 +402,15 @@
 									%>
 
 
+
+
+
 									<c:choose>
 										<c:when test="${ icon_1== 1}">
-											<td><video controls  width="200" height="132"><source type="video/webm" src="data:video/webm;base64,<%=encodedText%>" ></video></td>
+											<td><video controls width="200" height="132">
+													<source type="video/webm"
+														src="data:video/webm;base64,<%=encodedText1%>">
+												</video></td>
 										</c:when>
 
 
@@ -393,8 +418,6 @@
 											<td><img
 												src="<%=request.getContextPath()%>/image/noVideo.png"
 												width="200" height="132"></td>
-
-
 										</c:otherwise>
 
 									</c:choose>
@@ -419,7 +442,7 @@
 						</tbody>
 					</table>
 					<%@ include file="page2.file"%>
-					<br> <a href="addBra.jsp">回選取頁面</a>
+					<br> <a href="addBra.jsp">新增分店</a>
 				</div>
 
 
@@ -490,40 +513,23 @@
 
 </body>
 <style>
-		table {
-			table-layout: fixed;
-			width: 100%;   
-			margin-top: 5px;
-			margin-bottom: 5px;
-		}	
-			
-		.table > thead > tr > th {
-			text-align: center;
-			vertical-align: middle;
-		}  
-		.table > tbody > tr > td {
-			word-break: break-all;
-			text-align: center;
-			vertical-align: middle;
-			border-top: 0px;
-		}
-		
-		
-		.float_btn{
-			position:fixed;
-			width:60px;
-			height:60px;
-			bottom:30px;
-			right:30px;
-			background-color:#0094D4FF;
-			color:#FFF;
-			border-radius:30px;
-			text-align:center;
-			box-shadow: 4px 4px 6px #222;
-		}
-		
-		.my-float{
-			margin-top:22px;
-		}
+table {
+	table-layout: auto;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.table>thead>tr>th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.table>tbody>tr>td {
+	word-break: break-all;
+	text-align: center;
+	vertical-align: middle;
+	border-top: 0px;
+}
 </style>
 </html>
