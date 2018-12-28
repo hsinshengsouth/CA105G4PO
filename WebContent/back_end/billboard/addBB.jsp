@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.activity.model.*"%>
+<%@ page import="com.billboard.model.*"%>
 <%@page import="java.util.*"%>
 
 <%
-	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
+	BillboardVO bbVO = (BillboardVO) request.getAttribute("bbVO");
 %>
 
 <!DOCTYPE html>
@@ -13,14 +13,14 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Add Activity</title>
+<title>Add Billboard</title>
 
 <!-- Bootstrap core CSS-->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +36,19 @@
 <!-- Custom styles for this template-->
 <link href="css/sb-admin.css" rel="stylesheet">
 <style>
+.container {
+	margin-left: -13px;
+	padding: 10px;
+}
+
+img {
+	max-width: 400px;
+	max-height: 250px;
+}
 </style>
+
+
+
 </head>
 
 <body id="page-top">
@@ -275,10 +287,10 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">新增:</h6>
-					<a class="dropdown-item" href="blank.html">新增分店</a>
+					<a class="dropdown-item" href="addBra.jsp">新增分店</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
-					<a class="dropdown-item" href="table.html">分店列表</a>
+					<a class="dropdown-item" href="listAllBranch.jsp">分店列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a class="nav-link"
 				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q&A</span>
@@ -293,7 +305,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">新增一筆促銷活動</li>
+					<li class="breadcrumb-item active">新增輪播廣告</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
@@ -309,57 +321,107 @@
 				</c:if>
 
 
+				<br>
 
-
-
-				<h3>新增一筆促銷活動</h3>
 				<div class="container">
 					<div class="row">
+						<div class="col-sm-7 offset-sm-3 ">
 
-						<form METHOD="post" ACTION="act.do"
-							class="form-inline form-horizontal" name="insertform">
-							<table class="table table-hover">
-								<tr>
-									<td>促銷活動名稱</td>
-									<td><input class="form-control " type="TEXT"
-										name="actName" placeholder="請新增一筆促銷活動"
-										value="<%=(actVO == null) ? "" : actVO.getActName()%>" /></td>
-								</tr>
-
-								<tr>
-									<td>促銷活動開始時間</td>
-									<td><input name="actStart" id="f_date1" type="text"
-										class="form-control " /></td>
-								</tr>
+							<form method="post" action="bb.do" name="insertbbform"
+								class="form-horizontal justify-content-center"
+								enctype="multipart/form-data">
 
 
-								<tr>
-									<td>促銷活動結束時間</td>
-									<td><input name="actEnd" id="f_date2" type="text"
-										class="form-control " /></td>
-								</tr>
+								<div class="form-row">
+									<div class="form-group">
+										<label for="aa">欲前往頁面的URL:</label> <input type="text"
+											name="braName" id="braName" placeholder="請輸入URL"
+											class="form-control" style="width: 200px">
+									</div>
 
-							</table>
+							
+								</div>
 
-							<div class="col-xs-12 col-sm-8">
-								<input type="hidden" name="action" value="insert">
-							</div>
-							<button class="btn btn-info" type="submit">送出新增</button>
 
-						</form>
+								<div class="form-row">
+									<div class="form-group" style="margin-right: 15px">
+										<label for="aa">開始時間:</label> <input type="text" name="bbStart"
+											id="f_date1" class="form-control"
+											style="width: 140px">
+									</div>
 
 
 
 
+									<div class="form-group">
+										<label for="aa">結束時間:</label> <input type="text" name="bbEnd"
+											id="f_date2"  class="form-control"
+											style="width: 140px">
+									</div>
+
+								</div>
+
+				
+
+
+								<div class="form-row">
+
+							
+
+								</div>
+								<br>
+				
+
+
+
+
+
+
+								<div class="form-row">
+
+
+
+									<div class="form-row" style="margin-bottom: 15px">
+										<img id="blah" />
+									</div>
+
+
+
+									<div class="input-group mb-3 form-group">
+										<div class="custom-file">
+
+											<input class="custom-file-input" id="inputGroupFile01"
+												name="braPic" multiple type="file"> <label
+												class="custom-file-label" for="inputGroupFile02"
+												id="labelPicName">上傳輪播廣告 file</label>
+
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text" id="">Upload</span>
+										</div>
+
+
+									</div>
+
+								</div>
+
+
+								<div class="col-12 text-center">
+									<input type="hidden" name="action" value="insert"> <input
+										class="btn btn-primary" type="submit" value="送出新增">
+									<button class="btn btn-primary">返回</button>
+								</div>
+
+							</form>
+
+							<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
+
+
+
+
+						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
 
 
 
@@ -430,23 +492,16 @@
 	<script src="js/sb-admin.min.js"></script>
 
 </body>
-
-<%
-	java.sql.Date date = null;
-	try {
-		date = actVO.getActStart();
-	} catch (Exception e) {
-		date = new java.sql.Date(System.currentTimeMillis());
-	}
-
-	String str = null;
+<% 
+  java.sql.Date date = null;
+  try {
+	    date = bbVO.getbbStart();
+   } catch (Exception e) {
+	    date = new java.sql.Date(System.currentTimeMillis());
+   }
+  
+  String str = null;
 %>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script
-	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {
 	width: 300px; /* width:  300px; */
@@ -456,80 +511,65 @@
 	height: 151px; /* height:  151px; */
 }
 </style>
-
-
-
 <script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       timepicker:false,       //timepicker:true,
-	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=date%> 	', // value:   new Date(),
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+	$(function() {
+
+		$(document).ready(function() {
+			$('#inputGroupFile01').on('change', function(event) {
+				// and you can get the name of the image like this:
+				console.log(event.target.files[0].name);
+				$('#labelPicName').text(event.target.files[0].name);
+			});
+		});
+
+		$("#inputGroupFile01").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#blah').attr('src', e.target.result);
+
+				}
+
+				reader.readAsDataURL(this.files[0]);
+
+			}
+		});
+
+	
+
 	});
-	$('#f_date2').datetimepicker({
-		theme : '', //theme: 'dark',
-		timepicker : false, //timepicker:true,
-		step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
-		format : 'Y-m-d', //format:'Y-m-d H:i:s',
-		value :<%=str%>
-	, // value:   new Date(),
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-		minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-	});
+	
+	
 
-	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
-
-	//      1.以下為某一天之前的日期無法選擇
-	//      var somedate1 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      2.以下為某一天之後的日期無法選擇
-	//      var somedate2 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-	//      var somedate1 = new Date('2017-06-15');
-	//      var somedate2 = new Date('2017-06-25');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//		             ||
-	//		            date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
+    $.datetimepicker.setLocale('zh');
+    $('#f_date1').datetimepicker({
+       theme: '',              //theme: 'dark',
+       timepicker:false,       //timepicker:true,
+       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+	   value: '<%=date%> 	', // value:   new Date(),
+//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//startDate:	            '2017/07/10',  // 起始日
+//minDate:               '-1970-01-01', // 去除今日(不含)之前
+//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+});
+$('#f_date2').datetimepicker({
+	theme : '', //theme: 'dark',
+	timepicker : false, //timepicker:true,
+	step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+	format : 'Y-m-d', //format:'Y-m-d H:i:s',
+	value :<%=str%>
+, // value:   new Date(),
+//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//startDate:	            '2017/07/10',  // 起始日
+	minDate:               '-1970-01-01', // 去除今日(不含)之前
+//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+});
+	
+	
 </script>
+
+
 
 </html>

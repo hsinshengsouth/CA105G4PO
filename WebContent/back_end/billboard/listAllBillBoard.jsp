@@ -288,7 +288,7 @@ pageContext.setAttribute("list", list);
 					<a class="dropdown-item" href="listAllBranch.jsp">分店列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a class="nav-link"
-				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q&A</span>
+				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q & A</span>
 			</a></li>
 		</ul>
 
@@ -316,10 +316,10 @@ pageContext.setAttribute("list", list);
 
 						<thead>
 							<tr>
-								<th style="width: 80px">廣告編號</th>
-								<th style="width: 80px">圖片URL</th>
+								<th >廣告編號</th>
+								<th >圖片URL</th>
 								<th>開始時間</th>
-								<th style="width: 90px">結束時間</th>
+								<th >結束時間</th>
 								<th>廣告圖片</th>
 								<th align="center">修改</th>
 								<th align="center">刪除</th>
@@ -328,22 +328,22 @@ pageContext.setAttribute("list", list);
 
 						<tbody>
 							<%@ include file="page1.file"%>
-							<c:forEach var="bbVO" items="${list}" varStatus="status"
+							<c:forEach var="bbVO"  items="${list}" varStatus="status"
 								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 								<tr>
-									<td>${bbVO.BbID}</td>
-									<td>${bbVO.Url}</td>
-									<td>${bbVO.BbStart}</td>
-									<td>${bbVO.BbEnd}</td>
+									<td>${bbVO.bbID}</td>
+									<td>${bbVO.url}</td>
+									<td>${bbVO.bbStart}</td>
+									<td>${bbVO.bbEnd}</td>
 
 									<c:set var="index" value="${status.index}" />
 
 									<%
 										int count = (Integer) pageContext.getAttribute("index");
 											String encodedText = null;
-											if (list.get(count).getPic() != null) {
+											if (list.get(count).getpic() != null) {
 												Base64.Encoder encoder = Base64.getEncoder();
-												encodedText = encoder.encodeToString(list.get(count).getPic());
+												encodedText = encoder.encodeToString(list.get(count).getpic());
 												pageContext.setAttribute("icon_", new Integer(1));
 											} else {
 												pageContext.setAttribute("icon_", new Integer(0));
@@ -376,7 +376,7 @@ pageContext.setAttribute("list", list);
 											ACTION="<%=request.getContextPath()%>/back_end/billboard/bb.do"
 											style="margin-bottom: 0px;">
 											<button class="btn btn-info" type="submit">修改</button>
-											<input type="hidden" name="bbID" value="${bbVO.BbID }">
+											<input type="hidden" name="bbID" value="${bbVO.bbID }">
 											<input type="hidden" name="requestURL"
 												value="<%=request.getServletPath()%>">
 											<!--送出本網頁的路徑給Controller-->
@@ -390,7 +390,7 @@ pageContext.setAttribute("list", list);
 											ACTION="<%=request.getContextPath()%>/back_end/billboard/bb.do"
 											style="margin-bottom: 0px;">
 											<button class="btn btn-info" type="submit">刪除</button>
-											<input type="hidden" name="bbID" value="${bbVO.BbID }">
+											<input type="hidden" name="bbID" value="${bbVO.bbID }">
 											<input type="hidden" name="requestURL"
 												value="<%=request.getServletPath()%>">
 											<!--送出本網頁的路徑給Controller-->

@@ -14,10 +14,10 @@ public class BillboardService {
 	public BillboardVO addBB(String url, byte[] pic, Date bbStart, Date bbEnd ) {
 		BillboardVO bbVO=new BillboardVO();
 		
-		bbVO.setUrl(url);
-		bbVO.setPic(pic);
-		bbVO.setBbStart(bbStart);		
-		bbVO.setBbEnd(bbEnd);
+		bbVO.seturl(url);
+		bbVO.setpic(pic);
+		bbVO.setbbStart(bbStart);		
+		bbVO.setbbEnd(bbEnd);
 		dao.insert(bbVO);
 		
 		return bbVO;
@@ -26,10 +26,10 @@ public class BillboardService {
 	public BillboardVO updateBB(String url, byte[] pic,Date bbStart,Date bbEnd) {
 		BillboardVO bbVO = new BillboardVO(); 
 	
-		bbVO.setUrl(url);
-		bbVO.setPic(pic);
-		bbVO.setBbStart(bbStart);
-		bbVO.setBbEnd(bbEnd);
+		bbVO.seturl(url);
+		bbVO.setpic(pic);
+		bbVO.setbbStart(bbStart);
+		bbVO.setbbEnd(bbEnd);
 		dao.update(bbVO);
 		return 	bbVO;
 	}

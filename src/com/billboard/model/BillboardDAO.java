@@ -41,10 +41,10 @@ public class BillboardDAO implements BillboardDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_SQL);
-			pstmt.setString(1, billboardVO.getUrl());
-			pstmt.setBytes(2, billboardVO.getPic());
-			pstmt.setDate(3, billboardVO.getBbStart());
-			pstmt.setDate(4, billboardVO.getBbEnd());
+			pstmt.setString(1, billboardVO.geturl());
+			pstmt.setBytes(2, billboardVO.getpic());
+			pstmt.setDate(3, billboardVO.getbbStart());
+			pstmt.setDate(4, billboardVO.getbbEnd());
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -79,11 +79,11 @@ public class BillboardDAO implements BillboardDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, billboardVO.getUrl());
-			pstmt.setBytes(2, billboardVO.getPic());
-			pstmt.setDate(3, billboardVO.getBbStart());
-			pstmt.setDate(4, billboardVO.getBbEnd());
-			pstmt.setInt(5, billboardVO.getBbID());
+			pstmt.setString(1, billboardVO.geturl());
+			pstmt.setBytes(2, billboardVO.getpic());
+			pstmt.setDate(3, billboardVO.getbbStart());
+			pstmt.setDate(4, billboardVO.getbbEnd());
+			pstmt.setInt(5, billboardVO.getbbID());
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -164,11 +164,11 @@ public class BillboardDAO implements BillboardDAO_interface {
 			while (rs.next()) {
 				billboardVO = new BillboardVO();
 
-				billboardVO.setBbID(rs.getInt("bbID"));
-				billboardVO.setUrl(rs.getString("url"));
-				billboardVO.setPic(rs.getBytes("pic"));
-				billboardVO.setBbStart(rs.getDate("bbStart"));
-				billboardVO.setBbEnd(rs.getDate("bbEnd"));
+				billboardVO.setbbID(rs.getInt("bbID"));
+				billboardVO.seturl(rs.getString("url"));
+				billboardVO.setpic(rs.getBytes("pic"));
+				billboardVO.setbbStart(rs.getDate("bbStart"));
+				billboardVO.setbbEnd(rs.getDate("bbEnd"));
 			}
 
 		} catch (SQLException e) {
@@ -219,11 +219,11 @@ public class BillboardDAO implements BillboardDAO_interface {
 			while (rs.next()) {
 				billboardVO = new BillboardVO();
 
-				billboardVO.setBbID(rs.getInt("bbID"));
-				billboardVO.setUrl(rs.getString("URL"));
-				billboardVO.setPic(rs.getBytes("pic"));
-				billboardVO.setBbStart(rs.getDate("bbStart"));
-				billboardVO.setBbEnd(rs.getDate("bbEnd"));
+				billboardVO.setbbID(rs.getInt("bbID"));
+				billboardVO.seturl(rs.getString("URL"));
+				billboardVO.setpic(rs.getBytes("pic"));
+				billboardVO.setbbStart(rs.getDate("bbStart"));
+				billboardVO.setbbEnd(rs.getDate("bbEnd"));
 
 				list.add(billboardVO);
 			}
