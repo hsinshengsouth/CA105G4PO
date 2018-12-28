@@ -27,12 +27,10 @@
     <servlet-name>BchServlet</servlet-name>
     <servlet-class>com.branch.controller.braServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>BchServlet</servlet-name>
     <url-pattern>/back_end/branch/bra.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>braImgServlet</servlet-name>
     <servlet-class>com.branch.controller.braImgServlet</servlet-class>
@@ -41,8 +39,7 @@
     <servlet-name>braImgServlet</servlet-name>
     <url-pattern>/back_end/branch/braImg.do</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>braVideoServlet</servlet-name>
     <servlet-class>com.branch.controller.braVideoServlet</servlet-class>
   </servlet>
@@ -50,7 +47,4 @@
     <servlet-name>braVideoServlet</servlet-name>
     <url-pattern>/back_end/branch/braVideo.do</url-pattern>
   </servlet-mapping>
-  
-  
-  
 </web-app>
