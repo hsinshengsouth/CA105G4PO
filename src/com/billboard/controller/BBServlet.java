@@ -105,7 +105,6 @@ public class BBServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				System.out.println(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/billboard/addBB.jsp");
 				failureView.forward(req, res);
 			}
