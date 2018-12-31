@@ -35,11 +35,16 @@ public class CouponService {
 		
 		return cpnVO;
 	}
-	
+		
 	public CouponVO getOneByID(String cpnID) {
 		return dao.findByPK(cpnID);
 		
 	}
+	
+	public void delete(String cpnID) {
+		dao.delete(cpnID);
+	}
+	
 	
 	public List<CouponVO>getAll(){
 		return dao.getAll();

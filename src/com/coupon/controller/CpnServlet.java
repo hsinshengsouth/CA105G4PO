@@ -209,17 +209,25 @@ public class CpnServlet extends HttpServlet {
 				
 			}
 			
-			
-			
-			
-	
-			
-			
-			
 			if("delete".equals(action)) {
+				List<String>errorMsgs =new LinkedList<String>();
+				req.setAttribute("errorMsgs", errorMsgs);
 				
+				try {
+				String cpnID =req.getParameter("cpnID");
 				
+				CouponService cpnSvc =new CouponService();
+				cpnSvc.delete(cpnID);
 				
+				String url ="/back_end/coupon/listAllCoupon";
+				RequestDispatcher successView =req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				}catch(Exception e) {
+					errorMsgs.add("刪除資料失敗"+e.getMessage());
+					RequestDispatcher failureView =req.getRequestDispatcher("/back_end/coupon/listAllCoupon.jsp");
+					failureView.forward(req, res);
+					
+				}
 				
 				
 			}

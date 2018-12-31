@@ -87,7 +87,6 @@ public class BillboardDAO implements BillboardDAO_interface {
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {

@@ -265,4 +265,9 @@ public class CouponJDBCDAO implements CouponDAO_interface{
 		System.out.println("查詢全部成功");
 		System.out.println("-------------------");
 	}
+
+	@Override
+	public void delete(String cpnID) {
+		
+	}
 }
