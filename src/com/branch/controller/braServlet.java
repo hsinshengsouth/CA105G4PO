@@ -29,7 +29,7 @@ public class braServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("1");
+		
 		System.out.println(action);
 
 		if ("insert".equals(action)) { // 來自addBra.jsp的請求
@@ -156,7 +156,7 @@ public class braServlet extends HttpServlet {
 			String requestURL = req.getParameter("requestURL");// 送出修改的來源請求
 
 			try {
-				/*************************** 1.接收請求參數 ****************************************/
+			
 
 				String braID = req.getParameter("braID");
 

@@ -23,6 +23,7 @@
     <servlet-name>ActServlet</servlet-name>
     <url-pattern>/back_end/activity/act.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>BchServlet</servlet-name>
     <servlet-class>com.branch.controller.braServlet</servlet-class>
@@ -31,6 +32,7 @@
     <servlet-name>BchServlet</servlet-name>
     <url-pattern>/back_end/branch/bra.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>braImgServlet</servlet-name>
     <servlet-class>com.branch.controller.braImgServlet</servlet-class>
@@ -39,6 +41,7 @@
     <servlet-name>braImgServlet</servlet-name>
     <url-pattern>/back_end/branch/braImg.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>braVideoServlet</servlet-name>
     <servlet-class>com.branch.controller.braVideoServlet</servlet-class>
@@ -47,4 +50,20 @@
     <servlet-name>braVideoServlet</servlet-name>
     <url-pattern>/back_end/branch/braVideo.do</url-pattern>
   </servlet-mapping>
+  
+  
+    <servlet>
+    <servlet-name>BBServlet</servlet-name>
+    <servlet-class>com.billboard.controller.BBServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BBServlet</servlet-name>
+    <url-pattern>/back_end/billboard/bb.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
+  
 </web-app>

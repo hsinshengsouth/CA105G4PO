@@ -5,11 +5,7 @@
 <%@page import="java.util.*"%>
 
 <%
-	
-BillboardService bbSvc = new BillboardService();
-List<BillboardVO> list = bbSvc.getAll();
-pageContext.setAttribute("list", list);
-
+	BillboardVO bbVO = (BillboardVO) request.getAttribute("bbVO");//BBServlet.java (Concroller) 存入req的bbVO物件 (包括幫忙取出的bbVO, 也包括輸入資料錯誤時的bbVO物件)
 %>
 
 <!DOCTYPE html>
@@ -17,14 +13,14 @@ pageContext.setAttribute("list", list);
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>ListAllBillboard</title>
+<title>Update Billboard</title>
 
 <!-- Bootstrap core CSS-->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -40,10 +36,14 @@ pageContext.setAttribute("list", list);
 <!-- Custom styles for this template-->
 <link href="css/sb-admin.css" rel="stylesheet">
 <style>
-
-
-
+.container {
+	margin-left: -13px;
+	padding: 10px;
+}
 </style>
+
+
+
 </head>
 
 <body id="page-top">
@@ -232,7 +232,7 @@ pageContext.setAttribute("list", list);
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">輪播看板:</h6>
-					<a class="dropdown-item" href="addBB.jsp">新增</a> <a
+					<a class="dropdown-item" href="blank.html">新增</a> <a
 						class="dropdown-item" href="table.html">列表</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">廣告彈跳:</h6>
@@ -288,7 +288,7 @@ pageContext.setAttribute("list", list);
 					<a class="dropdown-item" href="listAllBranch.jsp">分店列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a class="nav-link"
-				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q & A</span>
+				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q&A</span>
 			</a></li>
 		</ul>
 
@@ -300,124 +300,151 @@ pageContext.setAttribute("list", list);
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">輪播廣告列表</li>
+					<li class="breadcrumb-item active">修改輪播廣告</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
 
+				<%--錯誤列表 --%>
+				<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
+
+
+				<br>
+
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-7 offset-sm-3 ">
+
+							<form method="post" action="bb.do" name="updateform"
+								class="form-horizontal justify-content-center"
+								enctype="multipart/form-data">
+
+								<div class="form-row">
+									<div class="form-group">
+										<label for="aa">廣告編號:<font color=red><b>*</b></font></label> <input
+											type="text" name="bbID" id="bbID" placeholder=""
+											class="form-control" style="width: 200px"
+											value="<%=bbVO.getbbID()%>">
+									</div>
+									
+									<div class="form-group" style="margin-left: 15px">
+										<label for="aa">URL:</label> <input type="text" name="url"
+											id="aa" placeholder="" class="form-control"
+											style="width: 200px" value="<%=bbVO.geturl()%>">
+									</div>
+									
+								</div>
+
+							
+							
+							
+							
+
+								<div class="form-row">
+									<div class="form-group" style="margin-right: 15px">
+										<label for="aa">廣告開始時間:</label> <input type="text" name="bbStart"
+											id="f_date1" placeholder="" class="form-control"
+											style="width: 140px" value="<%=bbVO.getbbStart()%>">
+
+									</div>
 
 
 
 
-				<div class="container-fluid">
-					<caption>輪播廣告</caption>
-					<br>
-					<table class="table table-hover">
+									<div class="form-group">
+										<label for="aa">廣告結束時間:</label> <input type="text" name="bbEnd"
+											id="f_date2" placeholder="" class="form-control"
+											style="width: 140px" value="<%=bbVO.getbbEnd()%>">
+									</div>
 
-						<thead>
-							<tr>
-								<th >廣告編號</th>
-								<th >圖片URL</th>
-								<th>開始時間</th>
-								<th >結束時間</th>
-								<th>廣告圖片</th>
-								<th align="center">修改</th>
-								<th align="center">刪除</th>
-							</tr>
-						</thead>
+								</div>
 
-						<tbody>
-							<%@ include file="page1.file"%>
-							<c:forEach var="bbVO"  items="${list}" varStatus="status"
-								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-								<tr>
-									<td>${bbVO.bbID}</td>
-									<td>${bbVO.url}</td>
-									<td>${bbVO.bbStart}</td>
-									<td>${bbVO.bbEnd}</td>
 
-									<c:set var="index" value="${status.index}" />
 
-									<%
-										int count = (Integer) pageContext.getAttribute("index");
-											String encodedText = null;
-											if (list.get(count).getpic() != null) {
-												Base64.Encoder encoder = Base64.getEncoder();
-												encodedText = encoder.encodeToString(list.get(count).getpic());
-												pageContext.setAttribute("icon_", new Integer(1));
-											} else {
-												pageContext.setAttribute("icon_", new Integer(0));
-											}
-									%>
+					
+								<br>
 
-									<c:choose>
-										<c:when test="${ icon_== 1}">
-											<td style=""><img width="200"
-												src="data:image/png;base64, <%=encodedText%>"></td>
-										</c:when>
-										<c:otherwise>
-											<td><img
-												src="<%=request.getContextPath()%>/image/noImage.jpg"
-												width="200" height="132"></td>
+<%
+
+Base64.Encoder encoder = Base64.getEncoder();
+String encodedText = "";
+
+if (bbVO.getpic() != null) {
+	encodedText = encoder.encodeToString(bbVO.getpic());
+	pageContext.setAttribute("bbPic", new Integer(1));
+} else {
+	pageContext.setAttribute("bbPic", new Integer(0));
+}
+
+%>
+								<div class="form-row">
+									<div class="input-group mb-3 form-group">
+
+										<c:choose>
+									<c:when test="${ bbPic==1}">
+												<img id="blah" width="377.8" height="250"
+													src="data:image ;base64, <%=encodedText%>">
+										</c:when> 
+
+
+										<c:otherwise> 
+											<img id="icon_preview" width="377.8" height="250" 
+												src="<%=request.getContextPath()%>/image/noImage.jpg"> 
 										</c:otherwise>
-									</c:choose>
-
-
-						
 
 
 
+								</c:choose> 
 
 
-
-
-									<td>
-										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/back_end/billboard/bb.do"
-											style="margin-bottom: 0px;">
-											<button class="btn btn-info" type="submit">修改</button>
-											<input type="hidden" name="bbID" value="${bbVO.bbID }">
-											<input type="hidden" name="requestURL"
-												value="<%=request.getServletPath()%>">
-											<!--送出本網頁的路徑給Controller-->
-											<input type="hidden" name="action" value="getOne_For_Update">
-										</form>
-									</td>
-									
-									
-									<td>
-										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/back_end/billboard/bb.do"
-											style="margin-bottom: 0px;">
-											<button class="btn btn-info" type="submit">刪除</button>
-											<input type="hidden" name="bbID" value="${bbVO.bbID }">
-											<input type="hidden" name="requestURL"
-												value="<%=request.getServletPath()%>">
-											<!--送出本網頁的路徑給Controller-->
-											<input type="hidden" name="action" value="delete">
-										</form>
-									</td>
+									</div>
 									
 									
 									
 									
+									<div class="input-group mb-3 form-group">
+
+										<div class="custom-file">
+
+											<input class="custom-file-input" id="inputGroupFile01"
+												name="bbPic" multiple type="file"> <label
+												class="custom-file-label" for="inputGroupFile02"
+												id="labelPicName">上傳輪播廣告 file</label>
+										</div>
 
 
+										<div class="input-group-append">
+											<span class="input-group-text" id="">Upload</span>
+										</div>
 
+									</div>
 
+								</div>
+																	
 
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<%@ include file="page2.file"%>
-					<br> <a href="">返回頁面</a>
+								<div class="col-12 text-center">
+									<input type="hidden" name="action" value="update"> <input
+										type="hidden" name="requestURL"
+										value="<%=request.getParameter("requestURL")%>">
+									<!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+									<input class="btn btn-primary" type="submit" value="送出修改">
+									<button class="btn btn-primary">返回</button>
+								</div>
+
+							</form>
+
+							<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
+
+						</div>
+					</div>
 				</div>
-
-
-
-
-
 
 				<!-- Page Content 這邊開始自由發揮結束-->
 			</div>
@@ -481,24 +508,125 @@ pageContext.setAttribute("list", list);
 	<script src="js/sb-admin.min.js"></script>
 
 </body>
+
+<% 
+  java.sql.Date date = null;
+  try {
+	    date = bbVO.getbbStart();
+   } catch (Exception e) {
+	    date = new java.sql.Date(System.currentTimeMillis());
+   }
+  
+  String str = null;
+%>
+
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script
+	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+
+
+
 <style>
-table {
-	table-layout: auto;
-	width: 100%;
-	margin-top: 5px;
-	margin-bottom: 5px;
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
 }
 
-.table>thead>tr>th {
-	text-align: center;
-	vertical-align: middle;
-}
-
-.table>tbody>tr>td {
-	word-break: break-all;
-	text-align: center;
-	vertical-align: middle;
-	border-top: 0px;
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
 }
 </style>
+
+<script>
+	$(function() {
+
+		$(document).ready(function() {
+			$('#inputGroupFile01').on('change', function(event) {
+				// and you can get the name of the image like this:
+				console.log(event.target.files[0].name);
+				$('#labelPicName').text(event.target.files[0].name);
+			});
+		});
+
+
+
+		$("#inputGroupFile01").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#icon_preview').attr('src', e.target.result);
+
+				}
+
+				reader.readAsDataURL(this.files[0]);
+
+			}
+		});
+
+	
+
+	});
+	
+	$(function() {
+
+		$(document).ready(function() {
+			$('#inputGroupFile01').on('change', function(event) {
+				// and you can get the name of the image like this:
+				console.log(event.target.files[0].name);
+				$('#labelPicName').text(event.target.files[0].name);
+			});
+		});
+
+		$("#inputGroupFile01").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#blah').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(this.files[0]);
+
+			}
+		});
+	});
+	
+	
+
+    $.datetimepicker.setLocale('zh');
+    $('#f_date1').datetimepicker({
+       theme: '',              //theme: 'dark',
+       timepicker:false,       //timepicker:true,
+       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+	   value: '<%=date%> 	', // value:   new Date(),
+//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//startDate:	            '2017/07/10',  // 起始日
+//minDate:               '-1970-01-01', // 去除今日(不含)之前
+//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+});
+$('#f_date2').datetimepicker({
+	theme : '', //theme: 'dark',
+	timepicker : false, //timepicker:true,
+	step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+	format : 'Y-m-d', //format:'Y-m-d H:i:s',
+	value :<%=str%>, // value:   new Date(),
+//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//startDate:	            '2017/07/10',  // 起始日
+	minDate:               '-1970-01-01', // 去除今日(不含)之前
+//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+});
+	
+	
+	
+	
+	
+	
+</script>
+
+
+
 </html>

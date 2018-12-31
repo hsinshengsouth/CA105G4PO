@@ -335,7 +335,7 @@ img {
 								<div class="form-row">
 									<div class="form-group">
 										<label for="aa">欲前往頁面的URL:</label> <input type="text"
-											name="braName" id="braName" placeholder="請輸入URL"
+											name="url" id="url" placeholder="請輸入URL"
 											class="form-control" style="width: 200px">
 									</div>
 
@@ -360,39 +360,20 @@ img {
 									</div>
 
 								</div>
-
-				
-
-
-								<div class="form-row">
-
-							
-
-								</div>
+									
 								<br>
 				
-
-
-
-
-
-
 								<div class="form-row">
-
-
-
 									<div class="form-row" style="margin-bottom: 15px">
 										<img id="blah" />
 									</div>
-
-
 
 									<div class="input-group mb-3 form-group">
 										<div class="custom-file">
 
 											<input class="custom-file-input" id="inputGroupFile01"
-												name="braPic" multiple type="file"> <label
-												class="custom-file-label" for="inputGroupFile02"
+												name="bbPic" multiple type="file"> <label
+												class="custom-file-label" for="inputGroupFile01"
 												id="labelPicName">上傳輪播廣告 file</label>
 
 										</div>
@@ -502,6 +483,16 @@ img {
   
   String str = null;
 %>
+
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script
+	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+
+
+
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {
 	width: 300px; /* width:  300px; */
@@ -528,16 +519,12 @@ img {
 
 				reader.onload = function(e) {
 					$('#blah').attr('src', e.target.result);
-
 				}
 
 				reader.readAsDataURL(this.files[0]);
 
 			}
 		});
-
-	
-
 	});
 	
 	
@@ -559,8 +546,7 @@ $('#f_date2').datetimepicker({
 	timepicker : false, //timepicker:true,
 	step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 	format : 'Y-m-d', //format:'Y-m-d H:i:s',
-	value :<%=str%>
-, // value:   new Date(),
+	value :<%=str%>, // value:   new Date(),
 //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 //startDate:	            '2017/07/10',  // 起始日
 	minDate:               '-1970-01-01', // 去除今日(不含)之前

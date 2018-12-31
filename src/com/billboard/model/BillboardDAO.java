@@ -17,9 +17,9 @@ public class BillboardDAO implements BillboardDAO_interface {
 
 	private static final String INSERT_SQL = "INSERT INTO Billboard(bbID,url,pic,bbStart,bbEnd) "
 			+ "VALUES(bb_seq.nextval,?,?,?,?)";
-	private static final String UPDATE = "UPDATE Billboard set url=? pic=? bbStart=?, bbEnd=? where bbID=? ";
+	private static final String UPDATE = "UPDATE Billboard set url=?, pic=?, bbStart=?, bbEnd=? where bbID=?";
 	private static final String DELETE = "DELETE FROM Billboard WHERE bbID=?";
-	private static final String GET_ONE_SQL = "SELECT bbID,url,bbStart,bbEnd FROM Billboard WHERE bbID=?";
+	private static final String GET_ONE_SQL = "SELECT bbID,url,pic,bbStart,bbEnd FROM Billboard WHERE bbID=?";
 	private static final String GET_ALL_SQL = "SELECT * FROM Billboard ORDER BY bbID ";
 
 	private static DataSource ds = null;

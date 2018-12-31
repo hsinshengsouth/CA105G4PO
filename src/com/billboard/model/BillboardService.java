@@ -23,13 +23,14 @@ public class BillboardService {
 		return bbVO;
 	}
 	
-	public BillboardVO updateBB(String url, byte[] pic,Date bbStart,Date bbEnd) {
+	public BillboardVO updateBB(String url, byte[] pic,Date bbStart,Date bbEnd,Integer bbID) {
 		BillboardVO bbVO = new BillboardVO(); 
 	
 		bbVO.seturl(url);
 		bbVO.setpic(pic);
 		bbVO.setbbStart(bbStart);
 		bbVO.setbbEnd(bbEnd);
+		bbVO.setbbID(bbID);
 		dao.update(bbVO);
 		return 	bbVO;
 	}
@@ -37,6 +38,12 @@ public class BillboardService {
 	public void deleteBB(Integer bbID) {
 		dao.delete(bbID);
 	}
+	
+	public BillboardVO findByPK(Integer bbID) {
+		return dao.findByPK(bbID);
+		
+	}
+	
 	
 	public List<BillboardVO>getAll(){
 		return dao.getAll();
