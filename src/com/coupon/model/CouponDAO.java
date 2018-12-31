@@ -42,10 +42,10 @@ private static DataSource ds =null;
 			con=ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_SQL);
 			
-			pstmt.setBytes(1, couponVO.getCpnPic());
-			pstmt.setInt(2, couponVO.getDiscount());
-			pstmt.setInt(3, couponVO.getQuantity());
-			pstmt.setInt(4, couponVO.getAppQuantity());
+			pstmt.setBytes(1, couponVO.getcpnPic());
+			pstmt.setInt(2, couponVO.getdiscount());
+			pstmt.setInt(3, couponVO.getquantity());
+			pstmt.setInt(4, couponVO.getappQuantity());
 			
 			pstmt.executeUpdate();
 			
@@ -79,11 +79,11 @@ private static DataSource ds =null;
 			con=ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_SQL);
 			
-			pstmt.setBytes(1, couponVO.getCpnPic());
-			pstmt.setInt(2, couponVO.getDiscount());
-			pstmt.setInt(3, couponVO.getQuantity());
-			pstmt.setInt(4, couponVO.getAppQuantity());
-			pstmt.setString(5, couponVO.getCpnID());
+			pstmt.setBytes(1, couponVO.getcpnPic());
+			pstmt.setInt(2, couponVO.getdiscount());
+			pstmt.setInt(3, couponVO.getquantity());
+			pstmt.setInt(4, couponVO.getappQuantity());
+			pstmt.setString(5, couponVO.getcpnID());
 			
 			
 			pstmt.executeUpdate();
@@ -127,11 +127,11 @@ private static DataSource ds =null;
 			if(rs.next()) {
 				couponVO = new CouponVO();
 				
-				couponVO.setCpnID(rs.getString("cpnID"));
-				couponVO.setCpnPic(rs.getBytes("cpnPic"));
-				couponVO.setDiscount(rs.getInt("discount"));
-				couponVO.setQuantity(rs.getInt("quantity"));
-				couponVO.setAppQuantity(rs.getInt("appQuantity"));
+				couponVO.setcpnID(rs.getString("cpnID"));
+				couponVO.setcpnPic(rs.getBytes("cpnPic"));
+				couponVO.setdiscount(rs.getInt("discount"));
+				couponVO.setquantity(rs.getInt("quantity"));
+				couponVO.setappQuantity(rs.getInt("appQuantity"));
 			}
 			
 		} catch (SQLException e) {
@@ -180,11 +180,11 @@ private static DataSource ds =null;
 			while(rs.next()) {
 				couponVO = new CouponVO();
 								
-				couponVO.setCpnID(rs.getString("cpnID"));
-				couponVO.setCpnPic(rs.getBytes("cpnPic"));
-				couponVO.setDiscount(rs.getInt("discount"));
-				couponVO.setQuantity(rs.getInt("quantity"));
-				couponVO.setAppQuantity(rs.getInt("appQuantity"));
+				couponVO.setcpnID(rs.getString("cpnID"));
+				couponVO.setcpnPic(rs.getBytes("cpnPic"));
+				couponVO.setdiscount(rs.getInt("discount"));
+				couponVO.setquantity(rs.getInt("quantity"));
+				couponVO.setappQuantity(rs.getInt("appQuantity"));
 				
 				list.add(couponVO);
 			}

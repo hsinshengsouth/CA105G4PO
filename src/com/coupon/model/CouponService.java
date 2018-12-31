@@ -13,10 +13,10 @@ public class CouponService {
 	public CouponVO addCpn(byte[] cpnPic,Integer discount,Integer quantity,Integer appQuantity) {
 		CouponVO cpnVO =new CouponVO();
 		
-		cpnVO.setCpnPic(cpnPic);
-		cpnVO.setDiscount(discount);
-		cpnVO.setQuantity(quantity);
-		cpnVO.setAppQuantity(appQuantity);
+		cpnVO.setcpnPic(cpnPic);
+		cpnVO.setdiscount(discount);
+		cpnVO.setquantity(quantity);
+		cpnVO.setappQuantity(appQuantity);
 		dao.insert(cpnVO);
 		
 		return cpnVO;
@@ -25,11 +25,11 @@ public class CouponService {
 	public CouponVO updateCpn(byte[] cpnPic,Integer discount,Integer quantity,Integer appQuantity,String cpnID) {
 	CouponVO cpnVO = new CouponVO();	
 		
-	cpnVO.setCpnPic(cpnPic);
-	cpnVO.setDiscount(discount);
-	cpnVO.setQuantity(quantity);
-	cpnVO.setAppQuantity(appQuantity);
-	cpnVO.setCpnID(cpnID);
+	cpnVO.setcpnPic(cpnPic);
+	cpnVO.setdiscount(discount);
+	cpnVO.setquantity(quantity);
+	cpnVO.setappQuantity(appQuantity);
+	cpnVO.setcpnID(cpnID);
 	
 	dao.update(cpnVO);
 		
@@ -41,7 +41,7 @@ public class CouponService {
 		
 	}
 	
-	public List<CouponVO>getALl(){
+	public List<CouponVO>getAll(){
 		return dao.getAll();
 	}
 	
