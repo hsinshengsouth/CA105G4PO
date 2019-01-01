@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.activityDetail.model.ActivityDetailVO;
+
 public class ActivityJDBCDAO implements ActivityDAO_interface {
 
 	private static final String DRIVER= "oracle.jdbc.driver.OracleDriver";
@@ -362,6 +364,12 @@ public class ActivityJDBCDAO implements ActivityDAO_interface {
 //		dao.delete("A0021");
 		
 		
+		
+	}
+
+	@Override
+	public void insertWithDetail(ActivityVO actVO, List<ActivityDetailVO> list) {
+		// TODO Auto-generated method stub
 		
 	}
 

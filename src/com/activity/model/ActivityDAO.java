@@ -13,6 +13,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.activityDetail.model.ActivityDetailDAO;
+import com.activityDetail.model.ActivityDetailVO;
+
 public class ActivityDAO implements ActivityDAO_interface {
 	
 private static DataSource ds =null;	
@@ -307,5 +310,47 @@ private static DataSource ds =null;
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public void insertWithDetail(ActivityVO actVO, List<ActivityDetailVO> list) {
+			Connection con =null;
+			PreparedStatement pstmt =null;
+			
+			try {
+				con =ds.getConnection();
+				// 1●設定於 pstm.executeUpdate()之前
+				con.setAutoCommit(false);
+				
+				//先新增促銷活動編號
+				String cols[] = {"actID"};
+				pstmt=con.prepareStatement(INSERT_SQL, cols);
+				pstmt.setString(1,actVO.getActName());
+				pstmt.setDate(2, actVO.getActStart());
+				pstmt.setDate(3, actVO.getActEnd());
+				pstmt.executeUpdate();
+				//掘取對應的自增主鍵值
+				String next_actID =null;
+				ResultSet rs =pstmt.getGeneratedKeys();
+				if(rs.next()) {
+					next_actID =rs.getString(1);
+					System.out.println("自增主鍵值= " + next_actID +"(剛新增成功的部門編號)");
+				}else {
+					System.out.println("未取得自增主鍵值");
+				}
+				rs.close();
+				ActivityDetailDAO adDAO =new ActivityDetailDAO(); 
+				System.out.println(list.size());
+				
+				
+				
+				
+			} catch (SQLException e) {
+				throw new RuntimeException("A database error occured."+e.getMessage());
+			}
+			
+			
+		
+		
 	}
 }

@@ -249,4 +249,9 @@ public class ActivityDetailDAO implements ActivityDetailDAO_interface {
 		return list;
 	}
 
+	@Override
+	public void insert2(ActivityDetailVO adVO, Connection con) {
+		
+	}
+
 }
