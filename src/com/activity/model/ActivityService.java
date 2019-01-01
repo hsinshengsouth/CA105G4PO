@@ -2,6 +2,8 @@ package com.activity.model;
 
 import java.util.List;
 
+import com.activityDetail.model.ActivityDetailVO;
+
 public class ActivityService {
 	
 	private ActivityDAO_interface dao;
@@ -47,6 +49,20 @@ public class ActivityService {
 	
 	public List<ActivityVO>getAll(){
 		return dao.getAll();
+	}
+	
+	public ActivityVO insertWithDetail(String actName,java.sql.Date startDate,java.sql.Date  endDate) {
+		ActivityVO actVO =new ActivityVO();
+		
+		actVO.setActName(actName);
+		actVO.setActStart(startDate);
+		actVO.setActEnd(endDate);
+		
+		
+		dao.insertWithDetail(actVO, null);
+		
+		
+		return actVO;
 	}
 	
 }
