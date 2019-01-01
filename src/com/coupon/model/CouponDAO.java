@@ -26,7 +26,7 @@ public class CouponDAO implements CouponDAO_interface {
 	}
 
 	private static final String INSERT_SQL = "INSERT INTO Coupon(cpnID,cpnPic,discount,quantity,appquantity) VALUES ('C'||LPAD(to_char(cpn_seq.NEXTVAL), 4, '0'), ?, ?, ?, ?)";
-	private static final String UPDATE_SQL = "UPDATE Coupon set cpnPic=? discount=? quantity=? appQuantity = ? where cpnID = ?";
+	private static final String UPDATE_SQL = "UPDATE Coupon set cpnPic=? ,discount=? ,quantity=? ,appQuantity = ? WHERE cpnID = ?";
 	private static final String GET_ALL_SQL = "SELECT * from coupon";
 	private static final String GET_ONE_SQL = "SELECT * from coupon where cpnID = ?";
 	private static final String DELETE = "DELETE FROM coupon WHERE cpnID=?";

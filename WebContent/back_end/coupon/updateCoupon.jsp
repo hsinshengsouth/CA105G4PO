@@ -20,7 +20,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Update Branch</title>
+<title>Update Coupon</title>
 
 <!-- Bootstrap core CSS-->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -300,7 +300,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">修改分店資料</li>
+					<li class="breadcrumb-item active">修改優惠卷資料</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
@@ -322,13 +322,13 @@
 					<div class="row">
 						<div class="col-sm-7 offset-sm-3 ">
 
-							<form method="post" action="bra.do" name="updateform"
+							<form method="post" action="cpn.do" name="updateform"
 								class="form-horizontal justify-content-center"
 								enctype="multipart/form-data">
 
 								<div class="form-row">
 									<div class="form-group">
-										<label for="aa">分店編號:<font color=red><b>*</b></font></label> <input
+										<label for="aa">優惠卷編號:<font color=red><b>*</b></font></label> <input
 											type="text" name="cpnID" id="cpnID" placeholder=""
 											class="form-control" style="width: 200px"
 											value="<%=cpnVO.getcpnID()%>">
@@ -359,7 +359,7 @@
 										<label for="aa">申請數量:</label> <input type="text"
 											name="appQuantity" id="aa" placeholder=""
 											class="form-control" style="width: 140px"
-											value="<%=cpnVO.getquantity()%>">
+											value="<%=cpnVO.getappQuantity()%>">
 									</div>
 
 								</div>
@@ -401,8 +401,8 @@
 										<div class="custom-file">
 
 											<input class="custom-file-input" id="inputGroupFile01"
-												name="braPic" multiple type="file"> <label
-												class="custom-file-label" for="inputGroupFile02"
+												name="cpnPic" multiple type="file"> <label
+												class="custom-file-label" for="inputGroupFile01"
 												id="labelPicName">上傳優惠卷圖片 file</label>
 										</div>
 
@@ -516,7 +516,7 @@
 
 				reader.onload = function(e) {
 					$('#icon_preview').attr('src', e.target.result);
-
+					$('#blah').attr('src', e.target.result);
 				}
 
 				reader.readAsDataURL(this.files[0]);

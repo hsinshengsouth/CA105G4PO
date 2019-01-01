@@ -55,15 +55,17 @@ public class CpnServlet extends HttpServlet {
 			Integer appQuantity =null;
 			try {
 			appQuantity =new Integer(req.getParameter("appQuantity"));
-				if(appQuantity!=quantity) {
-					errorMsgs.add("發行數量與申請數量請一致");
-				}
+//				if(appQuantity!=quantity) {
+//					errorMsgs.add("發行數量與申請數量請一致");
+//				}
 			
 			}catch(NumberFormatException e) {
 				appQuantity =0;
 				errorMsgs.add("申請數量請填數字");
 			}
 				
+			System.out.println(quantity);System.out.println(appQuantity);
+			
 			byte []pic =null;
 			
 			Part cpnPic =req.getPart("cpnPic");
@@ -187,8 +189,12 @@ public class CpnServlet extends HttpServlet {
 				
 				if(!errorMsgs.isEmpty()) {
 					req.setAttribute("cpnVO", cpnVO);
-					RequestDispatcher failureView =req.getRequestDispatcher(requestURL);
+					RequestDispatcher failureView =req.getRequestDispatcher("/back_end/coupon/updateCoupon.jsp");
 					failureView.forward(req, res);
+					
+					for(String s: errorMsgs)
+						System.out.println(s);
+					
 					return;
 				}
 								
@@ -196,13 +202,14 @@ public class CpnServlet extends HttpServlet {
 				CouponService cpnSvc =new CouponService();
 				cpnVO =cpnSvc.updateCpn(pic, discount, quantity, appQuantity, cpnID);
 				
+				req.setAttribute("cpnVO", cpnVO);
 				String successURL =requestURL;
 				RequestDispatcher successView =req.getRequestDispatcher(successURL);
 				successView.forward(req, res);
-				}catch(Exception e) {
+			}catch(Exception e) {
 					errorMsgs.add("修改資料失敗"+e.getMessage());
-					RequestDispatcher failureView =req.getRequestDispatcher("back_end/coupon/updateCoupon.jsp");
-					failureView.forward(req, res);
+				RequestDispatcher failureView =req.getRequestDispatcher("/back_end/coupon/updateCoupon.jsp");
+				failureView.forward(req, res);
 				}
 				
 				
@@ -219,7 +226,7 @@ public class CpnServlet extends HttpServlet {
 				CouponService cpnSvc =new CouponService();
 				cpnSvc.delete(cpnID);
 				
-				String url ="/back_end/coupon/listAllCoupon";
+				String url ="/back_end/coupon/listAllCoupon.jsp";
 				RequestDispatcher successView =req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				}catch(Exception e) {
