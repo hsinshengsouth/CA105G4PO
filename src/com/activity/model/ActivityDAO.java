@@ -341,12 +341,44 @@ private static DataSource ds =null;
 				rs.close();
 				ActivityDetailDAO adDAO =new ActivityDetailDAO(); 
 				System.out.println(list.size());
+				for(ActivityDetailVO adVO:list) {
+					adVO.setActID(next_actID);
+					adDAO.insert2(adVO, con);
+				}
+				// 2●設定於 pstm.executeUpdate()之後
+				con.commit();
+				con.setAutoCommit(true);
 				
 				
-				
-				
-			} catch (SQLException e) {
-				throw new RuntimeException("A database error occured."+e.getMessage());
+			}catch (SQLException se) {
+				if (con != null) {
+					try {
+						// 3●設定於當有exception發生時之catch區塊內
+						System.err.print("Transaction is being ");
+						System.err.println("rolled back-由-activity");
+						con.rollback();
+					} catch (SQLException excep) {
+						throw new RuntimeException("rollback error occured. "
+								+ excep.getMessage());
+					}
+				}
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			}finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
 			}
 			
 			

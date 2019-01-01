@@ -252,6 +252,41 @@ public class ActivityDetailDAO implements ActivityDetailDAO_interface {
 	@Override
 	public void insert2(ActivityDetailVO adVO, Connection con) {
 		
+		PreparedStatement pstmt =null;
+		
+		try {
+			pstmt =con.prepareStatement(INSERT_SQL);
+			pstmt.setString(1, adVO.getActID());
+			pstmt.setString(2, adVO.getRtID());
+			pstmt.setFloat(3, adVO.getDiscount());
+		
+			pstmt.executeUpdate();
+		
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-emp");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		
 	}
 
 }
