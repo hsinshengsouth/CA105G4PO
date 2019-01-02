@@ -462,4 +462,24 @@
 
 </body>
 
+<style>
+table {
+	table-layout: auto;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.table>thead>tr>th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.table>tbody>tr>td {
+	word-break: break-all;
+	text-align: center;
+	vertical-align: middle;
+	border-top: 0px;
+}
+</style>
 </html>
