@@ -51,16 +51,9 @@ public class ActivityService {
 		return dao.getAll();
 	}
 	
-	public ActivityVO insertWithDetail(String actName,java.sql.Date startDate,java.sql.Date  endDate) {
-		ActivityVO actVO =new ActivityVO();
+	public ActivityVO insertWithDetail(ActivityVO actVO,List<ActivityDetailVO>adList) {
 		
-		actVO.setActName(actName);
-		actVO.setActStart(startDate);
-		actVO.setActEnd(endDate);
-		
-		
-		dao.insertWithDetail(actVO, null);
-		
+		dao.insertWithDetail(actVO, adList);
 		
 		return actVO;
 	}

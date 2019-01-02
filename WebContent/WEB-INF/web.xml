@@ -55,9 +55,7 @@
     <servlet-name>BBServlet</servlet-name>
     <url-pattern>/back_end/billboard/bb.do</url-pattern>
   </servlet-mapping>
-  
-  
-    <servlet>
+  <servlet>
     <servlet-name>CpnServlet</servlet-name>
     <servlet-class>com.coupon.controller.CpnServlet</servlet-class>
   </servlet>
@@ -65,7 +63,4 @@
     <servlet-name>CpnServlet</servlet-name>
     <url-pattern>/back_end/coupon/cpn.do</url-pattern>
   </servlet-mapping>
-  
-  
-  
 </web-app>
