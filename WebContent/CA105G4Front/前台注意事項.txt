@@ -1,0 +1,11 @@
+主頁是：indexCustom.html
+房型頁面請改：roomsC.html
+打工換宿頁面請改：Stay&Help.html
+優惠?請改：Coupon.html
+附近資訊請改：Neighbourhood.html
+
+會員首頁為：MyAccount.html
+與會員有關的請都共用MyAccount.html這個頁面的sidebar已參考價構圖幫各位打好
+
+另有留一整頁空白的頁面TemplateInner.html
+可給聊天室、LOGIN、註冊會員、新增訂單使用
