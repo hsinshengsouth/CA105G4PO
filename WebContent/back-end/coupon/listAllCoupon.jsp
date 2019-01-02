@@ -5,7 +5,12 @@
 <%@page import="java.util.*"%>
 
 <%
-	CouponVO cpnVO = (CouponVO) request.getAttribute("cpnVO");//CpnServlet.java (Concroller) 存入req的cpnVO物件 (包括幫忙取出的cpnVO, 也包括輸入資料錯誤時的cpnVO物件)
+	CouponService cpnSvc = new CouponService();
+	List<CouponVO> list = cpnSvc.getAll();
+	pageContext.setAttribute("list", list);
+
+	CouponVO cpnVO = (CouponVO) request.getAttribute("cpnVO");
+	String val = "";
 %>
 
 <!DOCTYPE html>
@@ -13,37 +18,46 @@
 
 <head>
 
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Update Coupon</title>
+<title>ListAllCoupon</title>
 
 <!-- Bootstrap core CSS-->
-<link href="<%=request.getContextPath()%>/back_end/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back-end/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
-<link href="<%=request.getContextPath()%>/back_end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+<link href="<%=request.getContextPath()%>/back-end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
 
 <!-- Page level plugin CSS-->
-<link href="<%=request.getContextPath()%>/back_end/vendor/datatables/dataTables.bootstrap4.css"
+<link href="<%=request.getContextPath()%>/back-end/vendor/datatables/dataTables.bootstrap4.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="<%=request.getContextPath()%>/back_end/css/sb-admin.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back-end/css/sb-admin.css" rel="stylesheet">
 <style>
-.container {
-	margin-left: -13px;
-	padding: 10px;
+.scrollbar {
+align:center;
+float: left;
+height: 150px;
+width: 120px;
+overflow-y: scroll;
+
 }
+
+.scrollbar1 {
+overflow-x: scroll;
+float: top;
+width: 120px;
+
+}
+
 </style>
-
-
-
 </head>
 
 <body id="page-top">
@@ -53,7 +67,7 @@
 		<a class="navbar-brand mr-1" href="index.html">M.C.P.I.G villa</a>
 
 		<button class="btn btn-link btn-sm text-white order-1 order-sm-0"
-			id="sidebarToggle"  href ="#">
+			id="sidebarToggle" href="#">
 			<i class="fas fa-bars"></i>
 		</button>
 
@@ -300,138 +314,126 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">修改優惠卷資料</li>
+					<li class="breadcrumb-item active">所有分店列表</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
 
-				<%--錯誤列表 --%>
-				<c:if test="${not empty errorMsgs}">
-					<font style="color: red">請修正以下錯誤</font>
-					<ul>
-						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
-						</c:forEach>
-					</ul>
-				</c:if>
 
 
-				<br>
-
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-7 offset-sm-3 ">
-
-							<form method="post" action="cpn.do" name="updateform"
-								class="form-horizontal justify-content-center"
-								enctype="multipart/form-data">
-
-								<div class="form-row">
-									<div class="form-group">
-										<label for="aa">優惠卷編號:<font color=red><b>*</b></font></label> <input
-											type="text" name="cpnID" id="cpnID" placeholder=""
-											class="form-control" style="width: 200px"
-											value="<%=cpnVO.getcpnID()%>">
-									</div>
-								</div>
-
-								<div class="form-row">
-									<div class="form-group">
-										<label for="aa">折扣金額:</label> <input type="text"
-											name="discount" id="discount" placeholder=""
-											class="form-control" style="width: 200px"
-											value="<%=cpnVO.getdiscount()%>">
-									</div>
 
 
-								</div>
+				<div class="container-fluid">
+					<caption>優惠卷列表</caption>
+					<br>
+					<table class="table table-hover">
+
+						<thead>
+							<tr>
+								<th style="width: 80px">編號</th>
+								<th style="width: 90px">折抵金額</th>
+								<th style="width: 85px">數量</th>
+								<th style="width: 80px">申請數量</th>
+								<th>優惠卷圖片</th>
+								<th align="center">修改</th>
+								<th align="center">刪除</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<%@ include file="page1.file"%>
+							<c:forEach var="cpnVO" items="${list}" varStatus="status"
+								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+								<tr>
+									<td>${cpnVO.cpnID}</td>
+									<td>${cpnVO.discount}</td>
+									<td>${cpnVO.quantity}</td>
+									<td>${cpnVO.appQuantity}</td>
+
+									<c:set var="index" value="${status.index}" />
+									<%
+										int count = (Integer) pageContext.getAttribute("index");
+											String encodedText = null;
+											if (list.get(count).getcpnPic() != null) {
+												Base64.Encoder encoder = Base64.getEncoder();
+												encodedText = encoder.encodeToString(list.get(count).getcpnPic());
+												pageContext.setAttribute("icon_", new Integer(1));
+											} else {
+												pageContext.setAttribute("icon_", new Integer(0));
+											}
+									%>
 
 
-								<div class="form-row">
-									<div class="form-group" style="margin-right: 15px">
-										<label for="aa">數量:</label> <input type="text" name="quantity"
-											id="aa" placeholder="" class="form-control"
-											style="width: 140px" value="<%=cpnVO.getquantity()%>">
-
-									</div>
-
-									<div class="form-group">
-										<label for="aa">申請數量:</label> <input type="text"
-											name="appQuantity" id="aa" placeholder=""
-											class="form-control" style="width: 140px"
-											value="<%=cpnVO.getappQuantity()%>">
-									</div>
-
-								</div>
-
-								<br>
-
-								<%
-									Base64.Encoder encoder = Base64.getEncoder();
-									String encodedText = "";
-
-									if (cpnVO.getcpnPic() != null) {
-										encodedText = encoder.encodeToString(cpnVO.getcpnPic());
-										pageContext.setAttribute("cpnPic", new Integer(1));
-									} else {
-										pageContext.setAttribute("cpnPic", new Integer(0));
-									}
-								%>
-
-								<div class="form-row">
-									<div class="input-group mb-3 form-group">
-										<c:choose>
-											<c:when test="${cpnPic==1}">
-												<img id="blah" width="377.8" height="250"
-													src="data:image ;base64, <%=encodedText%>">
-											</c:when>
+									<c:choose>
+										<c:when test="${ icon_== 1}">
+											<td style=""><img width="200"
+												src="data:image/png;base64, <%=encodedText%>"></td>
+										</c:when>
+										<c:otherwise>
+											<td><img
+												src="<%=request.getContextPath()%>/image/noImage.jpg"
+												width="200" height="132"></td>
+										</c:otherwise>
+									</c:choose>
 
 
-											<c:otherwise>
-												<img id="icon_preview" width="377.8" height="250"
-													src="<%=request.getContextPath()%>/image/noImage.jpg">
-											</c:otherwise>
+									<c:set var="index" value="${status.index}" />
+									<%
+										int count1 = (Integer) pageContext.getAttribute("index");
+											String encodedText1 = null;
 
-										</c:choose>
+											if (list.get(count).getcpnPic() != null) {
+												Base64.Encoder encoder = Base64.getEncoder();
+												encodedText1 = encoder.encodeToString(list.get(count).getcpnPic());
+												pageContext.setAttribute("icon_1", new Integer(1));
+											} else {
+												pageContext.setAttribute("icon_1", new Integer(0));
+											}
 
-									</div>
+											%>
+										<td>
+											<form METHOD="post"
+												ACTION="<%=request.getContextPath()%>/back-end/coupon/cpn.do"
+												style="margin-bottom: 0px;">
+												<button class="btn btn-info" type="submit">修改</button>
+												<input type="hidden" name="cpnID" value="${cpnVO.cpnID }">
+												<input type="hidden" name="requestURL"
+													value="<%=request.getServletPath()%>">
+												<!--送出本網頁的路徑給Controller-->
+												<input type="hidden" name="action" value="getOne_For_Update">
+											</form>
+										</td>
+										
+											
+											
+										
+										
+										<td>
+											<form METHOD="post"
+												ACTION="<%=request.getContextPath()%>/back-end/coupon/cpn.do"
+												style="margin-bottom: 0px;">
+												<button class="btn btn-info" type="submit">刪除</button>
+												<input type="hidden" name="cpnID" value="${cpnVO.cpnID }">
+												<input type="hidden" name="requestURL"
+													value="<%=request.getServletPath()%>">
+												<!--送出本網頁的路徑給Controller-->
+												<input type="hidden" name="action" value="delete">
+											</form>
+										</td>
+										
 
-									<div class="input-group mb-3 form-group">
-
-										<div class="custom-file">
-
-											<input class="custom-file-input" id="inputGroupFile01"
-												name="cpnPic" multiple type="file"> <label
-												class="custom-file-label" for="inputGroupFile01"
-												id="labelPicName">上傳優惠卷圖片 file</label>
-										</div>
-
-
-										<div class="input-group-append">
-											<span class="input-group-text" id="">Upload</span>
-										</div>
-
-									</div>
-
-								</div>
-
-
-								<div class="col-12 text-center">
-									<input type="hidden" name="action" value="update"> <input
-										type="hidden" name="requestURL"
-										value="<%=request.getParameter("requestURL")%>">
-									<!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
-									<input class="btn btn-primary" type="submit" value="送出修改">
-									<button class="btn btn-primary">返回</button>
-								</div>
-
-							</form>
-
-							<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
-
-						</div>
-					</div>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<%@ include file="page2.file"%>
+					<br> <a href="addCoupon.jsp">新增優惠卷</a>
 				</div>
+
+
+
+
+
 
 				<!-- Page Content 這邊開始自由發揮結束-->
 			</div>
@@ -485,48 +487,34 @@
 
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="<%=request.getContextPath()%>/back_end/vendor/jquery/jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/back_end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="<%=request.getContextPath()%>/back_end/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="<%=request.getContextPath()%>/back_end/js/sb-admin.min.js"></script>
-
-
-
-
+	<script src="<%=request.getContextPath()%>/back-end/js/sb-admin.min.js"></script>
 
 </body>
-<script>
-	$(function() {
+<style>
+table {
+	table-layout: auto;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
 
-		$(document).ready(function() {
-			$('#inputGroupFile01').on('change', function(event) {
-				// and you can get the name of the image like this:
-				console.log(event.target.files[0].name);
-				$('#labelPicName').text(event.target.files[0].name);
-			});
-		});
+.table>thead>tr>th {
+	text-align: center;
+	vertical-align: middle;
+}
 
-		$("#inputGroupFile01").change(function() {
-			if (this.files && this.files[0]) {
-				var reader = new FileReader();
-
-				reader.onload = function(e) {
-					$('#icon_preview').attr('src', e.target.result);
-					$('#blah').attr('src', e.target.result);
-				}
-
-				reader.readAsDataURL(this.files[0]);
-
-			}
-		});
-
-	});
-</script>
-
-
-
+.table>tbody>tr>td {
+	word-break: break-all;
+	text-align: center;
+	vertical-align: middle;
+	border-top: 0px;
+}
+</style>
 </html>

@@ -87,7 +87,7 @@ public class CpnServlet extends HttpServlet {
 			
 			if(!errorMsgs.isEmpty()) {
 				req.setAttribute("cpnVO", cpnVO);
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/coupon/addCoupon.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coupon/addCoupon.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -96,12 +96,12 @@ public class CpnServlet extends HttpServlet {
 			cpnVO =cpnSvc.addCpn(pic, discount, quantity, appQuantity);
 			
 			//3.新增完成，準備轉交
-			String urlBack = "/back_end/coupon/listAllCoupon.jsp";
+			String urlBack = "/back-end/coupon/listAllCoupon.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(urlBack);
 			successView.forward(req, res);
 			}catch(Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/coupon/addCoupon.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coupon/addCoupon.jsp");
 				failureView.forward(req, res);
 			}
 			
@@ -119,7 +119,7 @@ public class CpnServlet extends HttpServlet {
 				CouponVO cpnVO =cpnSvc.getOneByID(cpnID);
 				
 				req.setAttribute("cpnVO", cpnVO);
-				String url = "/back_end/coupon/updateCoupon.jsp";
+				String url = "/back-end/coupon/updateCoupon.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				}catch(Exception e) {
@@ -189,7 +189,7 @@ public class CpnServlet extends HttpServlet {
 				
 				if(!errorMsgs.isEmpty()) {
 					req.setAttribute("cpnVO", cpnVO);
-					RequestDispatcher failureView =req.getRequestDispatcher("/back_end/coupon/updateCoupon.jsp");
+					RequestDispatcher failureView =req.getRequestDispatcher("/back-end/coupon/updateCoupon.jsp");
 					failureView.forward(req, res);
 					
 					for(String s: errorMsgs)
@@ -208,7 +208,7 @@ public class CpnServlet extends HttpServlet {
 				successView.forward(req, res);
 			}catch(Exception e) {
 					errorMsgs.add("修改資料失敗"+e.getMessage());
-				RequestDispatcher failureView =req.getRequestDispatcher("/back_end/coupon/updateCoupon.jsp");
+				RequestDispatcher failureView =req.getRequestDispatcher("/back-end/coupon/updateCoupon.jsp");
 				failureView.forward(req, res);
 				}
 				
@@ -226,12 +226,12 @@ public class CpnServlet extends HttpServlet {
 				CouponService cpnSvc =new CouponService();
 				cpnSvc.delete(cpnID);
 				
-				String url ="/back_end/coupon/listAllCoupon.jsp";
+				String url ="/back-end/coupon/listAllCoupon.jsp";
 				RequestDispatcher successView =req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				}catch(Exception e) {
 					errorMsgs.add("刪除資料失敗"+e.getMessage());
-					RequestDispatcher failureView =req.getRequestDispatcher("/back_end/coupon/listAllCoupon.jsp");
+					RequestDispatcher failureView =req.getRequestDispatcher("/back-end/coupon/listAllCoupon.jsp");
 					failureView.forward(req, res);
 					
 				}

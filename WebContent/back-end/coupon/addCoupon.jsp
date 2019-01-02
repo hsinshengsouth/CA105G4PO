@@ -1,36 +1,53 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.coupon.model.*"%>
+<%@page import="java.util.*"%>
+
+<%
+	CouponVO cpnVO = (CouponVO) request.getAttribute("cpnVO");
+%>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin - Blank Page</title>
+<title>Add Coupon</title>
 
 <!-- Bootstrap core CSS-->
-<link
-	href="<%=request.getContextPath()%>/back_end/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back-end/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
-<link
-	href="<%=request.getContextPath()%>/back_end/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/back-end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
 
 <!-- Page level plugin CSS-->
-<link
-	href="<%=request.getContextPath()%>/back_end/vendor/datatables/dataTables.bootstrap4.css"
+<link href="<%=request.getContextPath()%>/back-end/vendor/datatables/dataTables.bootstrap4.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="<%=request.getContextPath()%>/back_end/css/sb-admin.css"
-	rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back-end/css/sb-admin.css" rel="stylesheet">
+<style>
+.container {
+	margin-left: -13px;
+	padding: 10px;
+}
+
+img {
+	max-width: 400px;
+	max-height: 250px;
+}
+</style>
+
+
 
 </head>
 
@@ -141,8 +158,8 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown2">
 					<h6 class="dropdown-header">新增/查詢:</h6>
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/orders/listAllOrders.jsp">查詢訂單</a> 
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/orders/addorders.jsp">新增訂單</a>
+					<a class="dropdown-item" href="blank.html">查詢訂單</a> <a
+						class="dropdown-item" href="blank.html">新增訂單</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
 					<a class="dropdown-item" href="tables.html">一般訂單列表</a> <a
@@ -169,10 +186,10 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">新增:</h6>
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/roomType/addroomType.jsp">新增房型</a>
+					<a class="dropdown-item" href="blank.html">新增房型</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/roomType/listAllRoomType.jsp">房型列表</a>
+					<a class="dropdown-item" href="tables.html">房型列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown3"
@@ -270,10 +287,10 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">新增:</h6>
-					<a class="dropdown-item" href="blank.html">新增分店</a>
+					<a class="dropdown-item" href="addBra.jsp">新增分店</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
-					<a class="dropdown-item" href="table.html">分店列表</a>
+					<a class="dropdown-item" href="listAllBranch.jsp">分店列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a class="nav-link"
 				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q&A</span>
@@ -288,26 +305,132 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item active">新增分店</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
-				<h1>房型管理</h1>
-				<hr>
-				<div class="container-fluid">
-					<h2>select_RoomType_index</h2>
-					<br>
+
+				<%--錯誤列表 --%>
+				<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
+
+
+				<br>
+
+				<div class="container">
 					<div class="row">
+						<div class="col-sm-7 offset-sm-3 ">
+
+							<form method="post" action="cpn.do" name="insertbraform"
+								class="form-horizontal justify-content-center"
+								enctype="multipart/form-data">
+
+
+								<div class="form-row">
+									<div class="form-group">
+										<label for="aa">折扣金額:</label> <input type="text"
+											name="discount" id="discount" placeholder="請輸入折扣金額"
+											class="form-control" style="width: 200px">
+									</div>
+
+							
+								</div>
+
+
+								<div class="form-row">
+									<div class="form-group" style="margin-right: 15px">
+										<label for="aa">數量:</label> 
+										<input type="number" name="quantity"
+											id="aa" placeholder="請輸入數量" class="form-control"
+											style="width: 140px">
+									</div>
+
+
+
+
+									<div class="form-group">
+										<label for="aa">申請數量:</label>
+
+										 <input type="text" name="appQuantity"
+											id="aa" placeholder="申請數量" class="form-control"
+											style="width: 140px ">
+									</div>
+
+								</div>
+
 					
-						<button type="button" class="btn btn-info">
-							<a href='<%=request.getContextPath()%>/back_end/roomType/listAllRoomType.jsp' style="color:#fff">查詢全部</a>
-						</button>
-						
+
+								<br>
+				
+
+
+
+
+
+
+								<div class="form-row">
+
+									<div class="form-row" style="margin-bottom: 15px">
+										<img id="blah" />
+									</div>
+
+
+									<div class="input-group mb-3 form-group">
+										<div class="custom-file">
+
+											<input class="custom-file-input" id="inputGroupFile01"
+												name="cpnPic" multiple type="file" style="margin-left:-20px"> <label
+												class="custom-file-label" for="inputGroupFile01"
+												id="labelPicName">上傳優惠卷 file</label>
+
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text" id="">Upload</span>
+										</div>
+
+
+									</div>
+
+								</div>
+
+
+
+
+								<div class="form-row">
+								<div class="col-12 text-center">
+									<input type="hidden" name="action" value="insert"> <input
+										class="btn btn-primary" type="submit" value="送出新增">
+									<button class="btn btn-primary">返回</button>
+								</div>
+							</div>
+
+							</form>
+
+							<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
+
+
+
+
+
+
+
+
+
+						</div>
 					</div>
-					<br>
-					
-						
 				</div>
+
+
+
+
+
+
 
 
 				<!-- Page Content 這邊開始自由發揮結束-->
@@ -322,11 +445,11 @@
 					</div>
 				</div>
 			</footer>
-
 		</div>
-		<!-- /.content-wrapper -->
 
 	</div>
+	<!-- /.content-wrapper -->
+
 	<!-- /#wrapper -->
 
 	<!-- Scroll to Top Button-->
@@ -357,20 +480,52 @@
 		</div>
 	</div>
 
+
+
+
+
 	<!-- Bootstrap core JavaScript-->
-	<script
-		src="<%=request.getContextPath()%>/back_end/vendor/jquery/jquery.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/back_end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script
-		src="<%=request.getContextPath()%>/back_end/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="<%=request.getContextPath()%>/back_end/js/sb-admin.min.js"></script>
-
+	<script src="<%=request.getContextPath()%>/back-end/js/sb-admin.min.js"></script>
 
 </body>
+<script>
+	$(function() {
+
+		$(document).ready(function() {
+			$('#inputGroupFile01').on('change', function(event) {
+				// and you can get the name of the image like this:
+				console.log(event.target.files[0].name);
+				$('#labelPicName').text(event.target.files[0].name);
+			});
+		});
+
+
+		$("#inputGroupFile01").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#blah').attr('src', e.target.result);
+
+				}
+
+				reader.readAsDataURL(this.files[0]);
+
+			}
+		});
+
+
+
+	});
+</script>
+
+
 
 </html>

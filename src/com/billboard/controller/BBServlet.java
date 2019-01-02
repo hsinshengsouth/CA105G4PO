@@ -88,7 +88,7 @@ public class BBServlet extends HttpServlet {
 					for (String s : errorMsgs) {
 						System.out.println(s);
 					}
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/billboard/addBB.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/billboard/addBB.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -98,14 +98,14 @@ public class BBServlet extends HttpServlet {
 				bbVO = bbSvc.addBB(url, pic, sDate, eDate);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String urlBack = "/back_end/billboard/listAllBillBoard.jsp";
+				String urlBack = "/back-end/billboard/listAllBillBoard.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(urlBack);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/billboard/addBB.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/billboard/addBB.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -126,7 +126,7 @@ public class BBServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
 				req.setAttribute("bbVO", bbVO);
-				String url = "/back_end/billboard/updateBB.jsp";
+				String url = "/back-end/billboard/updateBB.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -197,7 +197,7 @@ public class BBServlet extends HttpServlet {
 					for (String s : errorMsgs) {
 						System.out.println(s);
 					}
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/billboard/addBB.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/billboard/addBB.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -213,7 +213,7 @@ public class BBServlet extends HttpServlet {
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/branch/update_bra_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/branch/update_bra_input.jsp");
 				failureView.forward(req, res);
 			}
 
@@ -234,7 +234,7 @@ public class BBServlet extends HttpServlet {
 				bbSvc.deleteBB(bbID);
 				// 3.刪除完成，準備轉交
 
-				String url = "/back_end/billboard/listAllBillBoard.jsp";
+				String url = "/back-end/billboard/listAllBillBoard.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

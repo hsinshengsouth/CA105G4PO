@@ -33,7 +33,7 @@ public class ActServlet extends HttpServlet {
 				// 若是有誤，把使用者重新送回搜尋頁面
 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/activity/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/activity/select_page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -50,14 +50,14 @@ public class ActServlet extends HttpServlet {
 
 				// 若是有誤，把使用者重新送回搜尋頁面
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/activity/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/activity/select_page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("actVO", actVO);
-				String url = "/back_end/activity/listOneActivity.jsp";
+				String url = "/back-end/activity/listOneActivity.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -128,7 +128,7 @@ public class ActServlet extends HttpServlet {
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("actVO", actVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/activity/addAct.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/activity/addAct.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -140,14 +140,14 @@ public class ActServlet extends HttpServlet {
 				
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back_end/activity/listAllActivity.jsp";
+				String url = "/back-end/activity/listAllActivity.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/activity/addAct.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/activity/addAct.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -167,14 +167,14 @@ public class ActServlet extends HttpServlet {
 				ActivityVO actVO = actSvc.getOneByID(actID);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("actVO", actVO); // 資料庫取出的empVO物件,存入req
-				String url = "/back_end/activity/update_act_input.jsp";
+				String url = "/back-end/activity/update_act_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/activity/listAllActivity.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/activity/listAllActivity.jsp");
 				failureView.forward(req, res);
 			}
 
@@ -220,7 +220,7 @@ public class ActServlet extends HttpServlet {
 				// 把修改過後，格式仍有問題的回傳回去
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("actVO", actVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/activity/update_act_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/activity/update_act_input.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -230,12 +230,12 @@ public class ActServlet extends HttpServlet {
 				actVO = actSvc.updateAct(actName, actStart, actEnd, actID);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("actVO", actVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/activity/listOneActivity.jsp";
+				String url = "/back-end/activity/listOneActivity.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("資料修改失敗" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/activity/update_act_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/activity/update_act_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -255,13 +255,13 @@ public class ActServlet extends HttpServlet {
 				actSvc.deleteAct(actID);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/back_end/activity/listAllActivity.jsp";
+				String url = "/back-end/activity/listAllActivity.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/activity/listAllActivity.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/activity/listAllActivity.jsp");
 				failureView.forward(req, res);
 			}
 

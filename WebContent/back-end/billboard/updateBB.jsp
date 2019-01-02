@@ -5,7 +5,7 @@
 <%@page import="java.util.*"%>
 
 <%
-	BillboardVO bbVO = (BillboardVO) request.getAttribute("bbVO");
+	BillboardVO bbVO = (BillboardVO) request.getAttribute("bbVO");//BBServlet.java (Concroller) 存入req的bbVO物件 (包括幫忙取出的bbVO, 也包括輸入資料錯誤時的bbVO物件)
 %>
 
 <!DOCTYPE html>
@@ -20,30 +20,25 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Add Billboard</title>
+<title>Update Billboard</title>
 
 <!-- Bootstrap core CSS-->
-<link href="<%=request.getContextPath()%>/back_end/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back-end/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
-<link href="<%=request.getContextPath()%>/back_end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+<link href="<%=request.getContextPath()%>/back-end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
 
 <!-- Page level plugin CSS-->
-<link href="<%=request.getContextPath()%>/back_end/vendor/datatables/dataTables.bootstrap4.css"
+<link href="<%=request.getContextPath()%>/back-end/vendor/datatables/dataTables.bootstrap4.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="<%=request.getContextPath()%>/back_end/css/sb-admin.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back-end/css/sb-admin.css" rel="stylesheet">
 <style>
 .container {
 	margin-left: -13px;
 	padding: 10px;
-}
-
-img {
-	max-width: 400px;
-	max-height: 250px;
 }
 </style>
 
@@ -305,7 +300,7 @@ img {
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">新增輪播廣告</li>
+					<li class="breadcrumb-item active">修改輪播廣告</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
@@ -327,69 +322,119 @@ img {
 					<div class="row">
 						<div class="col-sm-7 offset-sm-3 ">
 
-							<form method="post" action="bb.do" name="insertbbform"
+							<form method="post" action="bb.do" name="updateform"
 								class="form-horizontal justify-content-center"
 								enctype="multipart/form-data">
 
-
 								<div class="form-row">
 									<div class="form-group">
-										<label for="aa">欲前往頁面的URL:</label> <input type="text"
-											name="url" id="url" placeholder="請輸入URL"
-											class="form-control" style="width: 200px">
+										<label for="aa">廣告編號:<font color=red><b>*</b></font></label> <input
+											type="text" name="bbID" id="bbID" placeholder=""
+											class="form-control" style="width: 200px"
+											value="<%=bbVO.getbbID()%>">
 									</div>
-
-							
+									
+									<div class="form-group" style="margin-left: 15px">
+										<label for="aa">URL:</label> <input type="text" name="url"
+											id="aa" placeholder="" class="form-control"
+											style="width: 200px" value="<%=bbVO.geturl()%>">
+									</div>
+									
 								</div>
 
+							
+							
+							
+							
 
 								<div class="form-row">
 									<div class="form-group" style="margin-right: 15px">
-										<label for="aa">開始時間:</label> <input type="text" name="bbStart"
-											id="f_date1" class="form-control"
-											style="width: 140px">
+										<label for="aa">廣告開始時間:</label> <input type="text" name="bbStart"
+											id="f_date1" placeholder="" class="form-control"
+											style="width: 140px" value="<%=bbVO.getbbStart()%>">
+
 									</div>
 
 
 
 
 									<div class="form-group">
-										<label for="aa">結束時間:</label> <input type="text" name="bbEnd"
-											id="f_date2"  class="form-control"
-											style="width: 140px">
+										<label for="aa">廣告結束時間:</label> <input type="text" name="bbEnd"
+											id="f_date2" placeholder="" class="form-control"
+											style="width: 140px" value="<%=bbVO.getbbEnd()%>">
 									</div>
 
 								</div>
-									
-								<br>
-				
-								<div class="form-row">
-									<div class="form-row" style="margin-bottom: 15px">
-										<img id="blah" />
-									</div>
 
+
+
+					
+								<br>
+
+<%
+
+Base64.Encoder encoder = Base64.getEncoder();
+String encodedText = "";
+
+if (bbVO.getpic() != null) {
+	encodedText = encoder.encodeToString(bbVO.getpic());
+	pageContext.setAttribute("bbPic", new Integer(1));
+} else {
+	pageContext.setAttribute("bbPic", new Integer(0));
+}
+
+%>
+								<div class="form-row">
 									<div class="input-group mb-3 form-group">
+
+										<c:choose>
+									<c:when test="${ bbPic==1}">
+												<img id="blah" width="377.8" height="250"
+													src="data:image ;base64, <%=encodedText%>">
+										</c:when> 
+
+
+										<c:otherwise> 
+											<img id="icon_preview" width="377.8" height="250" 
+												src="<%=request.getContextPath()%>/image/noImage.jpg"> 
+										</c:otherwise>
+
+
+
+								</c:choose> 
+
+
+									</div>
+									
+									
+									
+									
+									<div class="input-group mb-3 form-group">
+
 										<div class="custom-file">
 
 											<input class="custom-file-input" id="inputGroupFile01"
 												name="bbPic" multiple type="file"> <label
-												class="custom-file-label" for="inputGroupFile01"
+												class="custom-file-label" for="inputGroupFile02"
 												id="labelPicName">上傳輪播廣告 file</label>
-
 										</div>
+
+
 										<div class="input-group-append">
 											<span class="input-group-text" id="">Upload</span>
 										</div>
 
-
 									</div>
 
 								</div>
-
+																	
 
 								<div class="col-12 text-center">
-									<input type="hidden" name="action" value="insert"> <input
-										class="btn btn-primary" type="submit" value="送出新增">
+									<input type="hidden" name="action" value="update"> <input
+										type="hidden" name="requestURL"
+										value="<%=request.getParameter("requestURL")%>">
+									<!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+									<input class="btn btn-primary" type="submit" value="送出修改">
 									<button class="btn btn-primary">返回</button>
 								</div>
 
@@ -397,19 +442,9 @@ img {
 
 							<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
 
-
-
-
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
 
 				<!-- Page Content 這邊開始自由發揮結束-->
 			</div>
@@ -463,16 +498,17 @@ img {
 
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="<%=request.getContextPath()%>/back_end/vendor/jquery/jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/back_end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="<%=request.getContextPath()%>/back_end/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="<%=request.getContextPath()%>/back_end/js/sb-admin.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/js/sb-admin.min.js"></script>
 
 </body>
+
 <% 
   java.sql.Date date = null;
   try {
@@ -502,7 +538,38 @@ img {
 	height: 151px; /* height:  151px; */
 }
 </style>
+
 <script>
+	$(function() {
+
+		$(document).ready(function() {
+			$('#inputGroupFile01').on('change', function(event) {
+				// and you can get the name of the image like this:
+				console.log(event.target.files[0].name);
+				$('#labelPicName').text(event.target.files[0].name);
+			});
+		});
+
+
+
+		$("#inputGroupFile01").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#icon_preview').attr('src', e.target.result);
+
+				}
+
+				reader.readAsDataURL(this.files[0]);
+
+			}
+		});
+
+	
+
+	});
+	
 	$(function() {
 
 		$(document).ready(function() {
@@ -552,6 +619,10 @@ $('#f_date2').datetimepicker({
 	minDate:               '-1970-01-01', // 去除今日(不含)之前
 //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 });
+	
+	
+	
+	
 	
 	
 </script>

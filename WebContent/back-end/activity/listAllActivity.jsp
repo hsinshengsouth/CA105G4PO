@@ -1,44 +1,41 @@
-<%@page import="java.util.*"%>
-<%@page import="com.roomType.model.RoomTypeVO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page import="com.activity.model.*"%>
+<%@page import="java.util.*"%>
 <%
-RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
+	ActivityService actSvc = new ActivityService();
+	List<ActivityVO> list = actSvc.getAll();
+	pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin - Blank Page</title>
+<title>ListAllActivity</title>
 
 <!-- Bootstrap core CSS-->
-<link
-	href="<%=request.getContextPath()%>/back_end/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back-end/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
-<link
-	href="<%=request.getContextPath()%>/back_end/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/back-end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
 
 <!-- Page level plugin CSS-->
-<link
-	href="<%=request.getContextPath()%>/back_end/vendor/datatables/dataTables.bootstrap4.css"
+<link href="<%=request.getContextPath()%>/back-end/vendor/datatables/dataTables.bootstrap4.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="<%=request.getContextPath()%>/back_end/css/sb-admin.css"
-	rel="stylesheet">
-
+<link href="css/sb-admin.css" rel="stylesheet">
 
 </head>
 
@@ -149,8 +146,8 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown2">
 					<h6 class="dropdown-header">新增/查詢:</h6>
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/orders/listAllOrders.jsp">查詢訂單</a> <a
-						class="dropdown-item" href="<%=request.getContextPath()%>/back_end/orders/addorders.jsp">新增訂單</a>
+					<a class="dropdown-item" href="blank.html">查詢訂單</a> <a
+						class="dropdown-item" href="blank.html">新增訂單</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
 					<a class="dropdown-item" href="tables.html">一般訂單列表</a> <a
@@ -177,10 +174,10 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">新增:</h6>
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/roomType/addroomType.jsp">新增房型</a>
+					<a class="dropdown-item" href="blank.html">新增房型</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/roomType/listAllRoomType.jsp">房型列表</a>
+					<a class="dropdown-item" href="tables.html">房型列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown3"
@@ -296,124 +293,66 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item active">促銷活動管理</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
-				<h1>修改訂單資料</h1>
-				<hr>
-				<div class="container-fluid" >
-				<br>
-					<div class="row">
-						<div class="col-xs-12 col-sm-5">
-							
-						</div>
-						<div class="col-xs-12 col-sm-2">
-							
-								<c:if test="${not empty errorMsgs}">
-									<font style="color:red">請修正以下錯誤:</font>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color:red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>		
-											
-						</div>
-						<div class="col-xs-12 col-sm-5">
-							
-						</div>
-					</div>
-					<div class="row" >  
-						<div class="col-xs-12 col-sm-3">
-							
-						</div>
-						<div class="col-xs-12 col-sm-6">
-							<div align="center">
-								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/roomType/roomType.do" name="form1" enctype="multipart/form-data">
-								<table>
-									<tr>
-										<td>分店編號:</td>
-										<td><input type="TEXT" name="braID" size="45" class="form-control"
-											 value="${(rtVO == null) ? "B01" : rtVO.braID }" /></td> 
-									</tr>
-									<tr>
-										<td>房型名稱:</td>
-										<td><input type="TEXT" name="rtName" size="45" class="form-control"
-											 value="${(rtVO == null) ? "自訂多人房" : rtVO.rtName}" /></td>
-									</tr>
-									<tr>
-										<td>房型照片:</td>
-										<td>
-											<c:choose>
-												<c:when test="${rtVO == null}">
-													<img src="<%=request.getContextPath()%>/back_end/roomType/images/nopic.jpg" id="previewpic" 
-													class="img-fluid" width="300px">
-												</c:when>
-												<c:otherwise>
-													<% 	byte[] picbyte = rtVO.getRtPic();
-														String src = null;
-														Base64.Encoder adapter = Base64.getEncoder();
-														src = adapter.encodeToString(picbyte); %>
-													<img src="data:image/jpeg;base64,<%= src %>" id="previewpic"
-													class="img-fluid" width="300px">
-												</c:otherwise>
-											</c:choose>
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td>
-										    <input type="file" name="rtPic"  id="inputfile01">
-  										</td>
-									</tr>
-									<tr>
-										 <td>房型介紹:</td>
-										<td><input type="TEXT" name="rtIntro" size="45" class="form-control"
-											 value="${(rtVO == null) ? "自訂介紹" : rtVO.rtIntro}" /></td>
-									</tr>
-									<tr>
-										<td>一般住房人數:</td>
-										<td><input type="TEXT" name="rtMinimum" size="45" class="form-control"
-											 value="${(rtVO == null) ? "2" : rtVO.rtMinimum}" /></td>
-									</tr>
-									<tr>
-										<td>住房上限人數:</td>
-										<td><input type="TEXT" name="rtLimit" size="45" class="form-control"
-											 value="${(rtVO == null) ? "3" : rtVO.rtLimit }" /></td>
-									</tr>
-									<tr>
-										<td>平日價格:</td>
-										<td><input type="TEXT" name="weeklyPrice" size="45" class="form-control"
-											 value="${(rtVO == null) ? "3000" : rtVO.weeklyPrice }" /></td>
-									</tr>
-									<tr>
-										<td>假日價格:</td>
-										<td><input type="TEXT" name="holidayPrice" size="45" class="form-control"
-											 value="${(rtVO == null) ? "3500" : rtVO.holidayPrice }" /></td>										
-									</tr>
-									<tr>
-										<td>房型數量:</td>
-										<td><input type="TEXT" name="total" size="45" class="form-control"
-											 value="${(rtVO == null) ? "10" : rtVO.total }" /></td>
-									</tr>
-								</table>
-								<br>
-									<input type="hidden" name="action" value="insert">
-									<input type="submit" value="送出新增" class="btn btn-info" >
-									<button type="button" class="btn btn-info">
-										<a href='<%=request.getContextPath()%>/back_end/roomType/select_roomType_page.jsp' style="color:#fff">返回</a>
-									</button>
-								</FORM>							
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-3">
-							
-						</div>
+				<div class="container">
+					<caption>促銷活動列表</caption>
+					<br>
+					<table class="table table-hover">
 
-	         		</div>
-											
+						<thead>
+							<tr>
+								<th>促銷活動編號</th>
+								<th>促銷活動名稱</th>
+								<th>活動開始時間</th>
+								<th>活動結束時間</th>
+								<th align="center">修改</th>
+								<th align="center">刪除</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<%@ include file="page1.file"%>
+							<c:forEach var="actVO" items="${list}" begin="<%=pageIndex%>"
+								end="<%=pageIndex+rowsPerPage-1%>">
+								<tr>
+									<td>${actVO.actID}</td>
+									<td>${actVO.actName}</td>
+									<td>${actVO.actStart}</td>
+									<td>${actVO.actEnd}</td>
+									<td>
+										<form METHOD="post"
+											ACTION="<%=request.getContextPath()%>/back-end/activity/act.do"
+											style="margin-bottom: 0px;">
+											<button class="btn btn-info" type="submit">修改</button>
+											<input type="hidden" name="actID" value="${actVO.actID}">
+											<input type="hidden" name="action" value="getOne_For_Update">
+										</form>
+									</td>
+									<td>
+										<form METHOD="post"
+											ACTION="<%=request.getContextPath()%>/back-end/activity/act.do"
+											style="margin-bottom: 0px;">
+											<button class="btn btn-info" type="submit">刪除</button>
+											<input type="hidden" name="actID" value="${actVO.actID}">
+											<input type="hidden" name="action" value="delete">
+										</form>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<%@ include file="page2.file"%>
+					<br>
+					<a href="select_page.jsp">回選取頁面</a>
 				</div>
+
+
+
+
+
 
 				<!-- Page Content 這邊開始自由發揮結束-->
 			</div>
@@ -427,11 +366,11 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 					</div>
 				</div>
 			</footer>
-
 		</div>
-		<!-- /.content-wrapper -->
 
 	</div>
+	<!-- /.content-wrapper -->
+
 	<!-- /#wrapper -->
 
 	<!-- Scroll to Top Button-->
@@ -462,32 +401,20 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 		</div>
 	</div>
 
+
+
+
+
 	<!-- Bootstrap core JavaScript-->
-	<script
-		src="<%=request.getContextPath()%>/back_end/vendor/jquery/jquery.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/back_end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script
-		src="<%=request.getContextPath()%>/back_end/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="<%=request.getContextPath()%>/back_end/js/sb-admin.min.js"></script>
-	
-	<script>
-		$("#inputfile01").change(function(){
-	        if (this.files && this.files[0]) {
-	                var reader = new FileReader();
-	                
-	                reader.onload = function (e) {
-	                        $('#previewpic').attr('src', e.target.result);
-	                }
-	                
-	                reader.readAsDataURL(this.files[0]);
-	        }
-		});
-	</script>
+	<script src="<%=request.getContextPath()%>/back-end/js/sb-admin.min.js"></script>
+
 </body>
 
 </html>

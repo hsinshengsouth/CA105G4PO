@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.billboard.model.*"%>
+<%@ page import="com.branch.model.*"%>
 <%@page import="java.util.*"%>
 
 <%
-	
-BillboardService bbSvc = new BillboardService();
-List<BillboardVO> list = bbSvc.getAll();
-pageContext.setAttribute("list", list);
+	BranchService braSvc = new BranchService();
+	List<BranchVO> list = braSvc.getAll();
+	pageContext.setAttribute("list", list);
 
+	BranchVO bchVO = (BranchVO) request.getAttribute("bchVO");
+	String val = "";
 %>
 
 <!DOCTYPE html>
@@ -24,24 +25,37 @@ pageContext.setAttribute("list", list);
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>ListAllBillboard</title>
+<title>ListAllBranch</title>
 
 <!-- Bootstrap core CSS-->
-<link href="<%=request.getContextPath()%>/back_end/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back-end/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
-<link href="<%=request.getContextPath()%>/back_end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+<link href="<%=request.getContextPath()%>/back-end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
 
 <!-- Page level plugin CSS-->
-<link href="<%=request.getContextPath()%>/back_end/vendor/datatables/dataTables.bootstrap4.css"
+<link href="<%=request.getContextPath()%>/back-end/vendor/datatables/dataTables.bootstrap4.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
 <link href="css/sb-admin.css" rel="stylesheet">
 <style>
+.scrollbar {
+align:center;
+float: left;
+height: 150px;
+width: 120px;
+overflow-y: scroll;
 
+}
 
+.scrollbar1 {
+overflow-x: scroll;
+float: top;
+width: 120px;
+
+}
 
 </style>
 </head>
@@ -232,7 +246,7 @@ pageContext.setAttribute("list", list);
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">輪播看板:</h6>
-					<a class="dropdown-item" href="addBB.jsp">新增</a> <a
+					<a class="dropdown-item" href="blank.html">新增</a> <a
 						class="dropdown-item" href="table.html">列表</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">廣告彈跳:</h6>
@@ -288,7 +302,7 @@ pageContext.setAttribute("list", list);
 					<a class="dropdown-item" href="listAllBranch.jsp">分店列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a class="nav-link"
-				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q & A</span>
+				href="blank.html"> <i class="fa fa-edit"></i> <span>客服Q&A</span>
 			</a></li>
 		</ul>
 
@@ -300,7 +314,7 @@ pageContext.setAttribute("list", list);
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">輪播廣告列表</li>
+					<li class="breadcrumb-item active">所有分店列表</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
@@ -310,45 +324,55 @@ pageContext.setAttribute("list", list);
 
 
 				<div class="container-fluid">
-					<caption>輪播廣告</caption>
+					<caption>各地分店</caption>
 					<br>
 					<table class="table table-hover">
 
 						<thead>
 							<tr>
-								<th >廣告編號</th>
-								<th >圖片URL</th>
-								<th>開始時間</th>
-								<th >結束時間</th>
-								<th>廣告圖片</th>
+								<th style="width: 80px">編號</th>
+								<th style="width: 80px">店名</th>
+								<th>分店簡介</th>
+								<th style="width: 90px">電話</th>
+								<th>地址</th>
+								<th style="width: 85px">經度</th>
+								<th style="width: 80px">緯度</th>
+								<th>分店圖片</th>
+								<th>分店影片</th>
+								<th style="width: 90px">狀態</th>
 								<th align="center">修改</th>
-								<th align="center">刪除</th>
 							</tr>
 						</thead>
 
 						<tbody>
 							<%@ include file="page1.file"%>
-							<c:forEach var="bbVO"  items="${list}" varStatus="status"
+							<c:forEach var="bchVO" items="${list}" varStatus="status"
 								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 								<tr>
-									<td>${bbVO.bbID}</td>
-									<td>${bbVO.url}</td>
-									<td>${bbVO.bbStart}</td>
-									<td>${bbVO.bbEnd}</td>
+									<td>${bchVO.braID}</td>
+									<td>${bchVO.braName}</td>
+									
+	 								 <td class="scrollbar">${bchVO.braIntro}</td>
+									
+									
+									<td>${bchVO.braTel}</td>
+									<td class="scrollbar1">${bchVO.braAddr}</td>
+									<td>${bchVO.braLng}</td>
+									<td>${bchVO.braLat}</td>
 
 									<c:set var="index" value="${status.index}" />
-
 									<%
 										int count = (Integer) pageContext.getAttribute("index");
 											String encodedText = null;
-											if (list.get(count).getpic() != null) {
+											if (list.get(count).getBraPic() != null) {
 												Base64.Encoder encoder = Base64.getEncoder();
-												encodedText = encoder.encodeToString(list.get(count).getpic());
+												encodedText = encoder.encodeToString(list.get(count).getBraPic());
 												pageContext.setAttribute("icon_", new Integer(1));
 											} else {
 												pageContext.setAttribute("icon_", new Integer(0));
 											}
 									%>
+
 
 									<c:choose>
 										<c:when test="${ icon_== 1}">
@@ -363,55 +387,62 @@ pageContext.setAttribute("list", list);
 									</c:choose>
 
 
-						
+									<c:set var="index" value="${status.index}" />
+									<%
+										int count1 = (Integer) pageContext.getAttribute("index");
+											String encodedText1 = null;
+
+											if (list.get(count).getBraVideo() != null) {
+												Base64.Encoder encoder = Base64.getEncoder();
+												encodedText1 = encoder.encodeToString(list.get(count).getBraVideo());
+												pageContext.setAttribute("icon_1", new Integer(1));
+											} else {
+												pageContext.setAttribute("icon_1", new Integer(0));
+											}
+									%>
 
 
 
 
 
+									<c:choose>
+										<c:when test="${ icon_1== 1}">
+											<td><video controls width="200" height="132">
+													<source type="video/webm"
+														src="data:video/webm;base64,<%=encodedText1%>">
+												</video></td>
+										</c:when>
 
+
+										<c:otherwise>
+											<td><img
+												src="<%=request.getContextPath()%>/image/noVideo.png"
+												width="200" height="132"></td>
+										</c:otherwise>
+
+									</c:choose>
+
+									<td>${bchVO.braState}</td>
 
 									<td>
 										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/back_end/billboard/bb.do"
+											ACTION="<%=request.getContextPath()%>/back-end/branch/bra.do"
 											style="margin-bottom: 0px;">
 											<button class="btn btn-info" type="submit">修改</button>
-											<input type="hidden" name="bbID" value="${bbVO.bbID }">
+											<input type="hidden" name="braID" value="${bchVO.braID }">
 											<input type="hidden" name="requestURL"
 												value="<%=request.getServletPath()%>">
 											<!--送出本網頁的路徑給Controller-->
 											<input type="hidden" name="action" value="getOne_For_Update">
 										</form>
 									</td>
-									
-									
-									<td>
-										<form METHOD="post"
-											ACTION="<%=request.getContextPath()%>/back_end/billboard/bb.do"
-											style="margin-bottom: 0px;">
-											<button class="btn btn-info" type="submit">刪除</button>
-											<input type="hidden" name="bbID" value="${bbVO.bbID }">
-											<input type="hidden" name="requestURL"
-												value="<%=request.getServletPath()%>">
-											<!--送出本網頁的路徑給Controller-->
-											<input type="hidden" name="action" value="delete">
-										</form>
-									</td>
-									
-									
-									
-									
-
-
-
-
 
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 					<%@ include file="page2.file"%>
-					<br> <a href="">返回頁面</a>
+					<br> <a href="addBra.jsp">新增分店</a>
 				</div>
 
 
@@ -471,14 +502,14 @@ pageContext.setAttribute("list", list);
 
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="<%=request.getContextPath()%>/back_end/vendor/jquery/jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/back_end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="<%=request.getContextPath()%>/back_end/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="<%=request.getContextPath()%>/back_end/js/sb-admin.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/js/sb-admin.min.js"></script>
 
 </body>
 <style>
