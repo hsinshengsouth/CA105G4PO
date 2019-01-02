@@ -43,13 +43,13 @@ public class RoomTypeServlet extends HttpServlet{
 				
 				/******查詢完成，set之後，執行轉交******/
 				req.setAttribute("rtVO", rtVO);
-				String url = "/back-end/roomType/update_roomType_input.jsp";
+				String url = "/back_end/roomType/update_roomType_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			}catch(Exception e) {
 				errorMsgs.add("無法取得要修改的資料" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/roomType/select_roomType_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/roomType/select_roomType_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -147,7 +147,7 @@ public class RoomTypeServlet extends HttpServlet{
 			
 			if(!errorMsgs.isEmpty()) {
 				req.setAttribute("rtVO", rtVO);
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/roomType/update_roomType_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/roomType/update_roomType_input.jsp");
 				failureView.forward(req, res);
 				return;
 			}			
@@ -158,7 +158,7 @@ public class RoomTypeServlet extends HttpServlet{
 			
 			/******修改完資料，要set，然後再轉交******/
 			req.setAttribute("rtVO", rtVO);
-			String url = "/back-end/roomType/listAllRoomType.jsp";
+			String url = "/back_end/roomType/listAllRoomType.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			
@@ -253,7 +253,7 @@ public class RoomTypeServlet extends HttpServlet{
 			
 			if(!errorMsgs.isEmpty()) {	//如果驗證有錯誤，轉交回同一頁面，但會把原本打的東西記起來
 				req.setAttribute("rtVO", rtVO);
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/roomType/addroomType.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/roomType/addroomType.jsp");
 				failureView.forward(req, res);
 				return;	//跳離這個方法
 			}
@@ -263,7 +263,7 @@ public class RoomTypeServlet extends HttpServlet{
 			rtSvc.addRoomType(braID, rtName, rtPic, rtIntro, rtMinimum, rtLimit, weeklyPrice, holidayPrice, total);
 			
 			/******新增完成，set完後，準備轉交******/
-			String url = "/back-end/roomType/listAllRoomType.jsp";
+			String url = "/back_end/roomType/listAllRoomType.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			

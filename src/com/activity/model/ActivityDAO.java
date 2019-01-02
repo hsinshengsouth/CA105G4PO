@@ -334,7 +334,7 @@ private static DataSource ds =null;
 				ResultSet rs =pstmt.getGeneratedKeys();
 				if(rs.next()) {
 					next_actID =rs.getString(1);
-					System.out.println("自增主鍵值= " + next_actID +"(剛新增成功的部門編號)");
+					System.out.println("自增主鍵值= " + next_actID +"(剛新增成功的活動編號)");
 				}else {
 					System.out.println("未取得自增主鍵值");
 				}
@@ -342,7 +342,7 @@ private static DataSource ds =null;
 				ActivityDetailDAO adDAO =new ActivityDetailDAO(); 
 				System.out.println(list.size());
 				for(ActivityDetailVO adVO:list) {
-					adVO.setActID(next_actID);
+					adVO.setactID(next_actID);
 					adDAO.insert2(adVO, con);
 				}
 				// 2●設定於 pstm.executeUpdate()之後

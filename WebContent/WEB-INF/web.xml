@@ -63,4 +63,15 @@
     <servlet-name>CpnServlet</servlet-name>
     <url-pattern>/back_end/coupon/cpn.do</url-pattern>
   </servlet-mapping>
+  
+  
+    <servlet>
+    <servlet-name>RoomTypeServlet</servlet-name>
+    <servlet-class>com.roomType.controller.RoomTypeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RoomTypeServlet</servlet-name>
+    <url-pattern>/back_end/roomType/roomType.do</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

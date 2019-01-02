@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import com.activity.model.*;
+import com.activityDetail.model.ActivityDetailVO;
 
 public class ActServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -68,6 +69,7 @@ public class ActServlet extends HttpServlet {
 		if ("insert".equals(action)) { // 來自addAct.jsp的請求或是listAllActivity.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
+						
 			// 儲存錯誤訊息在list裡，並把錯誤訊息儲存在request scope
 			// 若是任何錯誤訊息可以隨時叫出
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -101,6 +103,29 @@ public class ActServlet extends HttpServlet {
 				actVO.setActStart(date1);
 				actVO.setActEnd(date2);
 
+				/*********************** 1-2接收請求促銷活動明細參數 -製作list- 輸入格式的錯誤處理 *************************/
+				List<ActivityDetailVO>adlist =new ArrayList<ActivityDetailVO>();
+				Float discount =null; 
+				
+				try {
+				 discount =new Float(req.getParameter("discount").trim());
+				}catch(NumberFormatException e) {
+					discount =1.0f;
+					errorMsgs.add("請輸入適當的折扣");
+				}
+				
+				String rtID[] =req.getParameterValues("roomType");
+					if(rtID!=null) {
+						for(int i=0;i<rtID.length;i++) {
+							System.out.println(rtID[i]);
+							ActivityDetailVO adVO =new ActivityDetailVO();
+							adVO.setrtID(rtID[i]);
+							adVO.setdiscount(discount);
+							adlist.add(adVO);
+						}
+					
+					}
+				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("actVO", actVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/activity/addAct.jsp");
@@ -111,6 +136,8 @@ public class ActServlet extends HttpServlet {
 				/*************************** 2.開始新增資料 ***************************************/
 				ActivityService actSvc = new ActivityService();
 				actVO = actSvc.addAct(actName, date1, date2);
+				actVO =actSvc.insertWithDetail(actVO, adlist);
+				
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/back_end/activity/listAllActivity.jsp";

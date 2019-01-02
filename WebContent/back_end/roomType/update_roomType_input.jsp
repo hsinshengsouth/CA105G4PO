@@ -24,21 +24,21 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 
 <!-- Bootstrap core CSS-->
 <link
-	href="<%=request.getContextPath()%>/back-end/vendor/bootstrap/css/bootstrap.min.css"
+	href="<%=request.getContextPath()%>/back_end/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Custom fonts for this template-->
 <link
-	href="<%=request.getContextPath()%>/back-end/vendor/fontawesome-free/css/all.min.css"
+	href="<%=request.getContextPath()%>/back_end/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
 
 <!-- Page level plugin CSS-->
 <link
-	href="<%=request.getContextPath()%>/back-end/vendor/datatables/dataTables.bootstrap4.css"
+	href="<%=request.getContextPath()%>/back_end/vendor/datatables/dataTables.bootstrap4.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="<%=request.getContextPath()%>/back-end/css/sb-admin.css"
+<link href="<%=request.getContextPath()%>/back_end/css/sb-admin.css"
 	rel="stylesheet">
 
 
@@ -151,8 +151,8 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown2">
 					<h6 class="dropdown-header">新增/查詢:</h6>
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/orders/listAllOrders.jsp">查詢訂單</a> <a
-						class="dropdown-item" href="<%=request.getContextPath()%>/back-end/orders/addorders.jsp">新增訂單</a>
+					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/orders/listAllOrders.jsp">查詢訂單</a> <a
+						class="dropdown-item" href="<%=request.getContextPath()%>/back_end/orders/addorders.jsp">新增訂單</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
 					<a class="dropdown-item" href="tables.html">一般訂單列表</a> <a
@@ -179,10 +179,10 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown3">
 					<h6 class="dropdown-header">新增:</h6>
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/roomType/addroomType.jsp">新增房型</a>
+					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/roomType/addroomType.jsp">新增房型</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">列表:</h6>
-					<a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/roomType/listAllRoomType.jsp">房型列表</a>
+					<a class="dropdown-item" href="<%=request.getContextPath()%>/back_end/roomType/listAllRoomType.jsp">房型列表</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown3"
@@ -332,7 +332,7 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 						</div>
 						<div class="col-xs-12 col-sm-6">
 							<div align="center">
-								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/roomType/roomType.do" name="form1" enctype="multipart/form-data">
+								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/roomType/roomType.do" name="form1" enctype="multipart/form-data">
 								<table>
 									<tr>
 										<td>房型編號:</td>
@@ -397,7 +397,7 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 									<input type="hidden" name="rtID" value="<%= rtVO.getRtID() %>">
 									<input type="submit" value="送出修改" class="btn btn-info" >
 									<button type="button" class="btn btn-info">
-										<a href='<%=request.getContextPath()%>/back-end/roomType/select_roomType_page.jsp' style="color:#fff">返回</a>
+										<a href='<%=request.getContextPath()%>/back_end/roomType/select_roomType_page.jsp' style="color:#fff">返回</a>
 									</button>
 								</FORM>							
 							</div>
@@ -459,16 +459,16 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 
 	<!-- Bootstrap core JavaScript-->
 	<script
-		src="<%=request.getContextPath()%>/back-end/vendor/jquery/jquery.min.js"></script>
+		src="<%=request.getContextPath()%>/back_end/vendor/jquery/jquery.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		src="<%=request.getContextPath()%>/back_end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
 	<script
-		src="<%=request.getContextPath()%>/back-end/vendor/jquery-easing/jquery.easing.min.js"></script>
+		src="<%=request.getContextPath()%>/back_end/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="<%=request.getContextPath()%>/back-end/js/sb-admin.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back_end/js/sb-admin.min.js"></script>
 	
 	<script>
 		$("#inputfile01").change(function(){

@@ -23,14 +23,14 @@
 <title>Add Activity</title>
 
 <!-- Bootstrap core CSS-->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back_end/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+<link href="<%=request.getContextPath()%>/back_end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
 
 <!-- Page level plugin CSS-->
-<link href="vendor/datatables/dataTables.bootstrap4.css"
+<link href="<%=request.getContextPath()%>/back_end/vendor/datatables/dataTables.bootstrap4.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
@@ -312,45 +312,113 @@
 
 
 
-				<h3>新增一筆促銷活動</h3>
+				<h3 style="text-align: center">新增一筆促銷活動</h3>
 				<div class="container">
 					<div class="row">
+						<div class="col-sm-7 offset-sm-3 ">
+							<form METHOD="post" ACTION="act.do"
+								class="form-inline form-horizontal" name="insertform">
+								<table class="table table-hover">
+									<tr>
+										<td>促銷活動名稱</td>
+										<td><input class="form-control " type="TEXT"
+											name="actName" placeholder="請新增一筆促銷活動"
+											value="<%=(actVO == null) ? "" : actVO.getActName()%>" /></td>
+									</tr>
 
-						<form METHOD="post" ACTION="act.do"
-							class="form-inline form-horizontal" name="insertform">
-							<table class="table table-hover">
-								<tr>
-									<td>促銷活動名稱</td>
-									<td><input class="form-control " type="TEXT"
-										name="actName" placeholder="請新增一筆促銷活動"
-										value="<%=(actVO == null) ? "" : actVO.getActName()%>" /></td>
-								</tr>
-
-								<tr>
-									<td>促銷活動開始時間</td>
-									<td><input name="actStart" id="f_date1" type="text"
-										class="form-control " /></td>
-								</tr>
-
-
-								<tr>
-									<td>促銷活動結束時間</td>
-									<td><input name="actEnd" id="f_date2" type="text"
-										class="form-control " /></td>
-								</tr>
-
-							</table>
-
-							<div class="col-xs-12 col-sm-8">
-								<input type="hidden" name="action" value="insert">
-							</div>
-							<button class="btn btn-info" type="submit">送出新增</button>
-
-						</form>
+									<tr>
+										<td>促銷活動開始時間</td>
+										<td><input name="actStart" id="f_date1" type="text"
+											class="form-control " /></td>
+									</tr>
 
 
+									<tr>
+										<td>促銷活動結束時間</td>
+										<td><input name="actEnd" id="f_date2" type="text"
+											class="form-control " /></td>
+									</tr>
+
+									<tr>
+										<td>促銷折扣</td>
+										<td><input name="discount" type="number"
+											class="form-control " min="0" max="1"  step="0.01" /> 折</td>
+									</tr>
+
+									<tr>
+										<td>選擇房型</td>
+										<td class="form-inline">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												 name="roomType" value="RT01"> 
+												<label class="form-check-label" >RT01</label>
+										</div>
+										
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												 name="roomType"  value="RT02">
+												 <label class="form-check-label" >RT02</label>
+										</div>
+										
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												name="roomType"  value="RT03"> 
+												<label class="form-check-label" >RT03</label>
+										</div>		
+										
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												name="roomType"  value="RT04"> 
+												<label class="form-check-label" >RT04</label>
+										</div>										
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												name="roomType"  value="RT05"> 
+												<label class="form-check-label" >RT05</label>
+										</div>										
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												name="roomType"  value="RT06"> 
+												<label class="form-check-label" >RT06</label>
+										</div>										
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												name="roomType"  value="RT07"> 
+												<label class="form-check-label" >RT07</label>
+										</div>										
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												name="roomType"  value="RT08"> 
+												<label class="form-check-label" >RT08</label>
+										</div>										
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												name="roomType"  value="RT09"> 
+												<label class="form-check-label" >RT09</label>
+										</div>										
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox"
+												name="roomType"  value="RT10"> 
+												<label class="form-check-label" >RT10</label>
+										</div>
 
 
+										</td>
+									</tr>
+
+
+								</table>
+
+								<div class="col-12 text-center">
+									<input type="hidden" name="action" value="insert">
+
+									<button class="btn btn-info" type="submit">送出新增</button>
+								</div>
+							</form>
+
+
+
+						</div>
 					</div>
 				</div>
 
@@ -420,14 +488,14 @@
 
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back_end/vendor/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back_end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back_end/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back_end/js/sb-admin.min.js"></script>
 
 </body>
 
@@ -466,7 +534,7 @@
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=date%> 	', // value:   new Date(),
+		   value: '<%=date%>', // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -477,11 +545,10 @@
 		timepicker : false, //timepicker:true,
 		step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 		format : 'Y-m-d', //format:'Y-m-d H:i:s',
-		value :<%=str%>
-	, // value:   new Date(),
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-		minDate:               '-1970-01-01', // 去除今日(不含)之前
+		value :<%=str%>, // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		minDate : '-1970-01-01', // 去除今日(不含)之前
 	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 	});
 

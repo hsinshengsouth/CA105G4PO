@@ -14,7 +14,7 @@ public class ActivityDetailService {
 		ActivityDetailVO adVO =new ActivityDetailVO();
 		
 		
-		adVO.setDiscount(dis);
+		adVO.setdiscount(dis);
 		dao.insert(adVO);
 		
 		return adVO;
@@ -23,7 +23,7 @@ public class ActivityDetailService {
 	public ActivityDetailVO updateAD(Float dis) {
 		ActivityDetailVO adVO =new ActivityDetailVO();
 			
-		adVO.setDiscount(dis);
+		adVO.setdiscount(dis);
 		dao.update(adVO);
 		
 		return adVO;
