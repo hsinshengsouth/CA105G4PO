@@ -25,21 +25,21 @@
 
 <!-- Bootstrap core CSS-->
 <link
-	href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css"
+	href="<%=request.getContextPath()%>/back-end/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Custom fonts for this template-->
 <link
-	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
+	href="<%=request.getContextPath()%>/back-end/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
 
 <!-- Page level plugin CSS-->
 <link
-	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.css"
+	href="<%=request.getContextPath()%>/back-end/vendor/datatables/dataTables.bootstrap4.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="<%=request.getContextPath()%>/css/sb-admin.css"
+<link href="<%=request.getContextPath()%>/back-end/css/sb-admin.css"
 	rel="stylesheet">
 
 
@@ -308,7 +308,7 @@
 				<hr>
 				<div class="container-fluid" align="right">
 					<button type="button" class="btn btn-info">
-						<a href='<%=request.getContextPath()%>/roomType/addroomType.jsp' style="color:#fff">新增房型</a>
+						<a href='<%=request.getContextPath()%>/back-end/roomType/addroomType.jsp' style="color:#fff">新增房型</a>
 					</button>
 				</div>
 				<div class="container-fluid">
@@ -367,7 +367,7 @@
 				</div>
 				<div class="container-fluid" align="right">
 					<button type="button" class="btn btn-info">
-						<a href='<%=request.getContextPath()%>/roomType/select_roomType_page.jsp' style="color:#fff">返回</a>
+						<a href='<%=request.getContextPath()%>/back-end/roomType/select_roomType_page.jsp' style="color:#fff">返回</a>
 					</button>
 				</div>
 				<!-- Page Content 這邊開始自由發揮結束-->
@@ -419,16 +419,16 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<script
-		src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+		src="<%=request.getContextPath()%>/back-end/vendor/jquery/jquery.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		src="<%=request.getContextPath()%>/back-end/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
 	<script
-		src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+		src="<%=request.getContextPath()%>/back-end/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="<%=request.getContextPath()%>/js/sb-admin.min.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/js/sb-admin.min.js"></script>
 
 
 </body>
