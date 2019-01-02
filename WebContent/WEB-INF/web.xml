@@ -21,7 +21,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ActServlet</servlet-name>
-    <url-pattern>/back_end/activity/act.do</url-pattern>
+    <url-pattern>/back-end/activity/act.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>BchServlet</servlet-name>
@@ -29,7 +29,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>BchServlet</servlet-name>
-    <url-pattern>/back_end/branch/bra.do</url-pattern>
+    <url-pattern>/back-end/branch/bra.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>braImgServlet</servlet-name>
@@ -37,7 +37,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>braImgServlet</servlet-name>
-    <url-pattern>/back_end/branch/braImg.do</url-pattern>
+    <url-pattern>/back-end/branch/braImg.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>braVideoServlet</servlet-name>
@@ -45,7 +45,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>braVideoServlet</servlet-name>
-    <url-pattern>/back_end/branch/braVideo.do</url-pattern>
+    <url-pattern>/back-end/branch/braVideo.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>BBServlet</servlet-name>
@@ -53,7 +53,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>BBServlet</servlet-name>
-    <url-pattern>/back_end/billboard/bb.do</url-pattern>
+    <url-pattern>/back-end/billboard/bb.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>CpnServlet</servlet-name>
@@ -61,7 +61,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>CpnServlet</servlet-name>
-    <url-pattern>/back_end/coupon/cpn.do</url-pattern>
+    <url-pattern>/back-end/coupon/cpn.do</url-pattern>
   </servlet-mapping>
   
   
@@ -71,7 +71,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>RoomTypeServlet</servlet-name>
-    <url-pattern>/back_end/roomType/roomType.do</url-pattern>
+    <url-pattern>/back-end/roomType/roomType.do</url-pattern>
   </servlet-mapping>
   
 </web-app>

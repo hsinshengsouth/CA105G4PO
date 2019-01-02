@@ -184,8 +184,8 @@ public class braServlet extends HttpServlet {
 		if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>(); // 儲存錯誤在list裡
 			req.setAttribute("erroeMsgs", errorMsgs);
-			
-			String requestURL = req.getParameter("requestURL"); 	 // 送出修改的來源網頁路徑: 可能為【/bra/listAllBranch.jsp】
+System.out.println(action);			
+			String requestURL = req.getParameter("requestURL"); 	 // 送出修改的來源網頁路徑: 可能為【/branch/listAllBranch.jsp】
 			/*************************** * 1.接收請求參數- 輸入格式的錯誤處理 ****************************************/
 try {
 			String braID = req.getParameter("braID");
@@ -284,17 +284,24 @@ try {
 			/***************************2.開始修改資料*****************************************/
 			BranchService braSvc =new BranchService();
 			braVO =braSvc.updateBra(braName, intro, pic, phone, video, addr, lng, lat, bchStateChecked,braID);
-			
+			System.out.println("testA");	
 			/***************************3.修改完成,準備轉交(Send the Success view)*************/
 			req.setAttribute("braVO", braVO);// 資料庫update成功後,正確的的braVO物件,存入req
 			String url =requestURL;
 			RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
 			successView.forward(req, res);
 		
-			
+			System.out.println("testB");	
 		}catch(Exception e) {
 			errorMsgs.add("修改資料失敗"+ e.getMessage());
+			System.out.println(e.getMessage());
 			RequestDispatcher failureView =req.getRequestDispatcher("/back-end/branch/update_bra_input.jsp");
+			
+			for(String s:errorMsgs) {
+				System.out.println(s);
+			}
+			
+			
 			failureView.forward(req, res);
 		}
 		

@@ -35,7 +35,7 @@ public class ActivityService {
 		return actVO;
 	}
 	
-	public void deleteAct(String actID) {
+	public void deleteAct(String actID)  {
 		dao.delete(actID);
 	}
 	

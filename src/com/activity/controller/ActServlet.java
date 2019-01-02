@@ -249,18 +249,21 @@ public class ActServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ***************************************/
 				String actID = req.getParameter("actID");
-
+				System.out.println(action);
+				System.out.println(actID);
 				/*************************** 2.開始刪除資料 ***************************************/
 				ActivityService actSvc = new ActivityService();
 				actSvc.deleteAct(actID);
-
+				System.out.println("1");
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 				String url = "/back-end/activity/listAllActivity.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				System.out.println("2");
+				e.printStackTrace();
+//				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/activity/listAllActivity.jsp");
 				failureView.forward(req, res);
 			}

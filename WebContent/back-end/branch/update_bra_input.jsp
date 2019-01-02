@@ -34,7 +34,7 @@
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="css/sb-admin.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/back-end/css/sb-admin.css" rel="stylesheet">
 <style>
 .container {
 	margin-left: -13px;
@@ -326,6 +326,7 @@
 								class="form-horizontal justify-content-center"
 								enctype="multipart/form-data">
 
+
 								<div class="form-row">
 									<div class="form-group">
 										<label for="aa">分店編號:<font color=red><b>*</b></font></label> <input
@@ -419,7 +420,7 @@ if (braVO.getBraPic() != null) {
 
 
 										<c:choose>
-									<c:when test="${ braPic==1}">
+									<c:when test="${braPic==1}">
 												<img id="blah" width="377.8" height="250"
 													src="data:image ;base64, <%=encodedText%>">
 										</c:when> 
