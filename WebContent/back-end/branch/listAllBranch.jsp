@@ -376,7 +376,7 @@ width: 120px;
 
 									<c:choose>
 										<c:when test="${ icon_== 1}">
-											<td style=""><img width="200"
+											<td ><img width="200"
 												src="data:image/png;base64, <%=encodedText%>"></td>
 										</c:when>
 										<c:otherwise>

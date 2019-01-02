@@ -18,7 +18,7 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin - Blank Page</title>
+<title>add RoomType</title>
 
 <!-- Bootstrap core CSS-->
 <link
@@ -296,11 +296,11 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item active">新增房型</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
-				<h1>修改訂單資料</h1>
+				<h1>新增房型資料</h1>
 				<hr>
 				<div class="container-fluid" >
 				<br>

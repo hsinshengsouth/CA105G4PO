@@ -8,6 +8,8 @@
 	RoomTypeService rtSvc = new RoomTypeService();
 	List<RoomTypeVO> list = rtSvc.getAll();
 	pageContext.setAttribute("list", list);
+	
+
 %>
 
 <!DOCTYPE html>
@@ -21,7 +23,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin - Blank Page</title>
+<title>listAllRoomType</title>
 
 <!-- Bootstrap core CSS-->
 <link
@@ -329,16 +331,48 @@
 								<th>房間剩餘數量</th>
 								<th>房型數量</th>
 								<th>修改</th>
-								<th>刪除</th>
+								
 							</tr>
 							<%@ include file="page1.file" %> 
-							<c:forEach var="roomTypeVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+							<c:forEach var="roomTypeVO" items="${list}"  varStatus="status" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 								
 								<tr>
 									<td>${roomTypeVO.rtID}</td>
 									<td>${roomTypeVO.braID}</td>
 									<td>${roomTypeVO.rtName}</td>
-									<td><img src="<%=request.getContextPath()%>/back-end/roomType/roomTypeImg.do?rtID=${roomTypeVO.rtID}" class="img-fluid" width="400px"></td>
+									
+									<c:set var="index"  value="${status.index}"/>
+									<%
+									int count = (Integer) pageContext.getAttribute("index");
+									String encodedText =null;
+									if(list.get(count).getRtPic()!=null){
+										Base64.Encoder encoder = Base64.getEncoder();
+										encodedText = encoder.encodeToString(list.get(count).getRtPic());
+										pageContext.setAttribute("icon_", new Integer(1));
+									}else{
+										pageContext.setAttribute("icon_", new Integer(0));
+									}
+									%>
+									
+									
+									
+									<c:choose>
+									<c:when test="${icon_==1}">
+									
+								<td ><img width="200"
+												src="data:image/png;base64, <%=encodedText%>"></td>
+									
+									</c:when>
+									
+									<c:otherwise>
+						                	<td><img
+												src="<%=request.getContextPath()%>/image/noImage.jpg"
+												width="200" height="132"></td>
+									
+									</c:otherwise>
+									</c:choose>
+									
+									
 									<td>${roomTypeVO.rtIntro}</td> 
 									<td>${roomTypeVO.rtMinimum}</td>
 									<td>${roomTypeVO.rtLimit}</td>
@@ -352,12 +386,7 @@
 									     <input type="hidden" name="rtID"  value="${roomTypeVO.rtID}">
 									     <input type="hidden" name="action"	value="GetOneUpdate"></FORM>
 									</td>
-									<td>
-									  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/roomType/roomType.do" style="margin-bottom: 0px;">
-									     <input type="submit" value="刪除(沒做)" class="btn btn-info">
-									     <input type="hidden" name="rtID"  value="${roomTypeVO.rtID}">
-									     <input type="hidden" name="action" value="delete"></FORM>
-									</td>
+									
 								</tr>
 							</c:forEach>
 						</table>
