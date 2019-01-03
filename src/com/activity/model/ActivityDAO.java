@@ -44,7 +44,7 @@ private static DataSource ds =null;
 			"ON (activitydetail.rtID =roomtype.rtid) \r\n" + 
 			"WHERE activitydetail.actID=? order by actID";
 
-	
+
 	@Override
 	public void insert(ActivityVO activityVO) {
 		Connection con = null;
