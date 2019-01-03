@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -37,7 +39,10 @@ private static DataSource ds =null;
 	private static final String FIND_BY_PK = "SELECT * FROM Activity where actID=?";
 	private static final String FIND_BY_NAME = "SELECT actID,actStart,actEnd FROM Activity where actName=?";
 	private static final String FIND_ALL_STMT = "SELECT * FROM Activity ORDER by actID";
-	
+	private static final String GET_ActivityDetails_BY_actID="SELECT activitydetail.actID,activitydetail.rtID, roomtype.rtname,activitydetail.discount \r\n" + 
+			"FROM (activitydetail )LEFT JOIN roomtype \r\n" + 
+			"ON (activitydetail.rtID =roomtype.rtid) \r\n" + 
+			"WHERE activitydetail.actID=? order by actID";
 
 	
 	@Override
@@ -385,4 +390,67 @@ private static DataSource ds =null;
 		
 		
 	}
+
+	public Set<ActivityDetailVO>getDetailByactID(String actID){
+		Set<ActivityDetailVO>set =new LinkedHashSet<ActivityDetailVO>();
+		ActivityDetailVO adVO =null;
+		Connection con =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs =null;
+		
+		try {
+			con =ds.getConnection();
+			pstmt =con.prepareStatement(GET_ActivityDetails_BY_actID);
+			pstmt.setString(1, actID);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				adVO = new ActivityDetailVO();
+				
+				adVO.setactID(rs.getString("actID"));
+				adVO.setrtID(rs.getString("rtID"));
+				adVO.setdiscount(rs.getFloat("discount"));
+				
+				
+				set.add(adVO);
+				
+				}
+			}catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+
+		return set;
+		
+	}
+
+
+
 }
+	
+	
+
+
+	

@@ -1,6 +1,7 @@
 package com.activity.model;
 
 import java.util.List;
+import java.util.Set;
 
 import com.activityDetail.model.ActivityDetailVO;
 
@@ -13,5 +14,5 @@ public interface ActivityDAO_interface {
 	public ActivityVO findByName(String actName); //用活動名稱找到對應促銷活動
 	public List<ActivityVO> getAll(); //取得全部促銷活動之列表
 	public void insertWithDetail(ActivityVO actVO,List<ActivityDetailVO>list);
-	
+	public Set<ActivityDetailVO> getDetailByactID(String actID); //查詢該活動明細(一對多)(回傳 Set)
 }

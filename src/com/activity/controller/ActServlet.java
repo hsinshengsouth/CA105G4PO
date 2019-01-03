@@ -269,6 +269,38 @@ public class ActServlet extends HttpServlet {
 			}
 
 		}
+		
+		if("get_detail_by_actID".equals(action)) {
+			List<String>errorMsgs =new ArrayList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+			String actID =req.getParameter("actID");
+			
+			if(actID.trim().length()==0||actID==null) {
+				errorMsgs.add("傳送促銷活動編號有誤");
+			}
+			
+			ActivityService actSvc =new ActivityService();
+			Set<ActivityDetailVO>set =actSvc.getDetailVOByactID(actID);
+			
+			req.setAttribute("listDetail_ByactID", set);
+			
+			String url ="/back-end/activity/listAllActivity.jsp";
+			RequestDispatcher successView =req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			
+			}catch(Exception e) {
+				throw new ServletException(e);
+			
+			}
+		}
+		
+		
+		
+		
+		
+		
 
 	}
 }

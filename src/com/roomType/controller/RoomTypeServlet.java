@@ -204,7 +204,7 @@ public class RoomTypeServlet extends HttpServlet{
 				rtMinimum = new Integer(req.getParameter("rtMinimum").trim());
 			}catch(NumberFormatException e) {
 				rtMinimum = 2;
-				errorMsgs.add("一班住宿人數:請輸入數字!");
+				errorMsgs.add("一般住宿人數:請輸入數字!");
 			}
 			
 			Integer rtLimit = null;
@@ -252,6 +252,10 @@ public class RoomTypeServlet extends HttpServlet{
 			rtVO.setTotal(total);
 			
 			if(!errorMsgs.isEmpty()) {	//如果驗證有錯誤，轉交回同一頁面，但會把原本打的東西記起來
+				for(String s:errorMsgs) {
+					System.out.println(s);
+				}
+				
 				req.setAttribute("rtVO", rtVO);
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/roomType/addroomType.jsp");
 				failureView.forward(req, res);

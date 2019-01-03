@@ -290,6 +290,8 @@
 			<div class="container-fluid">
 
 				<!-- Breadcrumbs-->
+		
+				
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
@@ -297,7 +299,14 @@
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
+				<div class="container-fluid" align="right"  style="margin:0px  0px -25px -63px">
+					<button type="button" class="btn btn-info">
+						<a href="<%=request.getContextPath()%>/back-end/activity/addAct.jsp"     style="color:#fff">新增促銷活動</a>
+					</button>
+				</div>
+			
 				<div class="container">
+					
 					<caption>促銷活動列表</caption>
 					<br>
 					<table class="table table-hover">
@@ -310,6 +319,7 @@
 								<th>活動結束時間</th>
 								<th align="center">修改</th>
 								<th align="center">刪除</th>
+								<th align="center">查詢明細</th>
 							</tr>
 						</thead>
 
@@ -340,11 +350,31 @@
 											<input type="hidden" name="action" value="delete">
 										</form>
 									</td>
+									
+									<td>
+										<form METHOD="post"
+											ACTION="<%=request.getContextPath()%>/back-end/activity/act.do"
+											style="margin-bottom: 0px;">
+											<button class="btn btn-info" type="submit">查詢明細</button>
+											<input type="hidden" name="actID" value="${actVO.actID}">
+											<input type="hidden" name="action" value="get_detail_by_actID">
+										</form>
+									</td>
+									
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 					<%@ include file="page2.file"%>
+					
+					
+					<%if (request.getAttribute("listDetail_ByactID")!=null){%>
+       					<jsp:include page="listDetail_ByactID.jsp" />
+					<%} %>
+					
+					
+					
+					
 					<br>
 					<a href="select_page.jsp">回選取頁面</a>
 				</div>

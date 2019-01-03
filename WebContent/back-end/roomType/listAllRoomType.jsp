@@ -302,7 +302,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Dashboard</a>
 					</li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item active">房型列表</li>
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
@@ -318,6 +318,7 @@
 
 						<!--開始自由發揮-->
 						<table class="table table-bordered table-striped table-hover">
+							<thead>
 							<tr>
 								<th>房型編號</th>
 								<th>分店編號</th>
@@ -331,8 +332,9 @@
 								<th>房間剩餘數量</th>
 								<th>房型數量</th>
 								<th>修改</th>
-								
 							</tr>
+							</thead>
+							<tbody>
 							<%@ include file="page1.file" %> 
 							<c:forEach var="roomTypeVO" items="${list}"  varStatus="status" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 								
@@ -389,6 +391,7 @@
 									
 								</tr>
 							</c:forEach>
+							</tbody>
 						</table>
 						<%@ include file="page2.file" %>	
 						

@@ -1,6 +1,7 @@
 package com.activity.model;
 
 import java.util.List;
+import java.util.Set;
 
 import com.activityDetail.model.ActivityDetailVO;
 
@@ -57,5 +58,13 @@ public class ActivityService {
 		
 		return actVO;
 	}
+	
+	public Set<ActivityDetailVO>getDetailVOByactID(String actID){
+		
+		return dao.getDetailByactID(actID);
+		
+		
+	}
+	
 	
 }

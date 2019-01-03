@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.activityDetail.model.ActivityDetailVO;
 
@@ -371,6 +372,12 @@ public class ActivityJDBCDAO implements ActivityDAO_interface {
 	public void insertWithDetail(ActivityVO actVO, List<ActivityDetailVO> list) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Set<ActivityDetailVO> getDetailByactID(String actID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -20,7 +20,7 @@ RoomTypeVO rtVO = (RoomTypeVO) request.getAttribute("rtVO");
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin - Blank Page</title>
+<title>Update RoomType</title>
 
 <!-- Bootstrap core CSS-->
 <link
