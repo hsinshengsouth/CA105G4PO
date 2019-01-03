@@ -306,7 +306,7 @@
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
-				<h1>訂單列表</h1>
+				<h1>房型列表</h1>
 				<hr>
 				<div class="container-fluid" align="right">
 					<button type="button" class="btn btn-info">

@@ -299,6 +299,8 @@
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
+				<h1>促銷活動列表</h1>
+				<hr>
 				<div class="container-fluid" align="right"  style="margin:0px  0px -25px -63px">
 					<button type="button" class="btn btn-info">
 						<a href="<%=request.getContextPath()%>/back-end/activity/addAct.jsp"     style="color:#fff">新增促銷活動</a>
@@ -307,7 +309,7 @@
 			
 				<div class="container">
 					
-					<caption>促銷活動列表</caption>
+				
 					<br>
 					<table class="table table-hover">
 

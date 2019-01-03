@@ -318,13 +318,15 @@ width: 120px;
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
+				<h1>分店列表</h1>
+				<hr>
 					<div class="container-fluid" align="right"  style="margin:0px  0px -25px 0px">
 					<button type="button" class="btn btn-info">
 						<a href="<%=request.getContextPath()%>/back-end/branch/addBra.jsp"     style="color:#fff">新增分店</a>
 					</button>
 				</div>
 				<div class="container-fluid">
-					<caption>各地分店</caption>
+				
 					<br>
 					<table class="table table-hover table-striped ">
 
