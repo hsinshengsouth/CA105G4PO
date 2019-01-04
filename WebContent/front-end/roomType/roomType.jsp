@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-   
-    
+<%@page import="com.roomType.model.*"%>
+<%@page import="java.util.*"%>   
+  <%
+  RoomTypeService rtSvc =new RoomTypeService();
+  List<RoomTypeVO> rtList =rtSvc.getAll();
+  pageContext.setAttribute("rtList",rtList);
+  %>  
     
     
 <!DOCTYPE html>
@@ -124,23 +129,32 @@
         </div>
       </div>
    
-
+</div>
     <!-- 房間一覽 style.css Line7622 -->
     <div class="site-section bg-light">
       <div class="container">
+         <c:forEach var="rtVO" items="${rtList}"  varStatus="status"  begin="0" end="2">
+        
+        
         <div class="row mb-5">
+          
+          
           <div class="col-md-12 mb-5">
             
-            <div class="block-3 d-md-flex">
+           
+ <c:choose>
+ 		<c:when test="${status.index %3==0 }">
+            
+            <div class="block-3 d-md-flex ">
               <div class="image" style="background-image: url('images/img_1.jpg'); "></div>
               <div class="text">
 
-                <h2 class="heading">一般二人房</h2>
-                <div class="price"><sup>$</sup><span class="number">150</span><sub>/per night</sub></div>
+                <h2 class="heading">${rtVO.rtName}</h2>
+                <div class="price"><sup>$</sup><span class="number">${rtVO.weeklyPrice}</span><sub>/per night</sub></div>
                 <ul class="specs mb-5">
-                  <li><strong>Adults:</strong> 1</li>
+                  <li><strong>Adults:</strong> ${rtVO.rtLimit} </li>
                   <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
+                  <li><strong>Introduction:</strong>${rtVO.rtIntro}</li>
                   <li><strong>Size:</strong> 20m<sup>2</sup></li>
                   <li><strong>Bed Type:</strong> One bed</li>
                 </ul>
@@ -149,22 +163,20 @@
 
               </div>
             </div>
+</c:when>
 
-
-          </div>  
-
-
-          <div class="col-md-12 mb-5">
+<c:when test="${status.index %3==1}">
+ <div class="col-md-12 mb-5">
             
-            <div class="block-3 d-md-flex">
+            <div class="block-3 d-md-flex ">
               <div class="image order-2" style="background-image: url('images/img_2.jpg'); "></div>
               <div class="text order-1">
                 
-                <h2 class="heading">豪華二人房</h2>
-                <div class="price"><sup>$</sup><span class="number">245</span><sub>/per night</sub></div>
+                <h2 class="heading">${rtVO.rtName}</h2>
+                <div class="price"><sup>$</sup><span class="number">${rtVO.weeklyPrice}</span><sub>/per night</sub></div>
                 <ul class="specs mb-5">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
+                   <li><strong>Adults:</strong> ${rtVO.rtLimit} </li>
+                  <li><strong>Introduction:</strong> ${rtVO.rtIntro}</li>
                   <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
                   <li><strong>Size:</strong> 20m<sup>2</sup></li>
                   <li><strong>Bed Type:</strong> One bed</li>
@@ -178,18 +190,19 @@
 
           </div>  
 
-
+</c:when>
+<c:otherwise>
           <div class="col-md-12">
             
             <div class="block-3 d-md-flex">
               <div class="image" style="background-image: url('images/img_3.jpg'); "></div>
               <div class="text">
 
-                <h2 class="heading">總統套房</h2>
+                <h2 class="heading">${rtVO.rtName}</h2>
                 <div class="price"><sup>$</sup><span class="number">450</span><sub>/per night</sub></div>
                 <ul class="specs mb-5">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
+                 <li><strong>Adults:</strong> ${rtVO.rtLimit} </li>
+                   <li><strong>Introduction:</strong> ${rtVO.rtIntro}</li>
                   <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
                   <li><strong>Size:</strong> 20m<sup>2</sup></li>
                   <li><strong>Bed Type:</strong> One bed</li>
@@ -202,27 +215,46 @@
 
 
           </div>  
+</c:otherwise>
+
+
+
+
+</c:choose>
+
+          </div>  
+
+
+
+
+     
 
         </div>
 
-        
+        </c:forEach>
           <!-- 房間與房間中間文字訊息 -->
-        <div class="row mb-5 pt-5 justify-content-center">
+        
+        
+           <div class="row mb-5 pt-5 justify-content-center">
             <div class="col-md-7 text-center section-heading">
               <h2 class="heading">More Rooms</h2>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, iusto, omnis! Quidem, sint, impedit? Dicta eaque delectus tempora hic, corporis velit doloremque quod quam laborum, nobis iusto autem culpa quaerat!</p>
             </div>
           </div>
-
-        <div class="row">
+          
+          
+ 
+  <div class="row">
+  <c:forEach var="rtVO" items="${rtList}"  varStatus="status"  begin="0" end="2">   
           <div class="col-lg-4 mb-5">
             <div class="block-34">
+            
               <div class="image">
                 <a href="#"><img src="images/img_3.jpg" alt="Image placeholder"></a>
               </div>
               <div class="text">
-                <h2 class="heading">一般四人房</h2>
-                <div class="price"><sup>$</sup><span class="number">375</span><sub>/per night</sub></div>
+                <h2 class="heading">${rtVO.rtName}</h2>
+                <div class="price"><sup>$</sup><span class="number">${rtVO.weeklyPrice}</span><sub>/per night</sub></div>
                 <ul class="specs">
                   <li><strong>Adults:</strong> 1</li>
                   <li><strong>Categories:</strong> Single</li>
@@ -234,44 +266,20 @@
             </div>
           </div>
 
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="images/img_1.jpg" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">豪華四人房</h2>
-                <div class="price"><sup>$</sup><span class="number">156</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="images/img_2.jpg" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">為了美觀</h2>
-                <div class="price"><sup>$</sup><span class="number">245</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+  
+    
+    
+    
+    </c:forEach>
+    
         </div>
+
+
+
+
+
+
+
       </div>
     </div>
     
