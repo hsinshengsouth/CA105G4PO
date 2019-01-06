@@ -131,14 +131,16 @@ margin:25px;
         <div class="col-xs-12 col-sm-6">
           <img src="<%=request.getContextPath()%>/front-end/coupon/cpn.do?cpnID=${cpnVO.cpnID}" width="500px">
         </div>
-        
+        	
         <div class="col-xs-12 col-sm-6" >
-          <div class="price"><sup>$</sup><span class="number">${cpnVO.discount}</span></div>
-      
-        	<strong>優惠卷數量:</strong>${cpnVO.quantity}<br><br>
-        
         <br>
-        <button class="btn-warning">領取優惠券</button>
+          <div class="price"><sup>$</sup><span class="number">${cpnVO.discount}</span></div>
+     
+      <div>
+        	<strong>Coupon Number:</strong>${cpnVO.quantity}
+        </div>
+       <br>
+        <button type="button" class="btn-info">Get Coupon!</button>
         </div>
       </div>
     </div>
