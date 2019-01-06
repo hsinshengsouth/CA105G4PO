@@ -4,7 +4,14 @@
     <%@page import="java.util.*"%>   
     <%@page import="com.coupon.model.*" %>
     
+    <%
+    CouponService cpnSvc =new CouponService();
     
+    List<CouponVO>cpnList =cpnSvc.getAll();
+    
+    pageContext.setAttribute("cpnList",cpnList);
+    
+    %>
     
     
 <!DOCTYPE html>
@@ -28,7 +35,19 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/flaticon.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/icomoon.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/style.css">
-  </head>
+
+<style>
+
+.couponmargin{
+
+margin:25px;
+
+}
+
+
+</style>
+</head>
+
   <body>
   
 
@@ -101,84 +120,40 @@
   <div class="site-section bg-light main-section">
     <h2>&nbsp;All For Free! Let's join us !!!</h2>
     
+    		<jsp:useBean id="cpnSvc1" scope="page"
+								class="com.coupon.model.CouponService" />
+   <c:forEach var="cpnVO" items="${cpnList}"  varStatus="status"  begin="0" end="2">
     
     
-    <div class="container">
-      
+    <div class="container couponmargin">
       <div class="row">
+      
         <div class="col-xs-12 col-sm-6">
-          <img src="https://api.fnkr.net/testimg/500x300/00CED1/FFF/?text=img+placeholder">
+          <img src="<%=request.getContextPath()%>/front-end/coupon/cpn.do?cpnID=${cpnVO.cpnID}" width="500px">
         </div>
-        <div class="col-xs-12 col-sm-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        
+        <div class="col-xs-12 col-sm-6" >
+          <div class="price"><sup>$</sup><span class="number">${cpnVO.discount}</span></div>
+      
+        	<strong>優惠卷數量:</strong>${cpnVO.quantity}<br><br>
+        
+        <br>
         <button class="btn-warning">領取優惠券</button>
         </div>
       </div>
     </div>
     
+     
     
     
     
-      <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        <button class="btn-info">領取優惠券</button></div>
-        <div class="col-xs-12 col-sm-6"><img src="https://api.fnkr.net/testimg/500x300/00CED1/FFF/?text=img+placeholder"></div> 
-      </div>
-    </div>
+    </c:forEach>
     
     
-    
-    
-      <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-6"><img src="https://api.fnkr.net/testimg/500x300/00CED1/FFF/?text=img+placeholder"></div>
-        <div class="col-xs-12 col-sm-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        <button class="btn-danger">領取優惠券</button></div>
-      </div>
-    </div>
   </div>
 </div>
 
 <!-- 主畫面優惠券照片結尾 -->
-
-
-
-
-      
-
-
-
-
-
-
-
-
-
-         
-
-
-
-
-
-
-
-    
-
 
 
     <!-- Footer尾巴 -->
