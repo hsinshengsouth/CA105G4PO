@@ -8,7 +8,8 @@
 // List<RoomTypeVO>rtList = rtSvc.getAll();
 // pageContext.setAttribute("rtList", rtList);
 
-List<RoomTypeVO> rtList = (List<RoomTypeVO>) request.getAttribute("list");
+
+HttpSession Session=  request.getSession();
 %>
 
 <!DOCTYPE html>

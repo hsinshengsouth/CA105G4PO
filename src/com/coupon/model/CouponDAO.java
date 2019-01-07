@@ -30,6 +30,7 @@ public class CouponDAO implements CouponDAO_interface {
 	private static final String GET_ALL_SQL = "SELECT * from coupon";
 	private static final String GET_ONE_SQL = "SELECT * from coupon where cpnID = ?";
 	private static final String DELETE = "DELETE FROM coupon WHERE cpnID=?";
+	private static final String FIND_APPQUANTITY="SELECT Quantity WHERE cpnID=?";
 
 	@Override
 	public void insert(CouponVO couponVO) {
@@ -250,4 +251,8 @@ public class CouponDAO implements CouponDAO_interface {
 
 		}
 	}
+
+	
+
+
 }

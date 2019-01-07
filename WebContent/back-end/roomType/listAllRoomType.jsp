@@ -328,7 +328,7 @@
 								<th>住房上限人數</th>
 								<th>平日價格</th>
 								<th>假日價格</th>
-								<th>房間剩餘數量</th>
+<!-- 								<th>房間剩餘數量</th> -->
 								<th>房型數量</th>
 								<th>修改</th>
 							</tr>
@@ -379,7 +379,7 @@
 									<td>${roomTypeVO.rtLimit}</td>
 									<td>${roomTypeVO.weeklyPrice}</td>
 									<td>${roomTypeVO.holidayPrice}</td>
-									<td>${roomTypeVO.balance}</td>
+<%-- 									<td >${roomTypeVO.balance}</td> --%>
 									<td>${roomTypeVO.total}</td>
 									<td>
 									  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/roomType/roomType.do" style="margin-bottom: 0px;">

@@ -21,7 +21,7 @@ public class RoomTypeJDBCDAO implements RoomTypeDAO_interface{
 	
 	/**[訂單]Gina訂單交易使用**/
 	private static final String UPDATE_ROOMBALANCE ="UPDATE RoomType SET BALANCE=? WHERE RTID=?"; 
-	private static final String FIND_BY_BRANCH ="SELECT RTID, RTNAME FROM ROOMTYPE WHERE BRAID=?";
+	private static final String FIND_BY_BRANCH ="SELECT RTID, RTNAME, balance, total FROM ROOMTYPE WHERE BRAID=?";
 	/**[訂單]Gina訂單交易使用**/
 	
 	@Override
@@ -478,7 +478,9 @@ public class RoomTypeJDBCDAO implements RoomTypeDAO_interface{
 			while(rs.next()) {
 				roomTypeVO = new RoomTypeVO();
 				roomTypeVO.setRtID(rs.getString("RTID"));
-				roomTypeVO.setRtName(rs.getString("RTNAME"));	
+				roomTypeVO.setRtName(rs.getString("RTNAME"));
+				roomTypeVO.setBalance(rs.getString("balance"));
+				roomTypeVO.setTotal(rs.getInt("total"));
 				
 				list.add(roomTypeVO);
 			}

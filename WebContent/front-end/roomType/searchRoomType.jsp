@@ -2,13 +2,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="com.roomType.model.*"%>
 <%@page import="java.util.*"%>   
-  <%
-  RoomTypeService rtSvc =new RoomTypeService();
-  List<RoomTypeVO> rtList =rtSvc.getAll();
-  pageContext.setAttribute("rtList",rtList);
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%--   <% --%>
   
-  %>  
-    
+<!-- //    List<RoomTypeVO> rtList = (ArrayList)request.getAttribute("searchList"); -->
+  
+  
+<%--   %>   --%>
+   <jsp:useBean id="searchList" scope="request" type="java.util.List<RoomTypeVO>" />
     
 <!DOCTYPE html>
 <html lang="en">
@@ -25,11 +26,15 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/magnific-popup.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/aos.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/ionicons.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/jquery.timepicker.css">
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/bootstrap-datepicker.css"> --%>
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/jquery.timepicker.css"> --%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/flaticon.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/icomoon.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/style.css">
+    
+    
+     <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
   </head>
   <body>
     
@@ -76,25 +81,29 @@
 
   <!-- 複合查詢 -->
   <div class="container">
-      <div class="row mb-5">
+       <div class="row mb-5">
         <div class="col-md-12">
           <div class="block-32">
-            <form action="#">
+            <form METHOD="post"  action="<%=request.getContextPath() %>/front-end/roomType/roomType.do">
+              
               <div class="row">
+              
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkin">Check In</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkin_date" class="form-control">
+                    <input type="text" id="checkin_date" class="form-control" name="startdate">
                   </div>
                 </div>
+                
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkin">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkout_date" class="form-control">
+                    <input type="text"  id="checkout_date" class="form-control" name="enddate">
                   </div>
                 </div>
+                
                 <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
                   <div class="row">
                     <div class="col-md-6 mb-3 mb-md-0">
@@ -109,22 +118,35 @@
                         </select>
                       </div>
                     </div>
+                  
+                  <jsp:useBean id="bchSvc" scope="page"  class="com.branch.model.BranchService" />
+                  
+                
+                  
                     <div class="col-md-6 mb-3 mb-md-0">
                       <label for="checkin">Branch</label>
                       <div class="field-icon-wrap">
                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="" class="form-control">
-                          <option value="">1</option>
-                          <option value="">2</option>
+                        <select name="braID" id="" class="form-control">
+                           <c:forEach var="bchVO" items="${bchSvc.all}" >
+                          <option value="${bchVO.braID }">${bchVO.braName}</option>
+                         </c:forEach>
                         </select>
                       </div>
                     </div>
+                    
+                    
+                    
                   </div>
                 </div>
+                
                 <div class="col-md-6 col-lg-3 align-self-end">
-                  <button class="btn btn-primary btn-block icon-search">&nbsp;Search</button>
+                  <button class="btn btn-primary btn-block icon-search" type="submit">&nbsp;Search</button>
                 </div>
+                
               </div>
+              <input type="hidden" name="action" value="search" >
+              
             </form>
           </div>
         </div>
@@ -134,7 +156,7 @@
     <!-- 房間一覽 style.css Line7622 -->
     <div class="site-section bg-light">
       <div class="container">
-         <c:forEach var="rtVO" items="${rtList}"  varStatus="status"  >
+         <c:forEach var="rtVO" items="${searchList}"  varStatus="status"  >
         
         
         <div class="row mb-5">
@@ -367,7 +389,7 @@
           <div class="col-xs-12 col-md-4">
             <!-- style.css Line7633 -->
               <h3 class="heading-section">About Us</h3>
-                <p class="mb-5">麻翔山莊創立於1923年，於日治時期台東地區第一家現代化旅館，超過90年以上的經營，成為台灣最具指標性的山莊，分店翔泰山莊於2018年，符合環境友善，同時會及最新科技的六星級旅館. </p>
+                <p class="mb-5">麻翔山莊創立於1923年，於日治時期台東地區第一家現代化旅館，超過90年以上的經營，成為台灣最具指標性的山莊，分店翔泰山莊於2018年，符合環境友善，同時匯集最新科技的六星級旅館. </p>
           </div>
           <div class="col-xs-12 col-md-4">
             <h3 class="heading-section">Contact Info</h3>
@@ -403,13 +425,34 @@
   <script src="<%=request.getContextPath()%>/front-end/js/jquery.stellar.min.js"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/owl.carousel.min.js"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/jquery.magnific-popup.min.js"></script>
-  <script src="<%=request.getContextPath()%>/front-end/js/bootstrap-datepicker.js"></script>
+<%--   <script src="<%=request.getContextPath()%>/front-end/js/bootstrap-datepicker.js"></script> --%>
   
   <script src="<%=request.getContextPath()%>/front-end/js/aos.js"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/jquery.animateNumber.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/google-map.js"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/main.js"></script>
-    
+    <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
   </body>
+  <script>
+  var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+$('#checkin_date').datepicker({
+    uiLibrary: 'bootstrap4',
+    iconsLibrary: 'fontawesome',
+    format: 'yyyy-mm-dd',
+    minDate: today,
+    maxDate: function () {
+        return $('#checkout_date').val();
+    }
+});
+$('#checkout_date').datepicker({
+    uiLibrary: 'bootstrap4',
+    iconsLibrary: 'fontawesome',
+    format: 'yyyy-mm-dd',
+    minDate: function () {
+        return $('#checkin_date').val();
+    }
+});
+  
+  </script>
 </html>

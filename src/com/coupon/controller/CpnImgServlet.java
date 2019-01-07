@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.coupon.model.CouponService;
 
-public class FrontCpnServlet extends HttpServlet {
+public class CpnImgServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

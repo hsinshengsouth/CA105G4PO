@@ -13,12 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.roomType.model.RoomTypeService;
-import com.roomType.model.RoomTypeVO;
+import com.roomType.model.*;
 
 @MultipartConfig
 public class RoomTypeServlet extends HttpServlet{
-	
+
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req,res);
 	}
@@ -272,6 +273,43 @@ public class RoomTypeServlet extends HttpServlet{
 			successView.forward(req, res);
 			
 		}
+		
+		
+		if("search".equals(action)) {
+			
+			
+			//1.接收查詢參數
+			try {
+			String checkinStr= req.getParameter("startdate");
+			
+			String checkoutStr =req.getParameter("enddate");
+			
+			String braID =req.getParameter("braID"); 
+			System.out.println(braID);
+			//2.找尋房間
+			RoomTypeCompositeQuery rtCQ =new RoomTypeCompositeQuery();
+			
+			List<RoomTypeVO>searchList =rtCQ.searchRoomTypeMinRoom(braID, checkinStr, checkoutStr);
+			
+			
+			//3.轉交房型頁面
+			
+			req.setAttribute("searchList",searchList);
+			String url ="/front-end/roomType/searchRoomType.jsp";
+			RequestDispatcher successView =req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	}
