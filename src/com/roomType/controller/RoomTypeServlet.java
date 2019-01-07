@@ -2,8 +2,7 @@ package com.roomType.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -291,10 +290,12 @@ public class RoomTypeServlet extends HttpServlet{
 			
 			List<RoomTypeVO>searchList =rtCQ.searchRoomTypeMinRoom(braID, checkinStr, checkoutStr);
 			
-			
+			RoomTypeService rtSvc =new RoomTypeService();
+			Set<RoomTypeVO>searchSet =rtSvc.getAllInSet();
 			//3.轉交房型頁面
 			
 			req.setAttribute("searchList",searchList);
+			req.setAttribute("searchSet",searchSet);
 			String url ="/front-end/roomType/searchRoomType.jsp";
 			RequestDispatcher successView =req.getRequestDispatcher(url);
 			successView.forward(req, res);

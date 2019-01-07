@@ -182,7 +182,7 @@ HttpSession Session=  request.getSession();
           <div class="col-xs-12 col-md-4">
             <!-- style.css Line7633 -->
               <h3 class="heading-section">About Us</h3>
-                <p class="mb-5">麻翔山莊創立於1923年，於日治時期台東地區第一家現代化旅館，超過90年以上的經營，成為台灣最具指標性的山莊，分店翔泰山莊於2018年，符合環境友善，同時會及最新科技的六星級旅館. </p>
+                <p class="mb-5">麻翔山莊創立於1923年，於日治時期台東地區第一家現代化旅館，超過90年以上的經營，成為台灣最具指標性的山莊，分店翔泰山莊於2018年，符合環境友善，同時匯集最新科技的六星級旅館. </p>
           </div>
           <div class="col-xs-12 col-md-4">
             <h3 class="heading-section">Contact Info</h3>

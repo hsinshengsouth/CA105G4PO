@@ -614,4 +614,10 @@ public class RoomTypeJDBCDAO implements RoomTypeDAO_interface{
 		
 	}
 
+	@Override
+	public Set<RoomTypeVO> getAllInSet() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

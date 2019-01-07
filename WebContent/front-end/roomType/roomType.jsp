@@ -5,8 +5,9 @@
   <%
   RoomTypeService rtSvc =new RoomTypeService();
   List<RoomTypeVO> rtList =rtSvc.getAll();
+  Set<RoomTypeVO>rtSet =rtSvc.getAllInSet();
   pageContext.setAttribute("rtList",rtList);
-  
+  pageContext.setAttribute("rtSet",rtSet);
   %>  
     
     
@@ -25,12 +26,19 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/magnific-popup.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/aos.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/ionicons.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/jquery.timepicker.css">
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/bootstrap-datepicker.css"> --%>
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/jquery.timepicker.css"> --%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/flaticon.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/icomoon.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/style.css">
-  </head>
+    
+     <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ 
+
+
+</head>
+  
   <body>
     
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -54,13 +62,6 @@
     </div>
   </nav>
   <!-- END nav -->
-  
-
-
-
-
-
-
 
   <div class="block-30 block-30-sm item" style="background-image: url('imagesCustom/room.jpg'); min-height: 600px; height: 80vh" data-stellar-background-ratio="0.5">
     <div class="container">
@@ -76,25 +77,29 @@
 
   <!-- 複合查詢 -->
   <div class="container">
-      <div class="row mb-5">
+       <div class="row mb-5">
         <div class="col-md-12">
           <div class="block-32">
-            <form action="#">
+            <form METHOD="post"  action="<%=request.getContextPath() %>/front-end/roomType/roomType.do">
+              
               <div class="row">
+              
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkin">Check In</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkin_date" class="form-control">
+                    <input type="text" id="checkin_date" class="form-control" name="startdate">
                   </div>
                 </div>
+                
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkin">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkout_date" class="form-control">
+                    <input type="text"  id="checkout_date" class="form-control" name="enddate">
                   </div>
                 </div>
+                
                 <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
                   <div class="row">
                     <div class="col-md-6 mb-3 mb-md-0">
@@ -109,22 +114,35 @@
                         </select>
                       </div>
                     </div>
+                  
+                  <jsp:useBean id="bchSvc" scope="page"  class="com.branch.model.BranchService" />
+                  
+                
+                  
                     <div class="col-md-6 mb-3 mb-md-0">
                       <label for="checkin">Branch</label>
                       <div class="field-icon-wrap">
                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="" class="form-control">
-                          <option value="">1</option>
-                          <option value="">2</option>
+                        <select name="braID" id="" class="form-control">
+                           <c:forEach var="bchVO" items="${bchSvc.all}" >
+                          <option value="${bchVO.braID }">${bchVO.braName}</option>
+                         </c:forEach>
                         </select>
                       </div>
                     </div>
+                    
+                    
+                    
                   </div>
                 </div>
+                
                 <div class="col-md-6 col-lg-3 align-self-end">
-                  <button class="btn btn-primary btn-block icon-search">&nbsp;Search</button>
+                  <button class="btn btn-primary btn-block icon-search" type="submit">&nbsp;Search</button>
                 </div>
+                
               </div>
+              <input type="hidden" name="action" value="search" >
+              
             </form>
           </div>
         </div>
@@ -141,42 +159,43 @@
           
           
           <div class="col-md-12 mb-5">
-            
+           
            
  <c:choose>
- 		<c:when test="${status.index %3==0 }">
-            
+ 		<c:when test="${status.index %2==0 }">
+             <span class="flag-discount">30% Off</span>
             <div class="block-3 d-md-flex ">
-              <div class="image" style="background-image: url('images/img_1.jpg'); "></div>
+              <div class="image" style="background-image: url('<%=request.getContextPath()%>/front-end/roomType/rtPic.do?rtID=${rtVO.rtID}')"></div>
               <div class="text">
 
                 <h2 class="heading">${rtVO.rtName}</h2>
                 <div class="price"><sup>$</sup><span class="number">${rtVO.weeklyPrice}</span><sub>/per night</sub></div>
                 <ul class="specs mb-5">
                   <li><strong>Adults:</strong> ${rtVO.rtLimit} </li>
-                  <li><strong>Categories:</strong> Single</li>
+                  <li><strong>Total:</strong>  ${rtVO.total}</li>
                   <li><strong>Introduction:</strong>${rtVO.rtIntro}</li>
+                   <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
                   <li><strong>Size:</strong> 20m<sup>2</sup></li>
                   <li><strong>Bed Type:</strong> One bed</li>
                 </ul>
-
                 <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
 
               </div>
             </div>
 </c:when>
 
-<c:when test="${status.index %3==1}">
+<c:otherwise>
  <div class="col-md-12 mb-5">
             
             <div class="block-3 d-md-flex ">
-              <div class="image order-2" style="background-image: url('images/img_2.jpg'); "></div>
+              <div class="image order-2" style="background-image: url('<%=request.getContextPath()%>/front-end/roomType/rtPic.do?rtID=${rtVO.rtID}'); "></div>
               <div class="text order-1">
                 
                 <h2 class="heading">${rtVO.rtName}</h2>
                 <div class="price"><sup>$</sup><span class="number">${rtVO.weeklyPrice}</span><sub>/per night</sub></div>
                 <ul class="specs mb-5">
                    <li><strong>Adults:</strong> ${rtVO.rtLimit} </li>
+                   <li><strong>Total:</strong>  ${rtVO.total}</li>
                   <li><strong>Introduction:</strong> ${rtVO.rtIntro}</li>
                   <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
                   <li><strong>Size:</strong> 20m<sup>2</sup></li>
@@ -184,38 +203,13 @@
                 </ul>
 
                 <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
-                
+                	
               </div>
             </div>
 
 
           </div>  
 
-</c:when>
-<c:otherwise>
-          <div class="col-md-12">
-            
-            <div class="block-3 d-md-flex">
-              <div class="image" style="background-image: url('images/img_3.jpg'); "></div>
-              <div class="text">
-
-                <h2 class="heading">${rtVO.rtName}</h2>
-                <div class="price"><sup>$</sup><span class="number">450</span><sub>/per night</sub></div>
-                <ul class="specs mb-5">
-                 <li><strong>Adults:</strong> ${rtVO.rtLimit} </li>
-                   <li><strong>Introduction:</strong> ${rtVO.rtIntro}</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-
-                <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
-
-              </div>
-            </div>
-
-
-          </div>  
 </c:otherwise>
 
 
@@ -246,12 +240,12 @@
           
  
   <div class="row">
-  <c:forEach var="rtVO" items="${rtList}"  varStatus="status"  begin="0" end="2">   
+  <c:forEach var="rtVO" items="${rtSet}"  varStatus="status"  begin="0" end="2">   
           <div class="col-lg-4 mb-5">
             <div class="block-34">
             
               <div class="image">
-                <a href="#"><img src="images/img_3.jpg" alt="Image placeholder"></a>
+                <a href="#"><img src="<%=request.getContextPath()%>/front-end/roomType/rtPic.do?rtID=${rtVO.rtID}" alt="Image placeholder"></a>
               </div>
               <div class="text">
                 <h2 class="heading">${rtVO.rtName}</h2>
@@ -367,7 +361,7 @@
           <div class="col-xs-12 col-md-4">
             <!-- style.css Line7633 -->
               <h3 class="heading-section">About Us</h3>
-                <p class="mb-5">麻翔山莊創立於1923年，於日治時期台東地區第一家現代化旅館，超過90年以上的經營，成為台灣最具指標性的山莊，分店翔泰山莊於2018年，符合環境友善，同時會及最新科技的六星級旅館. </p>
+                <p class="mb-5">麻翔山莊創立於1923年，於日治時期台東地區第一家現代化旅館，超過90年以上的經營，成為台灣最具指標性的山莊，分店翔泰山莊於2018年，符合環境友善，同時匯集最新科技的六星級旅館. </p>
           </div>
           <div class="col-xs-12 col-md-4">
             <h3 class="heading-section">Contact Info</h3>
@@ -410,6 +404,72 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/google-map.js"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/main.js"></script>
-    
+   <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
   </body>
+   <style>
+* {
+  font-family: "Encode Sans Condensed", sans-serif;
+}
+
+
+
+
+.flag-discount {
+    border-radius: 6px 0 0 6px;
+    color: #fff;
+    display: block;
+    float: right;
+    padding: 10px 20px;
+    background: #93274f;
+    font-size: 20px;
+    font-weight: 400;
+    position: relative;
+}
+.flag-discount::before,
+.flag-discount::after {
+    content: "";
+    position: absolute;
+    left: 100%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    display: block;
+}
+.flag-discount::before {
+    top: 0;
+    border-width: 22px 15px 0 0;
+    border-color: #93274f transparent transparent transparent;
+}
+.flag-discount::after {
+    bottom: 0;
+    border-width: 0 15px 22px 0;
+    border-color: transparent transparent #93274f transparent;
+}
+</style>
+  
+  
+  
+  
+  <script>
+  var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+$('#checkin_date').datepicker({
+    uiLibrary: 'bootstrap4',
+    iconsLibrary: 'fontawesome',
+    format: 'yyyy-mm-dd',
+    minDate: today,
+    maxDate: function () {
+        return $('#checkout_date').val();
+    }
+});
+$('#checkout_date').datepicker({
+    uiLibrary: 'bootstrap4',
+    iconsLibrary: 'fontawesome',
+    format: 'yyyy-mm-dd',
+    minDate: function () {
+        return $('#checkin_date').val();
+    }
+});
+  
+  </script>
+  
 </html>
