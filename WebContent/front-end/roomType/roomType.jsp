@@ -8,13 +8,15 @@
   Set<RoomTypeVO>rtSet =rtSvc.getAllInSet();
   pageContext.setAttribute("rtList",rtList);
   pageContext.setAttribute("rtSet",rtSet);
+  
+
   %>  
-    
+   <jsp:useBean id="adSvc"  scope="page" class="com.activityDetail.model.ActivityDetailService" />   
     
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Bright Hotel - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Room Type</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -163,7 +165,13 @@
            
  <c:choose>
  		<c:when test="${status.index %2==0 }">
-             <span class="flag-discount">30% Off</span>
+             
+
+             <c:forEach var="adVO"  items="${adSvc.all}" varStatus="">
+             	<c:if test="${adVO.rtID==rtVO.rtID}">
+             <span class="flag-discount">${adVO.discount}折</span> 
+             	</c:if>
+             </c:forEach>
             <div class="block-3 d-md-flex ">
               <div class="image" style="background-image: url('<%=request.getContextPath()%>/front-end/roomType/rtPic.do?rtID=${rtVO.rtID}')"></div>
               <div class="text">

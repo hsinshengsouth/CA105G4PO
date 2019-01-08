@@ -239,6 +239,34 @@ public class CpnServlet extends HttpServlet {
 				
 			}
 			
+			
+			if("get_coupon".equals(action)) {
+				List<String> errorMsgs =new LinkedList<String>();
+				req.setAttribute("errorMsgs", errorMsgs);
+				CouponVO cpnVO =new CouponVO();
+				Integer totalNow= null;
+				//1.傳送參數
+				String cpnID =req.getParameter("cpnID");
+				
+				if(cpnID.trim().length()==0||cpnID==null) {
+					errorMsgs.add("傳輸產生錯誤");
+				}
+				
+				//2.取出該優惠卷VO，修改資料
+				
+				CouponService cpnSvc =new CouponService(); 
+				cpnVO =cpnSvc.getOneByID(cpnID);
+				totalNow =cpnVO.getquantity()-1;     //領取減少的動作
+				
+				cpnVO= cpnSvc.updateCpn(totalNow, cpnID);
+				
+				req.setAttribute("cpnVO", cpnVO);
+				String successURL ="/front-end/coupon/coupon.jsp";
+				RequestDispatcher successView =req.getRequestDispatcher(successURL);
+				successView.forward(req, res);
+				
+			}
+			
 	
 	
 	

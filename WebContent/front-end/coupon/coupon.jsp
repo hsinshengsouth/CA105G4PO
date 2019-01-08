@@ -48,10 +48,11 @@ margin:25px;
 </style>
 </head>
 
+// 		return queryString;
+// 	}
+
+<!-- </script> -->
   <body>
-  
-
-
 
     <!-- NavBar -->
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -75,9 +76,6 @@ margin:25px;
     </div>
   </nav>
   <!-- END nav -->
-  
-
-
 
 <!-- 廣告瀏覽區 -->
   <div class="block-31" style="position: relative;">
@@ -112,16 +110,12 @@ margin:25px;
     </div>
   </div>
 
-
-
-
   <!-- 主畫面優惠券照片 -->
 <div class="container">
   <div class="site-section bg-light main-section">
     <h2>&nbsp;All For Free! Let's join us !!!</h2>
     
-    		<jsp:useBean id="cpnSvc1" scope="page"
-								class="com.coupon.model.CouponService" />
+    		
    <c:forEach var="cpnVO" items="${cpnList}"  varStatus="status"  begin="0" end="2">
     
     
@@ -134,20 +128,21 @@ margin:25px;
         	
         <div class="col-xs-12 col-sm-6" >
         <br>
-          <div class="price"><sup>$</sup><span class="number">${cpnVO.discount}</span></div>
+          <div class="price"><h3><sup>$</sup><span class="number">${cpnVO.discount}</span></h3></div>
      
       <div>
         	<strong>Coupon Number:</strong>${cpnVO.quantity}
         </div>
        <br>
-        <button type="button" class="btn-info">Get Coupon!</button>
+<%--        <form METHOD="GET"  action="<%=request.getContextPath()%>/back-end/coupon/cpn.do"> --%>
+<!-- 		<form> -->
+<!--        <input id="coupon" type="hidden"  name="action"  value="get_coupon"> -->
+<%--        <input type="hidden" name="cpnID" value="${cpnVO.cpnID }"> --%>
+        <button id="couponclick"  type="submit" class="btn-info">Get Coupon!</button>
+<!--         </form> -->
         </div>
       </div>
     </div>
-    
-     
-    
-    
     
     </c:forEach>
     
@@ -211,5 +206,39 @@ margin:25px;
   <script src="<%=request.getContextPath()%>/front-end/js/google-map.js"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/main.js"></script>
     
+    
+    <script type="text/javascript">
+	$(document).ready(function(){
+		 $('#couponclick').click(function(){
+			 $.ajax({
+				 type: "GET",
+				 url: "/back-end/coupon/cpn.do",
+				 data: creatQueryString(),
+				 dataType: "json",
+				 success: function (data){
+					clearSelect();
+					console.log(data);
+			
+// 					$(data).each(function(i, item){
+// 						$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
+// 					});
+// 					jQuery.each(data, function(i, item){
+// 						$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
+// 					});
+			     },
+	             error: function(){alert("AJAX-grade發生錯誤囉!")}
+	         })
+		 })
+	
+	})
+	
+// 	function creatQueryString(paramGrade, paramClass){
+		function creatQueryString(){
+		var queryString= {"action":"get_coupon", "cpnID":"C0001"};
+// 		console.log("action:"+action+"; cpnID:"+cpnID);
+		return queryString;
+	}
+
+</script>
   </body>
 </html>

@@ -21,7 +21,7 @@ public class CouponJDBCDAO implements CouponDAO_interface{
     private static final String UPDATE_SQL = "UPDATE Coupon set cpnPic=? discount=? quantity=? appQuantity = ? where cpnID = ?";
     private static final String GET_ALL_SQL = "SELECT * from coupon";
     private static final String GET_ONE_SQL = "SELECT * from coupon where cpnID = ?";
-    
+    private static final String UPDATE_QUANTITY="UPDATE Coupon set quantity WHERE cpnID=?";
 	
     static {
     	try {
@@ -107,6 +107,8 @@ public class CouponJDBCDAO implements CouponDAO_interface{
 		}
 	}
 
+	
+	
 	@Override
 	public CouponVO findByPK(String cpnID) {
 		CouponVO couponVO = null;
@@ -242,6 +244,9 @@ public class CouponJDBCDAO implements CouponDAO_interface{
 		System.out.println("修改成功");
 		System.out.println("--------------------");		
 		
+		//減少一筆
+		
+		
 		// 查詢單筆
 		CouponVO couponVO3 = dao.findByPK("C0003");
 		
@@ -269,5 +274,43 @@ public class CouponJDBCDAO implements CouponDAO_interface{
 	@Override
 	public void delete(String cpnID) {
 		
+	}
+
+	@Override
+	public void updateQuantity(CouponVO couponVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_QUANTITY);
+			
+			
+			pstmt.setInt(1, couponVO.getquantity());
+		
+			pstmt.setString(2, couponVO.getcpnID());
+			
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

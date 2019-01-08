@@ -30,7 +30,7 @@ public class CouponDAO implements CouponDAO_interface {
 	private static final String GET_ALL_SQL = "SELECT * from coupon";
 	private static final String GET_ONE_SQL = "SELECT * from coupon where cpnID = ?";
 	private static final String DELETE = "DELETE FROM coupon WHERE cpnID=?";
-	private static final String FIND_APPQUANTITY="SELECT Quantity WHERE cpnID=?";
+	private static final String UPDATE_QUANTITY="UPDATE Coupon set quantity WHERE cpnID=?";
 
 	@Override
 	public void insert(CouponVO couponVO) {
@@ -106,7 +106,39 @@ public class CouponDAO implements CouponDAO_interface {
 			}
 		}
 	}
+	public void updateQuantity(CouponVO couponVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_QUANTITY);
+
+			pstmt.setInt(1, couponVO.getquantity());
+			pstmt.setString(2, couponVO.getcpnID());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	@Override
 	public CouponVO findByPK(String cpnID) {
 		CouponVO couponVO = null;
