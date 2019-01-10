@@ -325,7 +325,6 @@
     var webCtx = path.substring(0, path.indexOf('/', 1));
     var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
     
-	var statusOutput = document.getElementById("statusOutput");
 	var webSocket;
 	
 	function connect() {
@@ -386,10 +385,7 @@
 		document.getElementById('disconnect').disabled = true;
 	}
 
-	
-	function updateStatus(newStatus) {
-		statusOutput.innerHTML = newStatus;
-	}
+
     
 </script>
 
