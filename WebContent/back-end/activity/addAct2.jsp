@@ -79,10 +79,6 @@
 					</ul>
 				</c:if>
 
-
-
-
-
 				<h3 style="text-align: center">新增一筆促銷活動</h3>
 				<div class="container">
 					<div class="row">
@@ -186,28 +182,27 @@
 									<button class="btn btn-info" type="submit">送出新增</button>
 								</div>
 							</form>
-
-
-
+							
+							<br><br>
+							<div class="input-group">
+  									<div class="input-group-prepend">
+    									<span class="input-group-text">網站推播訊息</span>
+  									</div>
+  									<textarea class="form-control text-field" aria-label="With textarea"  id="message"  placeholder="親愛翔泰山莊的翔友們，請注意近期我們推出的促銷訊息" onkeydown="if (event.keyCode == 13) sendMessage();"></textarea>
+							</div>
+								
+								  <div class="panel input-area">
+           							 <input id="userName" class="text-field" type="hidden" placeholder="使用者名稱" value="user"/>
+            						<br>
+            						<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();"/>
+		   							 <input type="button" id="connect"     class="button" value="連線" onclick="connect();"/>
+		   							 <input type="button" id="disconnect"  class="button" value="離線" onclick="disconnect();"/>
+	   							 </div>
 						</div>
 					</div>
 				</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				<!-- Page Content 這邊開始自由發揮結束-->
+			<!-- Page Content 這邊開始自由發揮結束-->
 			</div>
 			<!-- /.container-fluid -->
 
@@ -253,10 +248,6 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/back-end/vendor/jquery/jquery.min.js"></script>
@@ -323,51 +314,84 @@
 	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 	});
 
-	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
-
-	//      1.以下為某一天之前的日期無法選擇
-	//      var somedate1 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      2.以下為某一天之後的日期無法選擇
-	//      var somedate2 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-	//      var somedate1 = new Date('2017-06-15');
-	//      var somedate2 = new Date('2017-06-25');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//		             ||
-	//		            date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
+	
 </script>
+
+<script>
+    
+    var MyPoint = "/MyEchoServer/Po/105";
+    var host = window.location.host;
+    var path = window.location.pathname;
+    var webCtx = path.substring(0, path.indexOf('/', 1));
+    var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+    
+	var statusOutput = document.getElementById("statusOutput");
+	var webSocket;
+	
+	function connect() {
+		// 建立 websocket 物件
+		webSocket = new WebSocket(endPointURL);
+		
+		webSocket.onopen = function(event) {
+			updateStatus("WebSocket 成功連線");
+			document.getElementById('sendMessage').disabled = false;
+			document.getElementById('connect').disabled = true;
+			document.getElementById('disconnect').disabled = false;
+		};
+
+		webSocket.onmessage = function(event) {
+			var messagesArea = document.getElementById("messagesArea");
+	        var jsonObj = JSON.parse(event.data);
+	        var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+	        messagesArea.value = messagesArea.value + message;
+	        messagesArea.scrollTop = messagesArea.scrollHeight;
+		};
+
+		webSocket.onclose = function(event) {
+			updateStatus("WebSocket 已離線");
+		};
+	}
+	
+	
+	var inputUserName = document.getElementById("userName");
+	inputUserName.focus();
+	
+	function sendMessage() {
+	    var userName = inputUserName.value.trim();
+	    if (userName === ""){
+	        alert ("使用者名稱請勿空白!");
+	        inputUserName.focus();	
+			return;
+	    }
+	    
+	    var inputMessage = document.getElementById("message");
+	    var message = inputMessage.value.trim();
+	    
+	    if (message === ""){
+	        alert ("訊息請勿空白!");
+	        inputMessage.focus();	
+	    }else{
+	        var jsonObj = {"userName" : userName, "message" : message};
+	        webSocket.send(JSON.stringify(jsonObj));
+	        inputMessage.value = "";
+	        inputMessage.focus();
+	    }
+	}
+
+	
+	function disconnect () {
+		webSocket.close();
+		document.getElementById('sendMessage').disabled = true;
+		document.getElementById('connect').disabled = false;
+		document.getElementById('disconnect').disabled = true;
+	}
+
+	
+	function updateStatus(newStatus) {
+		statusOutput.innerHTML = newStatus;
+	}
+    
+</script>
+
 
 </html>

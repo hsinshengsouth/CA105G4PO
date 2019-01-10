@@ -11,6 +11,8 @@
     
     pageContext.setAttribute("cpnList",cpnList);
     
+    
+    
     %>
     
     
@@ -35,6 +37,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/flaticon.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/icomoon.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/style.css">
+<!--      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" /> -->
 
 <style>
 
@@ -44,12 +47,9 @@ margin:25px;
 
 }
 
-
 </style>
 </head>
 
-// 		return queryString;
-// 	}
 
 <!-- </script> -->
   <body>
@@ -117,34 +117,61 @@ margin:25px;
     
     		
    <c:forEach var="cpnVO" items="${cpnList}"  varStatus="status"  begin="0" end="2">
-    
-    
-    <div class="container couponmargin">
-      <div class="row">
-      
-        <div class="col-xs-12 col-sm-6">
-          <img src="<%=request.getContextPath()%>/front-end/coupon/cpn.do?cpnID=${cpnVO.cpnID}" width="500px">
-        </div>
-        	
-        <div class="col-xs-12 col-sm-6" >
-        <br>
-          <div class="price"><h3><sup>$</sup><span class="number">${cpnVO.discount}</span></h3></div>
-     
-      <div>
-        	<strong>Coupon Number:</strong>${cpnVO.quantity}
-        </div>
-       <br>
-<%--        <form METHOD="GET"  action="<%=request.getContextPath()%>/back-end/coupon/cpn.do"> --%>
-<!-- 		<form> -->
-<!--        <input id="coupon" type="hidden"  name="action"  value="get_coupon"> -->
-<%--        <input type="hidden" name="cpnID" value="${cpnVO.cpnID }"> --%>
-        <button id="couponclick"  type="submit" class="btn-info">Get Coupon!</button>
-<!--         </form> -->
-        </div>
-      </div>
-    </div>
-    
-    </c:forEach>
+
+
+				<div class="container couponmargin">
+					<div class="row">
+
+<c:set var="index" value="${status.index}"/> 
+
+	<%
+										int count = (Integer) pageContext.getAttribute("index");
+											if (cpnList.get(count).getquantity() != 0) {
+												pageContext.setAttribute("cpn", new Integer(1));
+											} else {
+												pageContext.setAttribute("cpn", new Integer(0));
+											}
+	%>
+
+
+<c:choose>
+<c:when test="${cpn==1}">
+
+						<div class="col-xs-12 col-sm-6">
+							<img
+								src="<%=request.getContextPath()%>/front-end/coupon/cpn.do?cpnID=${cpnVO.cpnID}"
+								width="500px" id="image">
+						</div>
+</c:when>
+<c:otherwise>
+		<div class="col-xs-12 col-sm-6">
+							<img
+								src="<%=request.getContextPath()%>/front-end/imagesCustom/noCoupon.png"
+								width="500px">
+						</div>
+</c:otherwise>
+</c:choose>
+
+
+						<div class="col-xs-12 col-sm-6">
+							<br>
+							<div class="price">
+								<h3>
+									<sup>$</sup><span class="number sale">${cpnVO.discount}</span>
+								</h3>
+							</div>
+							<div id="quantity2">
+								<Strong>Coupon Number:</Strong>
+								<p id="${cpnVO.cpnID}">${cpnVO.quantity}</p>
+							</div>
+							<br>
+							<button type="submit" class="btn-info"
+								value="${cpnVO.cpnID }">Get Coupon!</button>
+						</div>
+					</div>
+				</div>
+
+			</c:forEach>
     
     
   </div>
@@ -205,26 +232,24 @@ margin:25px;
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/google-map.js"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/main.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
+<!--     <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script> -->
     
     <script type="text/javascript">
 	$(document).ready(function(){
-		 $('#couponclick').click(function(){
+		var d;
+		 $('button').click(function(){
 			 $.ajax({
 				 type: "GET",
-				 url: "/back-end/coupon/cpn.do",
-				 data: creatQueryString(),
+				 url: "<%=request.getContextPath()%>/back-end/coupon/cpn.do",
+				 data: creatQueryString($(this).val()),
 				 dataType: "json",
 				 success: function (data){
-					clearSelect();
-					console.log(data);
-			
-// 					$(data).each(function(i, item){
-// 						$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
-// 					});
-// 					jQuery.each(data, function(i, item){
-// 						$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
-// 					});
+ 						var id = "#" + data.cpnID;
+ 						
+					console.log(data.cpnVO);
+					console.log(data.cpnID);
+ 						$(id).text(data.cpnVO);
 			     },
 	             error: function(){alert("AJAX-grade發生錯誤囉!")}
 	         })
@@ -232,13 +257,32 @@ margin:25px;
 	
 	})
 	
-// 	function creatQueryString(paramGrade, paramClass){
-		function creatQueryString(){
-		var queryString= {"action":"get_coupon", "cpnID":"C0001"};
-// 		console.log("action:"+action+"; cpnID:"+cpnID);
+		function creatQueryString(cpnID){
+		var queryString= {"action":"get_coupon", "cpnID":cpnID};
 		return queryString;
 	}
 
 </script>
-  </body>
+
+<script type="text/javascript">
+
+
+	 $(function () {
+            $("button").click(function () {
+                //alert範例
+                swal({
+                		position: 'top-end',
+                		type: 'success',
+                		 title: 'You got a perfect coupon!!!',
+                		 showConfirmButton: false,
+                		 timer: 1500
+                }        
+                );
+
+            });
+        });
+	
+
+</script>
+</body>
 </html>

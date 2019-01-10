@@ -187,7 +187,7 @@
                   <li><strong>Bed Type:</strong> One bed</li>
                 </ul>
                 <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
-
+				 <p><a href="#" class="btn btn-info py-3 px-5">Collect Room</a></p>
               </div>
             </div>
 </c:when>
@@ -211,7 +211,7 @@
                 </ul>
 
                 <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
-                	
+                 <p style="width:100px"><a href="#" class="btn btn-info py-3 px-5">Collect Room</a></p>	
               </div>
             </div>
 
@@ -413,6 +413,9 @@
   <script src="<%=request.getContextPath()%>/front-end/js/google-map.js"></script>
   <script src="<%=request.getContextPath()%>/front-end/js/main.js"></script>
    <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
+<!--   //sweet alert 引用 -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
+  
   </body>
    <style>
 * {
@@ -480,4 +483,47 @@ $('#checkout_date').datepicker({
   
   </script>
   
+  
+  <script>
+	function connect() {
+		// 建立 websocket 物件
+		
+	
+
+		webSocket.onmessage = function(event) {
+	        var jsonObj = JSON.parse(event.data);
+	        var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+	        messagesArea.value = messagesArea.value + message;
+	        messagesArea.scrollTop = messagesArea.scrollHeight;
+		
+	   	 $(function () {
+	            $("button").onmessage(function () {
+	                //alert範例
+	                swal({
+	                		position: 'top-end',
+	                		type: 'success',
+	                		 title: 'You got a perfect coupon!!!',
+	                		 showConfirmButton: false,
+	                		 timer: 1500
+	                }        
+	                );
+
+	            });
+	        });
+	        
+	        
+		
+		
+		
+		
+		};
+
+		webSocket.onclose = function(event) {
+			updateStatus("WebSocket 已離線");
+		};
+	}
+  	
+  
+  
+  </script>
 </html>
