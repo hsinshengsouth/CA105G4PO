@@ -11,17 +11,15 @@ import javax.websocket.OnError;
 import javax.websocket.OnClose;
 import javax.websocket.CloseReason;
 
-@ServerEndpoint("/MyEchoServer/{myName}/{myRoom}")
+@ServerEndpoint("/MyEchoServer")
 public class MyEchoServer {
 	
 private static final Set<Session> allSessions = Collections.synchronizedSet(new HashSet<Session>());
 	
 	@OnOpen
-	public void onOpen(@PathParam("myName") String myName, @PathParam("myRoom") int myRoom, Session userSession) throws IOException {
+	public void onOpen( Session userSession) throws IOException {
 		allSessions.add(userSession);
-		System.out.println(userSession.getId() + ": �w�s�u");
-		System.out.println(myName + ": �w�s�u");
-		System.out.println(myRoom + ": �и�");
+		System.out.println(userSession.getId() + ": 已連線");
 //		userSession.getBasicRemote().sendText("WebSocket �s�u���\");
 	}
 

@@ -41,7 +41,7 @@
 
 </head>
   
-  <body>
+  <body onload="connect();" onunload="disconnect();">
     
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
@@ -482,51 +482,60 @@ $('#checkout_date').datepicker({
 });
   
   </script>
-  
+  <script>
+
+function getReload(event){
+	var data = JSON.parse( event.data );
+	console.log(data.message);
+	swal({
+		html: $("<div>").addClass('serverPush-alert').text(data.message),
+		showCancelButton : true,
+		confirmButtonColor : '#3085d6',
+		cancelButtonColor : '#d33',
+		confirmButtonText : 'Yes, 馬上搶購去!',
+		cancelButtonText : 'No, 等會再說!',
+		confirmButtonClass : 'confirm-class',
+		cancelButtonClass : 'cancel-class',
+		closeOnConfirm : false,
+		closeOnCancel : false
+	})
+	
+	
+	
+}
+
+
+
+</script>
   
   <script>
+  
+  var MyPoint = "/MyEchoServer";
+  var host = window.location.host;
+  var path = window.location.pathname;
+  var webCtx = path.substring(0, path.indexOf('/', 1));
+  var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+  
+  var webSocket;
+  
+  
 	function connect() {
 		// 建立 websocket 物件
 		webSocket = new WebSocket(endPointURL);
 		
 		webSocket.onopen = function(event) {
-			updateStatus("WebSocket 成功連線");
-			document.getElementById('sendMessage').disabled = false;
-			document.getElementById('connect').disabled = true;
-			document.getElementById('disconnect').disabled = false;
+			console.log("WebSocket 成功連線");
 		};
 	
-
 		webSocket.onmessage = function(event) {
-	        var jsonObj = JSON.parse(event.data);
-	        var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
-	        messagesArea.value = messagesArea.value + message;
-	        messagesArea.scrollTop = messagesArea.scrollHeight;
-		
-	   	 $(function () {
-	            $("button").onmessage(function () {
-	                //alert範例
-	                swal({
-	                		position: 'top-end',
-	                		type: 'success',
-	                		 title: 'You got a perfect coupon!!!',
-	                		 showConfirmButton: false,
-	                		 timer: 1500
-	                }        
-	                );
-
-	            });
-	        });
-	        
-	        
-		
-		
-		
-		
+			console.log("促銷活動準備上線...");
+ 			getReload(event);
 		};
+		
+
 
 		webSocket.onclose = function(event) {
-			updateStatus("WebSocket 已離線");
+			console.log("WebSocket 已離線");
 		};
 	}
   	

@@ -39,7 +39,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="connect();" onunload="disconnect();">
 
 		<!-- Navbar -->
 
@@ -188,12 +188,13 @@
   									<div class="input-group-prepend">
     									<span class="input-group-text">網站推播訊息</span>
   									</div>
-  									<textarea class="form-control text-field" aria-label="With textarea"  id="message"  placeholder="親愛翔泰山莊的翔友們，請注意近期我們推出的促銷訊息" onkeydown="if (event.keyCode == 13) sendMessage();"></textarea>
+  									<textarea class="form-control text-field" aria-label="With textarea"  id="message"  placeholder="親愛翔泰山莊的翔友們，請注意近期我們推出的促銷訊息"  onkeydown="if (event.keyCode == 13) sendMessage();"></textarea>
 							</div>
 								
 								  <div class="panel input-area">
            							 <input id="userName" class="text-field" type="hidden" placeholder="使用者名稱" value="user"/>
             						<br>
+            						 <input id="message2"  class="text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();"/>
             						<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();"/>
 		   							 <input type="button" id="connect"     class="button" value="連線" onclick="connect();"/>
 		   							 <input type="button" id="disconnect"  class="button" value="離線" onclick="disconnect();"/>
@@ -317,9 +318,11 @@
 	
 </script>
 
+
+
 <script>
     
-    var MyPoint = "/MyEchoServer/Po/105";
+    var MyPoint = "/MyEchoServer";
     var host = window.location.host;
     var path = window.location.pathname;
     var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -327,57 +330,41 @@
     
 	var webSocket;
 	
+	//建立連線
 	function connect() {
 		// 建立 websocket 物件
-		webSocket = new WebSocket(endPointURL);
+		webSocket = new WebSocket("ws://localhost:8081/CA105G4PO/MyEchoServer");
 		
 		webSocket.onopen = function(event) {
-			updateStatus("WebSocket 成功連線");
+			console.log("WebSocket 成功連線");
 			document.getElementById('sendMessage').disabled = false;
 			document.getElementById('connect').disabled = true;
 			document.getElementById('disconnect').disabled = false;
 		};
 
-		webSocket.onmessage = function(event) {
-			var messagesArea = document.getElementById("messagesArea");
-	        var jsonObj = JSON.parse(event.data);
-	        var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
-	        messagesArea.value = messagesArea.value + message;
-	        messagesArea.scrollTop = messagesArea.scrollHeight;
-		};
-
-		webSocket.onclose = function(event) {
-			updateStatus("WebSocket 已離線");
-		};
+	
+	
 	}
 	
 	
-	var inputUserName = document.getElementById("userName");
-	inputUserName.focus();
 	
 	function sendMessage() {
-	    var userName = inputUserName.value.trim();
-	    if (userName === ""){
-	        alert ("使用者名稱請勿空白!");
-	        inputUserName.focus();	
-			return;
-	    }
 	    
 	    var inputMessage = document.getElementById("message");
 	    var message = inputMessage.value.trim();
-	    
+	    console.log(message);
 	    if (message === ""){
 	        alert ("訊息請勿空白!");
 	        inputMessage.focus();	
 	    }else{
-	        var jsonObj = {"userName" : userName, "message" : message};
+	        var jsonObj = {"message" : message};
+	        console.log(JSON.stringify(jsonObj));
 	        webSocket.send(JSON.stringify(jsonObj));
 	        inputMessage.value = "";
 	        inputMessage.focus();
 	    }
-	}
 
-	
+	}
 	function disconnect () {
 		webSocket.close();
 		document.getElementById('sendMessage').disabled = true;
