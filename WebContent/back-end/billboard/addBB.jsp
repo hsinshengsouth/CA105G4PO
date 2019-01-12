@@ -118,7 +118,7 @@ img {
 									<div class="form-group" style="margin-right: 15px">
 										<label for="aa">開始時間:</label> <input type="text" name="bbStart"
 											id="f_date1" class="form-control"
-											style="width: 140px">
+											style="width: 180px">
 									</div>
 
 
@@ -127,7 +127,7 @@ img {
 									<div class="form-group">
 										<label for="aa">結束時間:</label> <input type="text" name="bbEnd"
 											id="f_date2"  class="form-control"
-											style="width: 140px">
+											style="width: 180px">
 									</div>
 
 								</div>
@@ -152,7 +152,6 @@ img {
 											<span class="input-group-text" id="">Upload</span>
 										</div>
 
-
 									</div>
 
 								</div>
@@ -161,26 +160,18 @@ img {
 								<div class="col-12 text-center">
 									<input type="hidden" name="action" value="insert"> <input
 										class="btn btn-primary" type="submit" value="送出新增">
-									<button class="btn btn-primary">返回</button>
+									<button class="btn btn-primary">
+										<a href="<%=request.getContextPath()%>/back-end/billboard/listAllBillBoard.jsp"  style="color:#fff">返回</a>
+									</button>
 								</div>
 
 							</form>
 
 							<!--解決按鈕置中的問題 https://stackoverflow.com/questions/41664991/bootstrap-4-how-do-i-center-align-a-button -->
 
-
-
-
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
 
 				<!-- Page Content 這邊開始自由發揮結束-->
 			</div>
@@ -305,7 +296,7 @@ img {
        theme: '',              //theme: 'dark',
        timepicker:false,       //timepicker:true,
        step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
 	   value: '<%=date%> 	', // value:   new Date(),
 //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 //startDate:	            '2017/07/10',  // 起始日
@@ -316,7 +307,7 @@ $('#f_date2').datetimepicker({
 	theme : '', //theme: 'dark',
 	timepicker : false, //timepicker:true,
 	step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
-	format : 'Y-m-d', //format:'Y-m-d H:i:s',
+	format : 'Y-m-d H:i:s', //format:'Y-m-d H:i:s',
 	value :<%=str%>, // value:   new Date(),
 //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 //startDate:	            '2017/07/10',  // 起始日

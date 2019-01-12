@@ -79,7 +79,7 @@
     <servlet-name>RoomTypeServletFront</servlet-name>
     <url-pattern>/front-end/roomType/roomType.do</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>RoomTypeImgServlet</servlet-name>
     <servlet-class>com.roomType.controller.RoomTypeImgServlet</servlet-class>
   </servlet>
@@ -87,8 +87,6 @@
     <servlet-name>RoomTypeImgServlet</servlet-name>
     <url-pattern>/front-end/roomType/rtPic.do</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
     <servlet-name>CpnImgServlet</servlet-name>
     <servlet-class>com.coupon.controller.CpnImgServlet</servlet-class>

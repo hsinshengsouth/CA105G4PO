@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TimerTask;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -92,6 +93,26 @@ public class BBServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
+				/*************************** 1-1設定排程功能 **********************/
+				TimerTask task = new TimerTask() {
+					
+					@Override
+					public void run() {
+						
+						
+						
+						
+						
+						
+					}
+					
+				};
+				
+				
+				
+				
+				
+				
 
 				/*************************** 2.開始新增資料 ***************************************/
 				BillboardService bbSvc = new BillboardService();

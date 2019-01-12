@@ -75,13 +75,18 @@ pageContext.setAttribute("list", list);
 				</ol>
 
 				<!-- Page Content 這邊開始自由發揮-->
-
+				<h1>輪播廣告</h1>
+				<hr>
+					<div class="container-fluid" align="right"  style="margin:0px  0px -25px 0px">
+					<button type="button" class="btn btn-info">
+						<a href="<%=request.getContextPath()%>/back-end/billboard/addBB.jsp"     style="color:#fff">新增輪播廣告</a>
+					</button>
+				</div>
 
 
 
 
 				<div class="container-fluid">
-					<caption>輪播廣告</caption>
 					<br>
 					<table class="table table-hover">
 
