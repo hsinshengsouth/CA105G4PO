@@ -236,11 +236,12 @@ img {
 
 </body>
 <% 
-  java.sql.Date date = null;
+Date date =null;
+  java.sql.Timestamp timestamp = null;
   try {
-	    date = bbVO.getbbStart();
+	  timestamp = bbVO.getbbStart();
    } catch (Exception e) {
-	    date = new java.sql.Date(System.currentTimeMillis());
+	   timestamp = new java.sql.Timestamp(System.currentTimeMillis());
    }
   
   String str = null;

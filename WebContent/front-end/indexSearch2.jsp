@@ -1,7 +1,17 @@
 <%@page import="java.util.*"%>
 <%@page import="com.roomType.model.RoomTypeVO"%>
+<%@page import="com.billboard.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<% 
+BillboardService bbSvc = new BillboardService();
+
+List<BillboardVO>bbList =bbSvc.getAll();
+
+pageContext.setAttribute("bbList", bbList);
+
+%>
 
 
 <!DOCTYPE html>
@@ -12,6 +22,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
+    <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
@@ -26,10 +38,18 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
   
-    <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
 <!--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">  -->
-    
+    <style>
+		.input-group-prepend .btn, .input-group-append .btn {
+    position: relative;
+    z-index: 0;
+		}
+		.input-group-append .btn, .input-group-prepend .btn {
+    position: relative;
+     z-index: 0; 
+}
+		
+</style>
     
   </head>
   <body>
@@ -59,12 +79,24 @@
   <!-- END nav -->
   
 
-
-
 <!-- 廣告瀏覽區 -->
   <div class="block-31" style="position: relative;">
     <div class="owl-carousel loop-block-31 ">
-      <div class="block-30 item" style="background-image: url('imagesCustom/mountain village.jpg'); min-height: 600px; height: 80vh" data-stellar-background-ratio="0.5">
+    <c:forEach var="bbVO"   varStatus="count"   items="${bbList}" >
+    	<c:set var="bbindex"  value="${count.index}"/>
+    	 <%
+   						 int index = (Integer) pageContext.getAttribute("bbindex");
+   	     				 String encodedText = null;
+   	     				 if(bbList.get(index).getpic() != null){
+   	     					 Base64.Encoder encoder = Base64.getEncoder();
+   	     					 encodedText = encoder.encodeToString(bbList.get(index).getpic());
+   	     					 pageContext.setAttribute("bb", new Integer(1));
+   	     				 }
+   	     				 else{pageContext.setAttribute("bb", new Integer(0));}
+   				 %>
+    
+    	<c:if test="${bb == 1 && bbVO.bbStatus == 1 }">
+      <div class="block-30 item" style="background-image: url('data:image/png;base64, <%=encodedText %>'); min-height: 600px; height: 80vh" data-stellar-background-ratio="0.5">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-md-10">
@@ -74,26 +106,10 @@
           </div>
         </div>
       </div>
-      <div class="block-30 item" style="background-image: url('imagesCustom/workExchange.jpg'); min-height: 600px; height: 80vh " data-stellar-background-ratio="0.5">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-md-10">
-              <!-- <span class="subheading-sm">Welcome</span> -->
-              <h2 class="heading"></h2>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="block-30 item" style="background-image: url('imagesCustom/EastScenery2.jpg');  min-height: 600px; height: 80vh" data-stellar-background-ratio="0.5">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-md-10">
-              <!-- <span class="subheading-sm">Welcome</span> -->
-              <h2 class="heading">Simple Life</h2>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      </c:if>
+   </c:forEach>
+    
     </div>
   </div>
 

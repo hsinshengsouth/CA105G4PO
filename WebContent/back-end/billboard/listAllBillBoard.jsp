@@ -97,6 +97,7 @@ pageContext.setAttribute("list", list);
 								<th>開始時間</th>
 								<th >結束時間</th>
 								<th>廣告圖片</th>
+								<th>廣告狀態</th>
 								<th align="center">修改</th>
 								<th align="center">刪除</th>
 							</tr>
@@ -138,7 +139,7 @@ pageContext.setAttribute("list", list);
 										</c:otherwise>
 									</c:choose>
 
-
+											<td>${bbVO.bbStatus}</td>
 						
 
 

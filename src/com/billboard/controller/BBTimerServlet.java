@@ -1,77 +1,58 @@
 package com.billboard.controller;
 
-import java.io.IOException;
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimerTask;
+import java.util.*;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.billboard.model.BillboardService;
+import com.billboard.model.*;
 
-@WebServlet("/BBTimerServlet")
 public class BBTimerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public BBTimerServlet() {
-        super();
-    }
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
-		
-		String action =req.getParameter("action"); 
-		
-		if("insert".equals(action)) {
-			
-			Date onTime =null;
-			
-			try {
-				onTime = Date.valueOf(req.getParameter("bbStart"));
-			} catch (IllegalArgumentException e) {
-				onTime = new Date(System.currentTimeMillis());
-			}
-			
-			Date offTime =null;
-			
-			try {
-				offTime = Date.valueOf(req.getParameter("bbEnd"));
-			} catch (IllegalArgumentException e) {
-				offTime = new Date(System.currentTimeMillis());
-			}
-			
-			
-			TimerTask task = new TimerTask() {
+	Timer timer;
+	TimerTask task;
 
-				@Override
-				public void run() {
-					
-					
-					
-					
-					
-					
-				}
-				
-			};
-			
-			
-			
-			
-		}
-		
-		
-		
-		
+	public void init() throws ServletException {
+		timer = new Timer();
+		task = new TimerTask() {
+			public void run() {
+				System.out.println("開始執行");
+				bbStatusChecker();
+			}
+		};
+		timer.scheduleAtFixedRate(task, 1000,   1*24*60 * 60 * 1000);
+		System.out.println("已建立輪播廣告排程!");
 	}
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doGet(req, res);
-		
+	public void destroy() {
+		timer.cancel();
+		timer.purge();
+		System.out.println("已結束輪播廣告排程!");
+	}
+
+	public void bbStatusChecker() {
+		BillboardService bbSvc = new BillboardService();
+		List<BillboardVO> bbList = bbSvc.getAll();
+
+		try {
+			for (BillboardVO bbVO : bbList) {
+				long now = System.currentTimeMillis();
+				long up = bbVO.getbbStart().getTime();
+				long down = bbVO.getbbEnd().getTime();
+
+				if (now > up && now < down) {
+					bbSvc.updateBB(bbVO.geturl(), bbVO.getpic(), bbVO.getbbStart(), bbVO.getbbEnd(), bbVO.getbbID(), 1);// 上架
+				} else if (now > down) {
+					bbSvc.updateBB(bbVO.geturl(), bbVO.getpic(), bbVO.getbbStart(), bbVO.getbbEnd(), bbVO.getbbID(), 2);// 下架
+				} else {
+					bbSvc.updateBB(bbVO.geturl(), bbVO.getpic(), bbVO.getbbStart(), bbVO.getbbEnd(), bbVO.getbbID(), 0);// 待上架
+				}
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
 	}
 
 }
