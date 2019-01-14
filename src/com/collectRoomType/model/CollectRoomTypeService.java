@@ -11,9 +11,9 @@ public class CollectRoomTypeService {
 	
 	public CollectRoomTypeVO addCRT(String memID,String rtID) {
 		CollectRoomTypeVO  crtVO =new CollectRoomTypeVO(); 
-		
 		crtVO.setMemID(memID);
 		crtVO.setRtID(rtID);
+		dao.insert(crtVO);
 		return crtVO;
 	}
 	

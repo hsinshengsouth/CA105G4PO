@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="com.roomType.model.*"%>
-<%@page import="java.util.*"%>   
+<%@page import="java.util.*"%> 
+   <%@page import="com.member.model.*" %>  
   <%
   RoomTypeService rtSvc =new RoomTypeService();
   List<RoomTypeVO> rtList =rtSvc.getAll();
   Set<RoomTypeVO>rtSet =rtSvc.getAllInSet();
   pageContext.setAttribute("rtList",rtList);
   pageContext.setAttribute("rtSet",rtSet);
-  
+  MemberVO memVO = (MemberVO) session.getAttribute("memberVO");
+  request.setAttribute("memberVO", memVO);
 
   %>  
    <jsp:useBean id="adSvc"  scope="page" class="com.activityDetail.model.ActivityDetailService" />   
@@ -186,8 +188,14 @@
                   <li><strong>Size:</strong> 20m<sup>2</sup></li>
                   <li><strong>Bed Type:</strong> One bed</li>
                 </ul>
-                <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
-				 <p><a href="#" class="btn btn-info py-3 px-5">Collect Room</a></p>
+                <p><a href="#" class="btn btn-primary py-3 px-5">Reservation</a></p>
+				<form method="post" action="<%=request.getContextPath() %>/back-end/roomType/roomType.do">
+			<p>
+				<input type="hidden" name="action" value="collect_room">
+				<input type="hidden" name="rtID" value="${rtVO.rtID}">
+				<button class="btn btn-info py-3 px-5" type="submit">Collect Room</button>
+			</p>
+			</form>
               </div>
             </div>
 </c:when>
@@ -210,8 +218,16 @@
                   <li><strong>Bed Type:</strong> One bed</li>
                 </ul>
 
-                <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
-                 <p style="width:100px"><a href="#" class="btn btn-info py-3 px-5">Collect Room</a></p>	
+            <p>
+				<a href="#" class="btn btn-primary py-3 px-5">Reservation</a>
+			</p>
+				<form method="post" action="<%=request.getContextPath() %>/back-end/roomType/roomType.do">
+			<p>
+				<input type="hidden" name="action" value="collect_room">
+				<input type="hidden" name="rtID" value="${rtVO.rtID}">
+				<button class="btn btn-info py-3 px-5" type="submit">Collect Room</button>
+			</p>
+			</form>
               </div>
             </div>
 

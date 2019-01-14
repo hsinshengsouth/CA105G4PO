@@ -24,7 +24,7 @@ public class CollectRoomTypeDAO implements CollectRoomType_interface{
 		} 
 	}
 	
-    private static final String INSERT_SQL = "INSERT INTO CollectRoomType VALUES (?, ?)";
+    private static final String INSERT_SQL = "INSERT INTO CollectRoomType(memID,rtID) VALUES (?, ?)";
     private static final String FIND_MEMBER_COLLECT_SQL = "SELECT * from CollectRoomType where memID = ?";
     private static final String DELETE_SQL = "DELETE from CollectRoomType where memID = ? AND rtID = ?";
     

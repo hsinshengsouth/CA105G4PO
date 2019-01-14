@@ -10,8 +10,11 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.collectRoomType.model.CollectRoomTypeService;
+import com.collectRoomType.model.CollectRoomTypeVO;
 import com.roomType.model.*;
 
 @MultipartConfig
@@ -305,7 +308,29 @@ public class RoomTypeServlet extends HttpServlet{
 		}
 		
 		
-		
+		if("collect_room".equals(action)) {
+			List<String>errorMsgs =new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			CollectRoomTypeService crtSvc =new CollectRoomTypeService();
+			CollectRoomTypeVO  crtVO =new CollectRoomTypeVO();
+//			從會員session存取會員ID
+//			HttpSession session =  req.getSession();
+//			MemberVO memVO = (MemberVO)session.getAttribute("memberVO");
+//			String memID = memVO.getMemID();
+			try {
+			String memID ="M0005";
+			String rtID =req.getParameter("rtID");
+System.out.println(rtID);
+			crtVO=crtSvc.addCRT(memID, rtID);
+			
+			String url = "/front-end/roomType/roomType.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+		}
 		
 		
 		
