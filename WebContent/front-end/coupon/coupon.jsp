@@ -175,7 +175,7 @@ margin:25px;
 							
 							
 							<button type="submit" class="btn-info disable"
-								value="${cpnVO.cpnID}">Get Coupon!		</button>
+								value="${cpnVO.cpnID}">Get Coupon!</button>
 								
 								
 						</div>

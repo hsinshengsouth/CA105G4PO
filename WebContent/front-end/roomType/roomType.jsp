@@ -189,13 +189,9 @@
                   <li><strong>Bed Type:</strong> One bed</li>
                 </ul>
                 <p><a href="#" class="btn btn-primary py-3 px-5">Reservation</a></p>
-				<form method="post" action="<%=request.getContextPath() %>/back-end/roomType/roomType.do">
 			<p>
-				<input type="hidden" name="action" value="collect_room">
-				<input type="hidden" name="rtID" value="${rtVO.rtID}">
-				<button class="btn btn-info py-3 px-5" type="submit">Collect Room</button>
+				<button class="btn btn-info py-3 px-5" type="submit" value="${rtVO.rtID}">Collect Room</button>
 			</p>
-			</form>
               </div>
             </div>
 </c:when>
@@ -221,13 +217,9 @@
             <p>
 				<a href="#" class="btn btn-primary py-3 px-5">Reservation</a>
 			</p>
-				<form method="post" action="<%=request.getContextPath() %>/back-end/roomType/roomType.do">
 			<p>
-				<input type="hidden" name="action" value="collect_room">
-				<input type="hidden" name="rtID" value="${rtVO.rtID}">
-				<button class="btn btn-info py-3 px-5" type="submit">Collect Room</button>
+					<button class="btn btn-info py-3 px-5" type="submit" value="${rtVO.rtID}">Collect Room</button>
 			</p>
-			</form>
               </div>
             </div>
 
@@ -559,4 +551,36 @@ function getReload(event){
   
   
   </script>
+  
+   <script type="text/javascript">
+	$(document).ready(function(){
+		 $('button').click(function(){
+			 $.ajax({
+				 type: "GET",
+				 url: "<%=request.getContextPath() %>/back-end/roomType/roomType.do",
+				 data: creatQueryString($(this).val()),
+				 dataType: "json",
+				 success: function (){
+					 swal({
+	                		position: 'top-end',
+	                		type: 'success',
+	                		 title: 'Collect Room Successfully!!!',
+	                		 showConfirmButton: false,
+	                		 timer: 1500
+	                } );       
+			     },
+	             error: function(){alert("AJAX-grade發生錯誤囉!")}
+	         })
+		 })
+	
+	})
+	
+		function creatQueryString(rtID){
+		var queryString= {"action":"collect_room", "rtID":rtID};
+		console.log(queryString);
+		return queryString;
+	}
+  
+  </script>
+  
 </html>

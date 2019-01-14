@@ -2,6 +2,7 @@ package com.roomType.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.*;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.collectRoomType.model.CollectRoomTypeService;
 import com.collectRoomType.model.CollectRoomTypeVO;
@@ -318,14 +322,24 @@ public class RoomTypeServlet extends HttpServlet{
 //			MemberVO memVO = (MemberVO)session.getAttribute("memberVO");
 //			String memID = memVO.getMemID();
 			try {
-			String memID ="M0005";
+			String memID ="M0010";
 			String rtID =req.getParameter("rtID");
 System.out.println(rtID);
 			crtVO=crtSvc.addCRT(memID, rtID);
 			
-			String url = "/front-end/roomType/roomType.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
+			JSONObject obj = new JSONObject();
+			try {
+				obj.put("rtID", rtID);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+			res.setContentType("text/plain");
+			res.setCharacterEncoding("UTF-8");
+			PrintWriter out = res.getWriter();
+			out.write(obj.toString());
+			out.flush();
+			out.close();
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
