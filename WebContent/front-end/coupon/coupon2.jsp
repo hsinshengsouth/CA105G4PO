@@ -16,8 +16,8 @@
     %>
     
  <%
- MemberVO memVO = (MemberVO) session.getAttribute("memberVO");
- request.setAttribute("memberVO", memVO);
+ MemberVO memVO = (MemberVO) session.getAttribute("memVO");
+ request.setAttribute("memVO", memVO);
 %>
     
     
@@ -170,13 +170,8 @@ margin:25px;
 								<p id="${cpnVO.cpnID}">${cpnVO.quantity}</p>
 							</div>
 							<br>
-		
 							
-							
-							
-							<button type="submit" class="btn-info disable"
-								value="${cpnVO.cpnID}">Get Coupon!		</button>
-								
+							<button type="submit" class="btn-info" >Get Coupon!	</button>
 								
 						</div>
 					</div>
@@ -248,11 +243,11 @@ margin:25px;
     
     <script type="text/javascript">
 	$(document).ready(function(){
-		 $('button').click(function(){
+		 $('#cpnform').click(function(){
 			 $.ajax({
 				 type: "GET",
 				 url: "<%=request.getContextPath()%>/back-end/coupon/cpn.do",
-				 data: creatQueryString($(this).val()),
+				 data:  creatQueryString($(this).val()),      
 				 dataType: "json",
 				 success: function (data){
  						var id = "#" + data.cpnID;
@@ -267,14 +262,11 @@ margin:25px;
 	
 	})
 	
-		function creatQueryString(cpnID){
-		var queryString= {"action":"get_coupon", "cpnID":cpnID};
+		function creatQueryString(cpnID,memID){
+		var queryString= {"action":"get_coupon", "cpnID":cpnID,"memID":memID};
+		console.log("cpnID:"+cpnID+"memID:"+memID)
 		return queryString;
 	}
-
-	$('.disable').click(function(){
-		   $(this).prop('disabled', true);
-		});
 	
 </script>
 

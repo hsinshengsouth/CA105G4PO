@@ -9,7 +9,8 @@ import javax.sql.DataSource;
 
 import com.room.model.RoomVO;
 
-import testpackage.BLOB;
+import tool.BLOB;
+
 import java.io.IOException;
 import java.sql.*;
 import java.sql.Date;

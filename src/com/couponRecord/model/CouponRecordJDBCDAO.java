@@ -176,4 +176,10 @@ public class CouponRecordJDBCDAO implements CouponRecord_interface{
 		System.out.println("搜尋成功");
 		System.out.println("------------------");
 	}
+
+	@Override
+	public boolean findByMemIdCpnId(String memId, String cpnId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

@@ -1,7 +1,9 @@
 package com.roomType.model;
 
 import java.util.*;
-import testpackage.BLOB;
+
+import tool.BLOB;
+
 import java.io.IOException;
 import java.sql.*;
 import java.sql.Date;

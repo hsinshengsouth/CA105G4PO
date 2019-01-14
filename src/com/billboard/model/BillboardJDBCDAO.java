@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import testpackage.BLOB;
+import tool.BLOB;
 
 public class BillboardJDBCDAO implements BillboardDAO_interface{
 	private static final String DRIVER="oracle.jdbc.driver.OracleDriver";
