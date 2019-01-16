@@ -17,7 +17,7 @@ public class ActivityDetailDAO implements ActivityDetailDAO_interface {
 
 	private static final String INSERT_SQL = "INSERT INTO ActivityDetail(actID,rtID,discount) VALUES(?,?,?)";
 	private static final String UPDATE_SQL = "UPDATE ActivityDetail set discount=? where actID=? and rtID=?";
-	private static final String DELETE_SQL = "DELETE FROM ActivityDetail where actID=?";
+	private static final String DELETE_SQL = "DELETE FROM ActivityDetail where actID=? and rtID=?";
 	private static final String FIND_BY_PK ="SELECT * FROM ActivityDetail WHERE actID=?";
 	private static final String GET_ALL_SQL = "SELECT * FROM ActivityDetail ORDER BY actID";
 
@@ -107,7 +107,7 @@ public class ActivityDetailDAO implements ActivityDetailDAO_interface {
 	}
 
 	@Override
-	public void delete(String actID) {
+	public void delete(String actID,String rtID) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -116,6 +116,7 @@ public class ActivityDetailDAO implements ActivityDetailDAO_interface {
 			pstmt = con.prepareStatement(DELETE_SQL);
 
 			pstmt.setString(1, actID);
+			pstmt.setString(2, rtID);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

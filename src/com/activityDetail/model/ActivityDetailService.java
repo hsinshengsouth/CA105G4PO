@@ -29,8 +29,8 @@ public class ActivityDetailService {
 		return adVO;
 	}
 	
-	public void deleteAD(String actID) {
-		dao.delete(actID);
+	public void deleteAD(String actID,String rtID) {
+		dao.delete(actID,rtID);
 	}
 	
 	public ActivityDetailVO getOneByID(String actID) {

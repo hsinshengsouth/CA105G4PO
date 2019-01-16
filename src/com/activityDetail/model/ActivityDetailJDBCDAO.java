@@ -107,7 +107,7 @@ public class ActivityDetailJDBCDAO implements ActivityDetailDAO_interface{
 	}
 
 	@Override
-	public void delete(String actID) {
+	public void delete(String actID,String rtID) {
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		
@@ -215,7 +215,7 @@ public class ActivityDetailJDBCDAO implements ActivityDetailDAO_interface{
 			System.out.println("Update Succesfully!");
 			System.out.println("===========");
 			//刪除
-			dao.delete("A0003");
+			dao.delete("A0003","RT03");
 			System.out.println("Delete Succesfully!");
 			System.out.println("===========");
 			//找全部

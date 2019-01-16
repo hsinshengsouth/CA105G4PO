@@ -6,11 +6,8 @@
    
    <jsp:useBean id="listDetail_ByactID" scope="request"  type="java.util.Set<ActivityDetailVO>" />
    <jsp:useBean id="rtSvc" scope="page" class="com.roomType.model.RoomTypeService" />
-   
-<%--    <% 
-//     ActivityDetailVO adVO =(ActivityDetailVO)request.getAttribute("adVO"); 
-%> --%>
-    
+
+
 <!DOCTYPE html>
 <html >
 
@@ -60,12 +57,13 @@
 						<th>房型編號</th>
 						<th>房型名稱</th>
 						<th>折扣</th>
+						<th>刪除</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="adVO" items="${listDetail_ByactID}" >
 					
-					<tr>
+					<tr id="${adVO.rtID}">
 						<td>${adVO.actID}</td>
 						
 						<td>${adVO.rtID}</td>
@@ -79,13 +77,21 @@
 							
 						</td>
 						<td>${adVO.discount}</td>
+						<td>
+								<form METHOD="post"
+											style="margin-bottom: 0px;" id="form1" onclick="formSubmit();">
+											<button class="btn btn-info deleteAD"  type="button">刪除</button>
+											<input type="hidden" name="actID" value="${adVO.actID}">
+											<input type="hidden" name="rtID" value="${adVO.rtID}">
+											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+											<input type="hidden" name="action" value="delete_activitydetail">
+								</form>
+						</td>
+					
 					</tr>
-					
-					
 					
 					</c:forEach>
 				</tbody>
-				
 				
           		</table>
           	</div>
@@ -114,7 +120,36 @@
 
     <!-- Bootstrap core JavaScript-->
    
-
+	<!--   //sweet alert 引用 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
   </body>
+   <script type="text/javascript">
+   function formSubmit(){
+
+	   $.ajax({
+	       url:'<%=request.getContextPath()%>/back-end/activity/act.do',
+	       data: $("#form1").serialize(),
+	       dataType: "json",
+	       success: function (data) {
+	    	   $('#' + data.rtID).remove();
+	    	   Swal({
+	    		   position: 'top-end',
+	    		   type: 'success',
+	    		   title: 'Your work has been saved',
+	    		   showConfirmButton: false,
+	    		   timer: 1500
+	    		 })
+	    	   
+	      },
+	      error: function(){    
+         	 alert("大家好");     
+          }
+	       
+	  });
+	  }
+  
+  </script>
+  
+  
 
 </html>

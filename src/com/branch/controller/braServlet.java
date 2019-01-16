@@ -296,13 +296,11 @@ try {
 			errorMsgs.add("修改資料失敗"+ e.getMessage());
 			System.out.println(e.getMessage());
 			RequestDispatcher failureView =req.getRequestDispatcher("/back-end/branch/update_bra_input.jsp");
-			
+			failureView.forward(req, res);
 			for(String s:errorMsgs) {
 				System.out.println(s);
 			}
 			
-			
-			failureView.forward(req, res);
 		}
 		
 		}

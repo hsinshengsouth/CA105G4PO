@@ -2,10 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.activity.model.*"%>
+<%@ page import="com.roomType.model.*"%>
 <%@page import="java.util.*"%>
 
 <%
 	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
+
+RoomTypeService rtSvc =new RoomTypeService();
+List<RoomTypeVO>rtList = rtSvc.getAll();
+pageContext.setAttribute("rtList", rtList);
+
 %>
 
 <!DOCTYPE html>
@@ -80,6 +86,7 @@
 				</c:if>
 
 				<h3 style="text-align: center">新增一筆促銷活動</h3>
+				
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-7 offset-sm-3 ">
@@ -87,7 +94,7 @@
 								class="form-inline form-horizontal" name="insertform">
 								<table class="table table-hover">
 									<tr>
-										<td>促銷活動名稱</td>
+										<td style="width:160px">促銷活動名稱</td>
 										<td><input class="form-control " type="TEXT"
 											name="actName" placeholder="請新增一筆促銷活動"
 											value="<%=(actVO == null) ? "" : actVO.getActName()%>" /></td>
@@ -115,60 +122,18 @@
 									<tr>
 										<td>選擇房型</td>
 										<td class="form-inline">
+								<jsp:useBean id="bchSvc" scope="page" class="com.branch.model.BranchService" />
+										<c:forEach var="rtVO" items="${rtList}">
+									<c:forEach var="bchVO" items="${bchSvc.all}">
 										<div class="form-check form-check-inline">
+											<c:if test="${rtVO.braID==bchVO.braID}">
 											<input class="form-check-input" type="checkbox"
-												 name="roomType" value="RT01"> 
-												<label class="form-check-label" >RT01</label>
+												 name="roomType" value="${rtVO.rtID}"> 
+												<label class="form-check-label" >${rtVO.rtID}-${rtVO.rtName}-${bchVO.braName}</label>
+												</c:if>
 										</div>
-										
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox"
-												 name="roomType"  value="RT02">
-												 <label class="form-check-label" >RT02</label>
-										</div>
-										
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox"
-												name="roomType"  value="RT03"> 
-												<label class="form-check-label" >RT03</label>
-										</div>		
-										
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox"
-												name="roomType"  value="RT04"> 
-												<label class="form-check-label" >RT04</label>
-										</div>										
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox"
-												name="roomType"  value="RT05"> 
-												<label class="form-check-label" >RT05</label>
-										</div>										
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox"
-												name="roomType"  value="RT06"> 
-												<label class="form-check-label" >RT06</label>
-										</div>										
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox"
-												name="roomType"  value="RT07"> 
-												<label class="form-check-label" >RT07</label>
-										</div>										
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox"
-												name="roomType"  value="RT08"> 
-												<label class="form-check-label" >RT08</label>
-										</div>										
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox"
-												name="roomType"  value="RT09"> 
-												<label class="form-check-label" >RT09</label>
-										</div>										
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox"
-												name="roomType"  value="RT10"> 
-												<label class="form-check-label" >RT10</label>
-										</div>
-
+										</c:forEach>
+										</c:forEach>
 
 										</td>
 									</tr>
@@ -194,7 +159,6 @@
 								  <div class="panel input-area">
            							 <input id="userName" class="text-field" type="hidden" placeholder="使用者名稱" value="user"/>
             						<br>
-            						 <input id="message2"  class="text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();"/>
             						<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();"/>
 		   							 <input type="button" id="connect"     class="button" value="連線" onclick="connect();"/>
 		   							 <input type="button" id="disconnect"  class="button" value="離線" onclick="disconnect();"/>
