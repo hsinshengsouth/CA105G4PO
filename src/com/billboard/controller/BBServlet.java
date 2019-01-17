@@ -2,7 +2,6 @@ package com.billboard.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
@@ -144,6 +143,7 @@ public class BBServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 ****************************************/
 
 				Integer bbID = new Integer(req.getParameter("bbID"));
+				
 				/*************************** 2.開始查詢資料 ****************************************/
 				BillboardService bbSvc = new BillboardService();
 				BillboardVO bbVO = bbSvc.findByPK(bbID);
@@ -160,17 +160,19 @@ public class BBServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-
+		System.out.println(action);
 		if ("update".equals(action)) {
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+
 			String requestURL = req.getParameter("requestURL");
 			try {
 				/***************************
 				 * * 1.接收請求參數- 輸入格式的錯誤處理
 				 ****************************************/
 				Integer bbID = new Integer(req.getParameter("bbID"));
-
+System.out.println(bbID);
 				String url = req.getParameter("url");
 				String urlReg = "^[(?<http>(http:[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*)]";
 
@@ -233,7 +235,7 @@ public class BBServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("bbVO", bbVO); // 含有輸入格式錯誤的braVO物件,也存入req
+					req.setAttribute("bbVO", bbVO); // 含有輸入格式錯誤的bbVO物件,也存入req
 
 					for (String s : errorMsgs) {
 						System.out.println(s);
